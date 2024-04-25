@@ -9,7 +9,9 @@ class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // TODO: 타입
     dynamic data = ref.watch(weatherRepositoryProvider);
+
     return Scaffold(
       body: Container(
         child: switch (data) {

@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xml2json/xml2json.dart';
 
 import 'package:avocado/utils/date.dart';
+import 'package:avocado/utils/location.dart';
 
 part 'weather_repository.g.dart'; // 자동 생성될 파일
 
@@ -17,6 +18,14 @@ class WeatherRepository extends _$WeatherRepository {
   }
 
   Future getWeather() async {
+    Location? location = await LocationUtil().getCurrentPosition();
+    if (location == null) {
+      return;
+    }
+
+    print('location.x:${location.x}');
+    print(location.y);
+
     Uri url = Uri.http(
       'apis.data.go.kr',
       '/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst',
@@ -27,8 +36,8 @@ class WeatherRepository extends _$WeatherRepository {
         'dataType': 'XML',
         'base_date': DateUtil.getYYYYMMDDToday(),
         'base_time': '0600',
-        'nx': '58',
-        'ny': '126',
+        'nx': location.x.toString(),
+        'ny': location.y.toString(),
       },
     );
 

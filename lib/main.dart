@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:avocado/presentation/view/home.dart';
+import 'package:avocado/feature/view/home_view.dart';
 import 'package:avocado/routes.dart';
 
 void main() async {
+  // TODO: ERROR 분기 처리
+  // - 실패시 화면
   await dotenv.load(fileName: '.env');
-  runApp(const MyApp());
+
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +30,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: routes,
-      home: const Home(),
+      home: const HomeView(),
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/data/repository/weather_repository.dart';
-import 'package:avocado/feature/view_model/home_view_model.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({super.key});

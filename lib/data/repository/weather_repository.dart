@@ -14,17 +14,15 @@ final transformer = Xml2Json();
 class WeatherRepository extends _$WeatherRepository {
   @override
   Future<dynamic> build() async {
-    return await getWeather();
+    return await getUltraShortTermLive();
   }
 
-  Future getWeather() async {
-    Location? location = await LocationUtil().getCurrentPosition();
+  Future getUltraShortTermLive() async {
+    Location? location = await LocationUtil().getLocation();
+
     if (location == null) {
       return;
     }
-
-    print('location.x:${location.x}');
-    print(location.y);
 
     Uri url = Uri.http(
       'apis.data.go.kr',
@@ -36,6 +34,33 @@ class WeatherRepository extends _$WeatherRepository {
         'dataType': 'XML',
         'base_date': DateUtil.getYYYYMMDDToday(),
         'base_time': '0600',
+        'nx': location.x.toString(),
+        'ny': location.y.toString(),
+      },
+    );
+
+    var response = await http.get(url);
+
+    transformer.parse(response.body);
+    return transformer.toParker();
+  }
+
+  Future getUltraShortTermForecast() async {
+    Location? location = await LocationUtil().getLocation();
+    if (location == null) {
+      return;
+    }
+
+    Uri url = Uri.http(
+      'apis.data.go.kr',
+      '/1360000/VilageFcstInfoService_2.0/getUltraSrtFScst',
+      {
+        'serviceKey': dotenv.env['API_SERVICE_KEY'],
+        'pageNo': '1',
+        'numOfRows': '1000',
+        'dataType': 'XML',
+        'base_date': DateUtil.getYYYYMMDDToday(),
+        'base_time': '0630',
         'nx': location.x.toString(),
         'ny': location.y.toString(),
       },

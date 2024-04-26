@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xml2json/xml2json.dart';
 
+import 'package:avocado/domain/model/weather_model.dart';
 import 'package:avocado/utils/date.dart';
 import 'package:avocado/utils/location.dart';
 
@@ -13,15 +14,15 @@ final transformer = Xml2Json();
 @riverpod
 class WeatherRepository extends _$WeatherRepository {
   @override
-  Future<dynamic> build() async {
+  Future<Weather?> build() async {
     return await getUltraShortTermLive();
   }
 
-  Future getUltraShortTermLive() async {
+  Future<Weather?> getUltraShortTermLive() async {
     Location? location = await LocationUtil().getLocation();
 
     if (location == null) {
-      return;
+      return null;
     }
 
     Uri url = Uri.http(

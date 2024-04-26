@@ -3,16 +3,7 @@ import 'dart:math';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
-class Address {
-  String city;
-  String district;
-  String street;
-  Address({
-    required this.city,
-    required this.district,
-    required this.street,
-  });
-}
+import 'package:avocado/domain/model/Address_model.dart';
 
 class Location {
   int latitude;

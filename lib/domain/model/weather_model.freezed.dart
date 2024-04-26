@@ -20,9 +20,12 @@ Weather _$WeatherFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Weather {
-  String get cityName => throw _privateConstructorUsedError;
+  Address get address => throw _privateConstructorUsedError;
   double get temperature => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  int get precipitationProbability => throw _privateConstructorUsedError;
+  double get precipitation => throw _privateConstructorUsedError;
+  double get humidity => throw _privateConstructorUsedError;
+  String get baseTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +37,15 @@ abstract class $WeatherCopyWith<$Res> {
   factory $WeatherCopyWith(Weather value, $Res Function(Weather) then) =
       _$WeatherCopyWithImpl<$Res, Weather>;
   @useResult
-  $Res call({String cityName, double temperature, String description});
+  $Res call(
+      {Address address,
+      double temperature,
+      int precipitationProbability,
+      double precipitation,
+      double humidity,
+      String baseTime});
+
+  $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -50,24 +61,47 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cityName = null,
+    Object? address = null,
     Object? temperature = null,
-    Object? description = null,
+    Object? precipitationProbability = null,
+    Object? precipitation = null,
+    Object? humidity = null,
+    Object? baseTime = null,
   }) {
     return _then(_value.copyWith(
-      cityName: null == cityName
-          ? _value.cityName
-          : cityName // ignore: cast_nullable_to_non_nullable
-              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as Address,
       temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
               as double,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      precipitationProbability: null == precipitationProbability
+          ? _value.precipitationProbability
+          : precipitationProbability // ignore: cast_nullable_to_non_nullable
+              as int,
+      precipitation: null == precipitation
+          ? _value.precipitation
+          : precipitation // ignore: cast_nullable_to_non_nullable
+              as double,
+      humidity: null == humidity
+          ? _value.humidity
+          : humidity // ignore: cast_nullable_to_non_nullable
+              as double,
+      baseTime: null == baseTime
+          ? _value.baseTime
+          : baseTime // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressCopyWith<$Res> get address {
+    return $AddressCopyWith<$Res>(_value.address, (value) {
+      return _then(_value.copyWith(address: value) as $Val);
+    });
   }
 }
 
@@ -78,7 +112,16 @@ abstract class _$$WeatherImplCopyWith<$Res> implements $WeatherCopyWith<$Res> {
       __$$WeatherImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String cityName, double temperature, String description});
+  $Res call(
+      {Address address,
+      double temperature,
+      int precipitationProbability,
+      double precipitation,
+      double humidity,
+      String baseTime});
+
+  @override
+  $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -92,22 +135,37 @@ class __$$WeatherImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cityName = null,
+    Object? address = null,
     Object? temperature = null,
-    Object? description = null,
+    Object? precipitationProbability = null,
+    Object? precipitation = null,
+    Object? humidity = null,
+    Object? baseTime = null,
   }) {
     return _then(_$WeatherImpl(
-      cityName: null == cityName
-          ? _value.cityName
-          : cityName // ignore: cast_nullable_to_non_nullable
-              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as Address,
       temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
               as double,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      precipitationProbability: null == precipitationProbability
+          ? _value.precipitationProbability
+          : precipitationProbability // ignore: cast_nullable_to_non_nullable
+              as int,
+      precipitation: null == precipitation
+          ? _value.precipitation
+          : precipitation // ignore: cast_nullable_to_non_nullable
+              as double,
+      humidity: null == humidity
+          ? _value.humidity
+          : humidity // ignore: cast_nullable_to_non_nullable
+              as double,
+      baseTime: null == baseTime
+          ? _value.baseTime
+          : baseTime // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -117,23 +175,32 @@ class __$$WeatherImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$WeatherImpl implements _Weather {
   const _$WeatherImpl(
-      {required this.cityName,
+      {required this.address,
       required this.temperature,
-      required this.description});
+      required this.precipitationProbability,
+      required this.precipitation,
+      required this.humidity,
+      required this.baseTime});
 
   factory _$WeatherImpl.fromJson(Map<String, dynamic> json) =>
       _$$WeatherImplFromJson(json);
 
   @override
-  final String cityName;
+  final Address address;
   @override
   final double temperature;
   @override
-  final String description;
+  final int precipitationProbability;
+  @override
+  final double precipitation;
+  @override
+  final double humidity;
+  @override
+  final String baseTime;
 
   @override
   String toString() {
-    return 'Weather(cityName: $cityName, temperature: $temperature, description: $description)';
+    return 'Weather(address: $address, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, humidity: $humidity, baseTime: $baseTime)';
   }
 
   @override
@@ -141,18 +208,24 @@ class _$WeatherImpl implements _Weather {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WeatherImpl &&
-            (identical(other.cityName, cityName) ||
-                other.cityName == cityName) &&
+            (identical(other.address, address) || other.address == address) &&
             (identical(other.temperature, temperature) ||
                 other.temperature == temperature) &&
-            (identical(other.description, description) ||
-                other.description == description));
+            (identical(
+                    other.precipitationProbability, precipitationProbability) ||
+                other.precipitationProbability == precipitationProbability) &&
+            (identical(other.precipitation, precipitation) ||
+                other.precipitation == precipitation) &&
+            (identical(other.humidity, humidity) ||
+                other.humidity == humidity) &&
+            (identical(other.baseTime, baseTime) ||
+                other.baseTime == baseTime));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, cityName, temperature, description);
+  int get hashCode => Object.hash(runtimeType, address, temperature,
+      precipitationProbability, precipitation, humidity, baseTime);
 
   @JsonKey(ignore: true)
   @override
@@ -170,18 +243,27 @@ class _$WeatherImpl implements _Weather {
 
 abstract class _Weather implements Weather {
   const factory _Weather(
-      {required final String cityName,
+      {required final Address address,
       required final double temperature,
-      required final String description}) = _$WeatherImpl;
+      required final int precipitationProbability,
+      required final double precipitation,
+      required final double humidity,
+      required final String baseTime}) = _$WeatherImpl;
 
   factory _Weather.fromJson(Map<String, dynamic> json) = _$WeatherImpl.fromJson;
 
   @override
-  String get cityName;
+  Address get address;
   @override
   double get temperature;
   @override
-  String get description;
+  int get precipitationProbability;
+  @override
+  double get precipitation;
+  @override
+  double get humidity;
+  @override
+  String get baseTime;
   @override
   @JsonKey(ignore: true)
   _$$WeatherImplCopyWith<_$WeatherImpl> get copyWith =>

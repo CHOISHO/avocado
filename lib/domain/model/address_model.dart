@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'Address_model.freezed.dart';
-part 'Address_model.g.dart';
+part 'address_model.freezed.dart';
+part 'address_model.g.dart';
 
 @freezed
 class Address with _$Address {

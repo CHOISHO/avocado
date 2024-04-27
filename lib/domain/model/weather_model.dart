@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:avocado/domain/model/Address_model.dart';
-import 'package:avocado/utils/location.dart';
+import 'package:avocado/domain/model/address_model.dart';
 
 part 'weather_model.freezed.dart';
 part 'weather_model.g.dart';

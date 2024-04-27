@@ -8,9 +8,9 @@ part of 'district_model.dart';
 
 _$DistrictImpl _$$DistrictImplFromJson(Map<String, dynamic> json) =>
     _$DistrictImpl(
-      administrativeArea: json['administrativeArea'] as String,
-      subLocality: json['subLocality'] as String,
-      thoroughfare: json['thoroughfare'] as String,
+      administrativeArea: json['administrativeArea'] as String? ?? '',
+      subLocality: json['subLocality'] as String? ?? '',
+      thoroughfare: json['thoroughfare'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$DistrictImplToJson(_$DistrictImpl instance) =>

@@ -21,10 +21,10 @@ Weather _$WeatherFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Weather {
   District get district => throw _privateConstructorUsedError;
-  double get temperature => throw _privateConstructorUsedError;
-  int get precipitationProbability => throw _privateConstructorUsedError;
-  double get precipitation => throw _privateConstructorUsedError;
-  double get humidity => throw _privateConstructorUsedError;
+  String get temperature => throw _privateConstructorUsedError;
+  String get precipitationProbability => throw _privateConstructorUsedError;
+  String get precipitation => throw _privateConstructorUsedError;
+  String get huminity => throw _privateConstructorUsedError;
   String get baseTime => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,10 +39,10 @@ abstract class $WeatherCopyWith<$Res> {
   @useResult
   $Res call(
       {District district,
-      double temperature,
-      int precipitationProbability,
-      double precipitation,
-      double humidity,
+      String temperature,
+      String precipitationProbability,
+      String precipitation,
+      String huminity,
       String baseTime});
 
   $DistrictCopyWith<$Res> get district;
@@ -65,7 +65,7 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
     Object? temperature = null,
     Object? precipitationProbability = null,
     Object? precipitation = null,
-    Object? humidity = null,
+    Object? huminity = null,
     Object? baseTime = null,
   }) {
     return _then(_value.copyWith(
@@ -76,19 +76,19 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
       temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       precipitationProbability: null == precipitationProbability
           ? _value.precipitationProbability
           : precipitationProbability // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       precipitation: null == precipitation
           ? _value.precipitation
           : precipitation // ignore: cast_nullable_to_non_nullable
-              as double,
-      humidity: null == humidity
-          ? _value.humidity
-          : humidity // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
+      huminity: null == huminity
+          ? _value.huminity
+          : huminity // ignore: cast_nullable_to_non_nullable
+              as String,
       baseTime: null == baseTime
           ? _value.baseTime
           : baseTime // ignore: cast_nullable_to_non_nullable
@@ -114,10 +114,10 @@ abstract class _$$WeatherImplCopyWith<$Res> implements $WeatherCopyWith<$Res> {
   @useResult
   $Res call(
       {District district,
-      double temperature,
-      int precipitationProbability,
-      double precipitation,
-      double humidity,
+      String temperature,
+      String precipitationProbability,
+      String precipitation,
+      String huminity,
       String baseTime});
 
   @override
@@ -139,7 +139,7 @@ class __$$WeatherImplCopyWithImpl<$Res>
     Object? temperature = null,
     Object? precipitationProbability = null,
     Object? precipitation = null,
-    Object? humidity = null,
+    Object? huminity = null,
     Object? baseTime = null,
   }) {
     return _then(_$WeatherImpl(
@@ -150,19 +150,19 @@ class __$$WeatherImplCopyWithImpl<$Res>
       temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       precipitationProbability: null == precipitationProbability
           ? _value.precipitationProbability
           : precipitationProbability // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       precipitation: null == precipitation
           ? _value.precipitation
           : precipitation // ignore: cast_nullable_to_non_nullable
-              as double,
-      humidity: null == humidity
-          ? _value.humidity
-          : humidity // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
+      huminity: null == huminity
+          ? _value.huminity
+          : huminity // ignore: cast_nullable_to_non_nullable
+              as String,
       baseTime: null == baseTime
           ? _value.baseTime
           : baseTime // ignore: cast_nullable_to_non_nullable
@@ -175,32 +175,38 @@ class __$$WeatherImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$WeatherImpl implements _Weather {
   const _$WeatherImpl(
-      {required this.district,
-      required this.temperature,
-      required this.precipitationProbability,
-      required this.precipitation,
-      required this.humidity,
-      required this.baseTime});
+      {this.district = const District(),
+      this.temperature = '',
+      this.precipitationProbability = '',
+      this.precipitation = '',
+      this.huminity = '',
+      this.baseTime = ''});
 
   factory _$WeatherImpl.fromJson(Map<String, dynamic> json) =>
       _$$WeatherImplFromJson(json);
 
   @override
+  @JsonKey()
   final District district;
   @override
-  final double temperature;
+  @JsonKey()
+  final String temperature;
   @override
-  final int precipitationProbability;
+  @JsonKey()
+  final String precipitationProbability;
   @override
-  final double precipitation;
+  @JsonKey()
+  final String precipitation;
   @override
-  final double humidity;
+  @JsonKey()
+  final String huminity;
   @override
+  @JsonKey()
   final String baseTime;
 
   @override
   String toString() {
-    return 'Weather(district: $district, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, humidity: $humidity, baseTime: $baseTime)';
+    return 'Weather(district: $district, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, huminity: $huminity, baseTime: $baseTime)';
   }
 
   @override
@@ -217,8 +223,8 @@ class _$WeatherImpl implements _Weather {
                 other.precipitationProbability == precipitationProbability) &&
             (identical(other.precipitation, precipitation) ||
                 other.precipitation == precipitation) &&
-            (identical(other.humidity, humidity) ||
-                other.humidity == humidity) &&
+            (identical(other.huminity, huminity) ||
+                other.huminity == huminity) &&
             (identical(other.baseTime, baseTime) ||
                 other.baseTime == baseTime));
   }
@@ -226,7 +232,7 @@ class _$WeatherImpl implements _Weather {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, district, temperature,
-      precipitationProbability, precipitation, humidity, baseTime);
+      precipitationProbability, precipitation, huminity, baseTime);
 
   @JsonKey(ignore: true)
   @override
@@ -244,25 +250,25 @@ class _$WeatherImpl implements _Weather {
 
 abstract class _Weather implements Weather {
   const factory _Weather(
-      {required final District district,
-      required final double temperature,
-      required final int precipitationProbability,
-      required final double precipitation,
-      required final double humidity,
-      required final String baseTime}) = _$WeatherImpl;
+      {final District district,
+      final String temperature,
+      final String precipitationProbability,
+      final String precipitation,
+      final String huminity,
+      final String baseTime}) = _$WeatherImpl;
 
   factory _Weather.fromJson(Map<String, dynamic> json) = _$WeatherImpl.fromJson;
 
   @override
   District get district;
   @override
-  double get temperature;
+  String get temperature;
   @override
-  int get precipitationProbability;
+  String get precipitationProbability;
   @override
-  double get precipitation;
+  String get precipitation;
   @override
-  double get humidity;
+  String get huminity;
   @override
   String get baseTime;
   @override

@@ -121,18 +121,21 @@ class __$$DistrictImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DistrictImpl implements _District {
   const _$DistrictImpl(
-      {required this.administrativeArea,
-      required this.subLocality,
-      required this.thoroughfare});
+      {this.administrativeArea = '',
+      this.subLocality = '',
+      this.thoroughfare = ''});
 
   factory _$DistrictImpl.fromJson(Map<String, dynamic> json) =>
       _$$DistrictImplFromJson(json);
 
   @override
+  @JsonKey()
   final String administrativeArea;
   @override
+  @JsonKey()
   final String subLocality;
   @override
+  @JsonKey()
   final String thoroughfare;
 
   @override
@@ -174,9 +177,9 @@ class _$DistrictImpl implements _District {
 
 abstract class _District implements District {
   const factory _District(
-      {required final String administrativeArea,
-      required final String subLocality,
-      required final String thoroughfare}) = _$DistrictImpl;
+      {final String administrativeArea,
+      final String subLocality,
+      final String thoroughfare}) = _$DistrictImpl;
 
   factory _District.fromJson(Map<String, dynamic> json) =
       _$DistrictImpl.fromJson;

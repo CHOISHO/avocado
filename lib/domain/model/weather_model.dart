@@ -8,12 +8,12 @@ part 'weather_model.g.dart';
 @freezed
 class Weather with _$Weather {
   const factory Weather({
-    required District district,
-    required double temperature,
-    required int precipitationProbability,
-    required double precipitation,
-    required double humidity,
-    required String baseTime,
+    @Default(District()) District district,
+    @Default('') String temperature,
+    @Default('') String precipitationProbability,
+    @Default('') String precipitation,
+    @Default('') String huminity,
+    @Default('') String baseTime,
   }) = _Weather;
 
   factory Weather.fromJson(Map<String, dynamic> json) => _$WeatherFromJson(json);

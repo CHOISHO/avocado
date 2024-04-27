@@ -44,8 +44,6 @@ abstract class $WeatherCopyWith<$Res> {
       double precipitation,
       double humidity,
       String baseTime});
-
-  $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -61,7 +59,7 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = null,
+    Object? address = freezed,
     Object? temperature = null,
     Object? precipitationProbability = null,
     Object? precipitation = null,
@@ -69,7 +67,7 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
     Object? baseTime = null,
   }) {
     return _then(_value.copyWith(
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
@@ -95,14 +93,6 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
               as String,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AddressCopyWith<$Res> get address {
-    return $AddressCopyWith<$Res>(_value.address, (value) {
-      return _then(_value.copyWith(address: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -119,9 +109,6 @@ abstract class _$$WeatherImplCopyWith<$Res> implements $WeatherCopyWith<$Res> {
       double precipitation,
       double humidity,
       String baseTime});
-
-  @override
-  $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -135,7 +122,7 @@ class __$$WeatherImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = null,
+    Object? address = freezed,
     Object? temperature = null,
     Object? precipitationProbability = null,
     Object? precipitation = null,
@@ -143,7 +130,7 @@ class __$$WeatherImplCopyWithImpl<$Res>
     Object? baseTime = null,
   }) {
     return _then(_$WeatherImpl(
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
@@ -208,7 +195,7 @@ class _$WeatherImpl implements _Weather {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WeatherImpl &&
-            (identical(other.address, address) || other.address == address) &&
+            const DeepCollectionEquality().equals(other.address, address) &&
             (identical(other.temperature, temperature) ||
                 other.temperature == temperature) &&
             (identical(
@@ -224,8 +211,14 @@ class _$WeatherImpl implements _Weather {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, address, temperature,
-      precipitationProbability, precipitation, humidity, baseTime);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(address),
+      temperature,
+      precipitationProbability,
+      precipitation,
+      humidity,
+      baseTime);
 
   @JsonKey(ignore: true)
   @override

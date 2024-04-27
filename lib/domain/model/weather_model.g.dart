@@ -8,7 +8,7 @@ part of 'weather_model.dart';
 
 _$WeatherImpl _$$WeatherImplFromJson(Map<String, dynamic> json) =>
     _$WeatherImpl(
-      address: Address.fromJson(json['address'] as Map<String, dynamic>),
+      district: District.fromJson(json['district'] as Map<String, dynamic>),
       temperature: (json['temperature'] as num).toDouble(),
       precipitationProbability: json['precipitationProbability'] as int,
       precipitation: (json['precipitation'] as num).toDouble(),
@@ -18,7 +18,7 @@ _$WeatherImpl _$$WeatherImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$WeatherImplToJson(_$WeatherImpl instance) =>
     <String, dynamic>{
-      'address': instance.address,
+      'district': instance.district,
       'temperature': instance.temperature,
       'precipitationProbability': instance.precipitationProbability,
       'precipitation': instance.precipitation,

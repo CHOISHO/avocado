@@ -20,7 +20,7 @@ Weather _$WeatherFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Weather {
-  Address get address => throw _privateConstructorUsedError;
+  District get district => throw _privateConstructorUsedError;
   double get temperature => throw _privateConstructorUsedError;
   int get precipitationProbability => throw _privateConstructorUsedError;
   double get precipitation => throw _privateConstructorUsedError;
@@ -38,14 +38,14 @@ abstract class $WeatherCopyWith<$Res> {
       _$WeatherCopyWithImpl<$Res, Weather>;
   @useResult
   $Res call(
-      {Address address,
+      {District district,
       double temperature,
       int precipitationProbability,
       double precipitation,
       double humidity,
       String baseTime});
 
-  $AddressCopyWith<$Res> get address;
+  $DistrictCopyWith<$Res> get district;
 }
 
 /// @nodoc
@@ -61,7 +61,7 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = null,
+    Object? district = null,
     Object? temperature = null,
     Object? precipitationProbability = null,
     Object? precipitation = null,
@@ -69,10 +69,10 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
     Object? baseTime = null,
   }) {
     return _then(_value.copyWith(
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as Address,
+      district: null == district
+          ? _value.district
+          : district // ignore: cast_nullable_to_non_nullable
+              as District,
       temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
@@ -98,9 +98,9 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
 
   @override
   @pragma('vm:prefer-inline')
-  $AddressCopyWith<$Res> get address {
-    return $AddressCopyWith<$Res>(_value.address, (value) {
-      return _then(_value.copyWith(address: value) as $Val);
+  $DistrictCopyWith<$Res> get district {
+    return $DistrictCopyWith<$Res>(_value.district, (value) {
+      return _then(_value.copyWith(district: value) as $Val);
     });
   }
 }
@@ -113,7 +113,7 @@ abstract class _$$WeatherImplCopyWith<$Res> implements $WeatherCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {Address address,
+      {District district,
       double temperature,
       int precipitationProbability,
       double precipitation,
@@ -121,7 +121,7 @@ abstract class _$$WeatherImplCopyWith<$Res> implements $WeatherCopyWith<$Res> {
       String baseTime});
 
   @override
-  $AddressCopyWith<$Res> get address;
+  $DistrictCopyWith<$Res> get district;
 }
 
 /// @nodoc
@@ -135,7 +135,7 @@ class __$$WeatherImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = null,
+    Object? district = null,
     Object? temperature = null,
     Object? precipitationProbability = null,
     Object? precipitation = null,
@@ -143,10 +143,10 @@ class __$$WeatherImplCopyWithImpl<$Res>
     Object? baseTime = null,
   }) {
     return _then(_$WeatherImpl(
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as Address,
+      district: null == district
+          ? _value.district
+          : district // ignore: cast_nullable_to_non_nullable
+              as District,
       temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
@@ -175,7 +175,7 @@ class __$$WeatherImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$WeatherImpl implements _Weather {
   const _$WeatherImpl(
-      {required this.address,
+      {required this.district,
       required this.temperature,
       required this.precipitationProbability,
       required this.precipitation,
@@ -186,7 +186,7 @@ class _$WeatherImpl implements _Weather {
       _$$WeatherImplFromJson(json);
 
   @override
-  final Address address;
+  final District district;
   @override
   final double temperature;
   @override
@@ -200,7 +200,7 @@ class _$WeatherImpl implements _Weather {
 
   @override
   String toString() {
-    return 'Weather(address: $address, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, humidity: $humidity, baseTime: $baseTime)';
+    return 'Weather(district: $district, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, humidity: $humidity, baseTime: $baseTime)';
   }
 
   @override
@@ -208,7 +208,8 @@ class _$WeatherImpl implements _Weather {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WeatherImpl &&
-            (identical(other.address, address) || other.address == address) &&
+            (identical(other.district, district) ||
+                other.district == district) &&
             (identical(other.temperature, temperature) ||
                 other.temperature == temperature) &&
             (identical(
@@ -224,7 +225,7 @@ class _$WeatherImpl implements _Weather {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, address, temperature,
+  int get hashCode => Object.hash(runtimeType, district, temperature,
       precipitationProbability, precipitation, humidity, baseTime);
 
   @JsonKey(ignore: true)
@@ -243,7 +244,7 @@ class _$WeatherImpl implements _Weather {
 
 abstract class _Weather implements Weather {
   const factory _Weather(
-      {required final Address address,
+      {required final District district,
       required final double temperature,
       required final int precipitationProbability,
       required final double precipitation,
@@ -253,7 +254,7 @@ abstract class _Weather implements Weather {
   factory _Weather.fromJson(Map<String, dynamic> json) = _$WeatherImpl.fromJson;
 
   @override
-  Address get address;
+  District get district;
   @override
   double get temperature;
   @override

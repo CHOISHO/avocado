@@ -3,21 +3,21 @@ import 'dart:math';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
-import 'package:avocado/domain/model/Address_model.dart';
+import 'package:avocado/domain/model/district_model.dart';
 
 class Location {
   int latitude;
   int longitude;
   int x;
   int y;
-  Address address;
+  District district;
 
   Location({
     required this.latitude,
     required this.longitude,
     required this.x,
     required this.y,
-    required this.address,
+    required this.district,
   });
 }
 
@@ -93,10 +93,10 @@ class LocationUtil {
 
     List<Placemark> placemark = await placemarkFromCoordinates(position.latitude, position.longitude);
 
-    Address address = Address(
-      city: placemark[0].administrativeArea ?? '',
-      district: placemark[0].subLocality ?? '',
-      street: placemark[0].thoroughfare ?? '',
+    District district = District(
+      administrativeArea: placemark[0].administrativeArea ?? '',
+      subLocality: placemark[0].subLocality ?? '',
+      thoroughfare: placemark[0].thoroughfare ?? '',
     );
 
     return Location(
@@ -104,7 +104,7 @@ class LocationUtil {
       longitude: position.longitude.toInt(),
       x: gridPosition.x,
       y: gridPosition.y,
-      address: address,
+      district: district,
     );
   }
 

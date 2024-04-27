@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xml2json/xml2json.dart';
 
+import 'package:avocado/domain/model/district_model.dart';
 import 'package:avocado/domain/model/weather_model.dart';
 import 'package:avocado/utils/date.dart';
 import 'package:avocado/utils/location.dart';
@@ -43,7 +44,13 @@ class WeatherRepository extends _$WeatherRepository {
     var response = await http.get(url);
 
     transformer.parse(response.body);
-    return transformer.toParker();
+    return Weather(
+        district: District(administrativeArea: 'city', subLocality: 'district', thoroughfare: 'street'),
+        temperature: 0,
+        precipitationProbability: 0,
+        precipitation: 0,
+        humidity: 0,
+        baseTime: '0600');
   }
 
   Future getUltraShortTermForecast() async {

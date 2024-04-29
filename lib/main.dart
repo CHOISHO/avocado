@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/feature/view/home_view.dart';
 import 'package:avocado/routes.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         fontFamily: 'Pretendard',
+        textTheme: textTheme,
       ),
       routes: routes,
       home: const HomeView(),

@@ -20,6 +20,7 @@ final transformer = Xml2Json();
 class WeatherRepository extends _$WeatherRepository {
   @override
   Future<Weather?> build() async {
+    //TODO: WeatherRepository 가 state 를 필요로 하는지 정리
     return await getUltraShortTermLive();
   }
 
@@ -47,9 +48,9 @@ class WeatherRepository extends _$WeatherRepository {
 
     var response = await http.get(url);
 
-    getUltraShortTermLiveMapper(jsonDecode(response.body));
+    Weather weather = getUltraShortTermLiveMapper(jsonDecode(response.body));
 
-    return Weather();
+    return weather;
   }
 
   Future getUltraShortTermForecast() async {

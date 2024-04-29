@@ -1,34 +1,24 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:logger/logger.dart';
 
 import 'package:avocado/domain/model/weather_model.dart';
 
 part 'ultra_short_term_live_mapper.freezed.dart';
 part 'ultra_short_term_live_mapper.g.dart';
 
-void getUltraShortTermLiveMapper(Map<String, dynamic> data) {
+Weather getUltraShortTermLiveMapper(Map<String, dynamic> data) {
   List items = data['response']['body']['items']['item'];
-
-  Item _item = Item();
 
   Map<String, dynamic> temp = {};
 
   for (var item in items) {
-    Logger().i(item);
     String category = item['category'];
     String parsedCategory = _category[category]!;
     String value = item['obsrValue'];
 
-    Logger().i(category);
-    Logger().i(value);
     temp[parsedCategory] = value;
   }
 
-  Logger().i(temp);
-
-  Weather weather = Weather.fromJson(temp);
-
-  Logger().i(weather);
+  return Weather.fromJson(temp);
 }
 
 Map<String, String> _category = {

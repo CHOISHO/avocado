@@ -3,15 +3,33 @@
 part of 'home_view_model.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$HomeViewModelStateImpl _$$HomeViewModelStateImplFromJson(
+        Map<String, dynamic> json) =>
+    _$HomeViewModelStateImpl(
+      weather: json['weather'] == null
+          ? const Weather()
+          : Weather.fromJson(json['weather'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$HomeViewModelStateImplToJson(
+        _$HomeViewModelStateImpl instance) =>
+    <String, dynamic>{
+      'weather': instance.weather,
+    };
+
+// **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homeViewModelHash() => r'443ccc6c27836706062989d6737c15e6e845badb';
+String _$homeViewModelHash() => r'225501df4f4199e6fd30aea20933968c8e210e1f';
 
 /// See also [HomeViewModel].
 @ProviderFor(HomeViewModel)
-final homeViewModelProvider =
-    AutoDisposeNotifierProvider<HomeViewModel, Object?>.internal(
+final homeViewModelProvider = AutoDisposeAsyncNotifierProvider<HomeViewModel,
+    HomeViewModelState>.internal(
   HomeViewModel.new,
   name: r'homeViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +39,6 @@ final homeViewModelProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$HomeViewModel = AutoDisposeNotifier<Object?>;
+typedef _$HomeViewModel = AutoDisposeAsyncNotifier<HomeViewModelState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

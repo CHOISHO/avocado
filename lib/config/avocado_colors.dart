@@ -22,4 +22,6 @@ class AvocadoColors {
   static Color grey03 = hexToColor('#878D94');
   static Color grey04 = hexToColor('#9EA5AA');
   static Color grey05 = hexToColor('#F1F5F8');
+
+  static Color white = hexToColor('#FFFFFF');
 }

@@ -2,12 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xml2json/xml2json.dart';
 
 import 'package:avocado/domain/mapper/ultra_short_term_live_mapper.dart';
-import 'package:avocado/domain/model/district_model.dart';
 import 'package:avocado/domain/model/weather_model.dart';
 import 'package:avocado/utils/date.dart';
 import 'package:avocado/utils/location.dart';
@@ -18,6 +16,9 @@ final transformer = Xml2Json();
 
 @riverpod
 class WeatherRepository extends _$WeatherRepository {
+  final String _url = 'apis.data.go.kr';
+  final String _versoin = '/1360000/VilageFcstInfoService_2.0';
+
   @override
   Future<Weather?> build() async {
     //TODO: WeatherRepository 가 state 를 필요로 하는지 정리
@@ -32,8 +33,8 @@ class WeatherRepository extends _$WeatherRepository {
     }
 
     Uri url = Uri.http(
-      'apis.data.go.kr',
-      '/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst',
+      _url,
+      '$_versoin/getUltraSrtNcst',
       {
         'serviceKey': dotenv.env['API_SERVICE_KEY'],
         'pageNo': '1',
@@ -50,7 +51,7 @@ class WeatherRepository extends _$WeatherRepository {
 
     Weather weather = getUltraShortTermLiveMapper(jsonDecode(response.body));
 
-    return weather;
+    return weather.copyWith(district: location.district);
   }
 
   Future getUltraShortTermForecast() async {
@@ -60,8 +61,8 @@ class WeatherRepository extends _$WeatherRepository {
     }
 
     Uri url = Uri.http(
-      'apis.data.go.kr',
-      '/1360000/VilageFcstInfoService_2.0/getUltraSrtFScst',
+      _url,
+      '$_versoin/getUltraSrtFScst',
       {
         'serviceKey': dotenv.env['API_SERVICE_KEY'],
         'pageNo': '1',

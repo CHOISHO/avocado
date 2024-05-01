@@ -22,7 +22,7 @@ class HomeViewModel extends _$HomeViewModel {
   @override
   Future<HomeViewModelState> build() async {
     Weather? ultraShortTermLive = await ref.watch(weatherRepositoryProvider.notifier).getUltraShortTermLive();
-    Logger().i(ultraShortTermLive);
+
     return Future.value(
       HomeViewModelState(
         weather: ultraShortTermLive ?? const Weather(),

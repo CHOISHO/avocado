@@ -5,6 +5,7 @@ import 'package:avocado/config/avocado_colors.dart';
 Widget shadowCard(Widget child) {
   return Container(
     margin: const EdgeInsets.all(16),
+    padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
     decoration: BoxDecoration(
       color: Colors.white,
       shape: BoxShape.rectangle,

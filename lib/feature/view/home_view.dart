@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
+import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/domain/model/weather_model.dart';
 import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/feature/widget/shadow_card.dart';
@@ -69,29 +70,40 @@ class WeatherCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ElevatedButton(
                 style: ButtonStyle(
+                  padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
                   backgroundColor: MaterialStatePropertyAll(AvocadoColors.main),
                 ),
                 onPressed: () {},
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       '${value.district.administrativeArea}, ${value.district.subLocality} ${value.district.thoroughfare}',
-                      style: TextStyle(color: AvocadoColors.white),
+                      style: context.themeLabel.copyWith(color: AvocadoColors.white),
                     ),
-                    SvgPicture.asset(
-                      'assets/icons/arrow_right.svg',
-                      key: const Key('arrow_right_icon'),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: SvgPicture.asset(
+                        'assets/icons/arrow_right.svg',
+                        height: 13,
+                        key: const Key('arrow_right_icon'),
+                      ),
                     )
                   ],
                 ),
               ),
-              Text(value.precipitation),
-              Text('오늘은 튼튼한 우산을 챙기세요 :D'),
+              Text(
+                value.precipitation,
+                style: context.themeTitle1.copyWith(fontWeight: FontWeight.w600),
+              ),
+              Text(
+                '오늘은 튼튼한 우산을 챙기세요 :D',
+                style: context.themeBody2,
+              ),
             ],
           ),
           SvgPicture.asset(

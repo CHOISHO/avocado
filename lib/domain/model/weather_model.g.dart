@@ -15,6 +15,7 @@ _$WeatherImpl _$$WeatherImplFromJson(Map<String, dynamic> json) =>
       precipitationProbability:
           json['precipitationProbability'] as String? ?? '',
       precipitation: json['precipitation'] as String? ?? '',
+      sky: json['sky'] as String? ?? '',
       huminity: json['huminity'] as String? ?? '',
       baseTime: json['baseTime'] as String? ?? '',
     );
@@ -25,6 +26,7 @@ Map<String, dynamic> _$$WeatherImplToJson(_$WeatherImpl instance) =>
       'temperature': instance.temperature,
       'precipitationProbability': instance.precipitationProbability,
       'precipitation': instance.precipitation,
+      'sky': instance.sky,
       'huminity': instance.huminity,
       'baseTime': instance.baseTime,
     };

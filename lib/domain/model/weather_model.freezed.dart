@@ -24,6 +24,7 @@ mixin _$Weather {
   String get temperature => throw _privateConstructorUsedError;
   String get precipitationProbability => throw _privateConstructorUsedError;
   String get precipitation => throw _privateConstructorUsedError;
+  String get sky => throw _privateConstructorUsedError;
   String get huminity => throw _privateConstructorUsedError;
   String get baseTime => throw _privateConstructorUsedError;
 
@@ -42,6 +43,7 @@ abstract class $WeatherCopyWith<$Res> {
       String temperature,
       String precipitationProbability,
       String precipitation,
+      String sky,
       String huminity,
       String baseTime});
 
@@ -65,6 +67,7 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
     Object? temperature = null,
     Object? precipitationProbability = null,
     Object? precipitation = null,
+    Object? sky = null,
     Object? huminity = null,
     Object? baseTime = null,
   }) {
@@ -84,6 +87,10 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
       precipitation: null == precipitation
           ? _value.precipitation
           : precipitation // ignore: cast_nullable_to_non_nullable
+              as String,
+      sky: null == sky
+          ? _value.sky
+          : sky // ignore: cast_nullable_to_non_nullable
               as String,
       huminity: null == huminity
           ? _value.huminity
@@ -117,6 +124,7 @@ abstract class _$$WeatherImplCopyWith<$Res> implements $WeatherCopyWith<$Res> {
       String temperature,
       String precipitationProbability,
       String precipitation,
+      String sky,
       String huminity,
       String baseTime});
 
@@ -139,6 +147,7 @@ class __$$WeatherImplCopyWithImpl<$Res>
     Object? temperature = null,
     Object? precipitationProbability = null,
     Object? precipitation = null,
+    Object? sky = null,
     Object? huminity = null,
     Object? baseTime = null,
   }) {
@@ -158,6 +167,10 @@ class __$$WeatherImplCopyWithImpl<$Res>
       precipitation: null == precipitation
           ? _value.precipitation
           : precipitation // ignore: cast_nullable_to_non_nullable
+              as String,
+      sky: null == sky
+          ? _value.sky
+          : sky // ignore: cast_nullable_to_non_nullable
               as String,
       huminity: null == huminity
           ? _value.huminity
@@ -179,6 +192,7 @@ class _$WeatherImpl implements _Weather {
       this.temperature = '',
       this.precipitationProbability = '',
       this.precipitation = '',
+      this.sky = '',
       this.huminity = '',
       this.baseTime = ''});
 
@@ -199,6 +213,9 @@ class _$WeatherImpl implements _Weather {
   final String precipitation;
   @override
   @JsonKey()
+  final String sky;
+  @override
+  @JsonKey()
   final String huminity;
   @override
   @JsonKey()
@@ -206,7 +223,7 @@ class _$WeatherImpl implements _Weather {
 
   @override
   String toString() {
-    return 'Weather(district: $district, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, huminity: $huminity, baseTime: $baseTime)';
+    return 'Weather(district: $district, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, sky: $sky, huminity: $huminity, baseTime: $baseTime)';
   }
 
   @override
@@ -223,6 +240,7 @@ class _$WeatherImpl implements _Weather {
                 other.precipitationProbability == precipitationProbability) &&
             (identical(other.precipitation, precipitation) ||
                 other.precipitation == precipitation) &&
+            (identical(other.sky, sky) || other.sky == sky) &&
             (identical(other.huminity, huminity) ||
                 other.huminity == huminity) &&
             (identical(other.baseTime, baseTime) ||
@@ -232,7 +250,7 @@ class _$WeatherImpl implements _Weather {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, district, temperature,
-      precipitationProbability, precipitation, huminity, baseTime);
+      precipitationProbability, precipitation, sky, huminity, baseTime);
 
   @JsonKey(ignore: true)
   @override
@@ -254,6 +272,7 @@ abstract class _Weather implements Weather {
       final String temperature,
       final String precipitationProbability,
       final String precipitation,
+      final String sky,
       final String huminity,
       final String baseTime}) = _$WeatherImpl;
 
@@ -267,6 +286,8 @@ abstract class _Weather implements Weather {
   String get precipitationProbability;
   @override
   String get precipitation;
+  @override
+  String get sky;
   @override
   String get huminity;
   @override

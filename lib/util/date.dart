@@ -7,8 +7,27 @@ class DateUtil {
     return '$year$month$day';
   }
 
+  static String getUltraShortTermLiveBaseTime(DateTime date) {
+    return '';
+  }
+
+  static String getUltraShortTermForecastBaseTime(DateTime date) {
+    int hour = date.hour;
+    int minute = date.minute;
+
+    String ultraShortTermForecastBaseTime;
+
+    if (minute < 30) {
+      ultraShortTermForecastBaseTime = '${(hour - 1)}00';
+    } else {
+      ultraShortTermForecastBaseTime = '${hour}00';
+    }
+
+    return ultraShortTermForecastBaseTime;
+  }
+
   static String getShortTermForecastBaseTime(DateTime date) {
-    var hour = date.hour;
+    int hour = date.hour;
 
     int minute = date.minute;
 

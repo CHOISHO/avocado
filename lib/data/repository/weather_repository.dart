@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
@@ -11,8 +9,8 @@ import 'package:xml2json/xml2json.dart';
 
 import 'package:avocado/domain/mapper/ultra_short_term_live_mapper.dart';
 import 'package:avocado/domain/model/weather_model.dart';
-import 'package:avocado/utils/date.dart';
-import 'package:avocado/utils/location.dart';
+import 'package:avocado/util/date.dart';
+import 'package:avocado/util/location.dart';
 
 part 'weather_repository.g.dart'; // 자동 생성될 파일
 
@@ -44,8 +42,8 @@ class WeatherRepository extends _$WeatherRepository {
         'pageNo': '1',
         'numOfRows': '1000',
         'dataType': 'JSON',
-        'base_date': DateUtil.getYYYYMMDDToday(),
-        'base_time': '0600',
+        'base_date': DateUtil.getYYYYMMDD(DateTime.now()),
+        'base_time': DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
         'nx': location.x.toString(),
         'ny': location.y.toString(),
       },
@@ -72,8 +70,8 @@ class WeatherRepository extends _$WeatherRepository {
         'pageNo': '1',
         'numOfRows': '1000',
         'dataType': 'JSON',
-        'base_date': DateUtil.getYYYYMMDDToday(),
-        'base_time': '0530',
+        'base_date': DateUtil.getYYYYMMDD(DateTime.now()),
+        'base_time': DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
         'nx': location.x.toString(),
         'ny': location.y.toString(),
       },
@@ -104,10 +102,10 @@ class WeatherRepository extends _$WeatherRepository {
       {
         'serviceKey': dotenv.env['API_SERVICE_KEY'],
         'pageNo': '1',
-        'numOfRows': '2',
+        'numOfRows': '30',
         'dataType': 'JSON',
-        'base_date': DateUtil.getYYYYMMDDToday(),
-        'base_time': DateUtil.getBaseTime(),
+        'base_date': DateUtil.getShortTermForecastBaseDate(DateTime.now()),
+        'base_time': DateUtil.getShortTermForecastBaseTime(DateTime.now()),
         'nx': location.x.toString(),
         'ny': location.y.toString(),
       },
@@ -115,11 +113,9 @@ class WeatherRepository extends _$WeatherRepository {
 
     try {
       var response = await http.get(url);
+      Weather weather = getUltraShortTermForecastMapper(jsonDecode(response.body));
 
-      Logger().i(jsonDecode(response.body));
-      // Weather weather = getUltraShortTermForecastMapper(jsonDecode(response.body));
-
-      // return weather.copyWith(district: location.district);
+      return weather.copyWith(district: location.district);
     } catch (e) {
       Logger().e(e);
       return null;

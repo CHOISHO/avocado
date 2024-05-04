@@ -37,19 +37,32 @@ Weather getUltraShortTermLiveMapper(Map<String, dynamic> data) {
 Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
   List items = data['response']['body']['items']['item'];
 
+  Map<String, List> parsedItems = {};
+
+  for (var item in items) {
+    if (parsedItems[item['fcstTime']] == null) {
+      parsedItems[item['fcstTime']] = [item];
+    } else {
+      parsedItems[item['fcstTime']]!.add(item);
+    }
+  }
+
+  // TODO: 초단기예보 아이템 모델 정의
+  var filtered = parsedItems[parsedItems.keys.toList()[0]];
+
+  Logger().i(filtered);
+
   Map<String, dynamic> temp = {};
 
-  Logger().i(items);
   try {
-    for (var item in items) {
+    for (var item in filtered!) {
       String? category = item['category'];
-      Logger().i(category);
 
       if (category != null) {
         String? parsedCategory = _category[category];
 
         if (parsedCategory != null) {
-          String? value = item['obsrValue'] ?? '';
+          String? value = item['fcstValue'] ?? '';
           temp[parsedCategory] = value;
         } else {
           continue;
@@ -67,13 +80,15 @@ Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
 }
 
 Map<String, String> _category = {
-  'PTY': 'precipitationType',
-  'REH': 'huminity',
-  'RN1': 'precipitationPerHour',
   'T1H': 'temperature',
+  'RN1': 'precipitationPerHour',
+  'SKY': 'sky',
   'UUU': 'windSpeedToEastWest',
-  'VEC': 'windDirection',
   'VVV': 'windSpeedToSouthNorth',
+  'REH': 'huminity',
+  'PTY': 'precipitationType',
+  'LGT': 'lightning',
+  'VEC': 'windDirection',
   'WSD': 'windSpeed',
 };
 

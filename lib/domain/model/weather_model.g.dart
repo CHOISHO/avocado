@@ -17,7 +17,8 @@ _$WeatherImpl _$$WeatherImplFromJson(Map<String, dynamic> json) =>
       precipitation: json['precipitation'] as String? ?? '',
       sky: json['sky'] as String? ?? '',
       huminity: json['huminity'] as String? ?? '',
-      baseTime: json['baseTime'] as String? ?? '',
+      type: $enumDecodeNullable(_$WeatherTypeEnumMap, json['type']) ??
+          WeatherType.initial,
     );
 
 Map<String, dynamic> _$$WeatherImplToJson(_$WeatherImpl instance) =>
@@ -28,5 +29,17 @@ Map<String, dynamic> _$$WeatherImplToJson(_$WeatherImpl instance) =>
       'precipitation': instance.precipitation,
       'sky': instance.sky,
       'huminity': instance.huminity,
-      'baseTime': instance.baseTime,
+      'type': _$WeatherTypeEnumMap[instance.type]!,
     };
+
+const _$WeatherTypeEnumMap = {
+  WeatherType.initial: 'initial',
+  WeatherType.rainningDrizzle: 'rainningDrizzle',
+  WeatherType.rainningNormal: 'rainningNormal',
+  WeatherType.rainningHeavily: 'rainningHeavily',
+  WeatherType.rainningDownpour: 'rainningDownpour',
+  WeatherType.cloudyPartly: 'cloudyPartly',
+  WeatherType.cloudyNormal: 'cloudyNormal',
+  WeatherType.sunny: 'sunny',
+  WeatherType.snowing: 'snowing',
+};

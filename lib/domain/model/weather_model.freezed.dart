@@ -26,7 +26,7 @@ mixin _$Weather {
   String get precipitation => throw _privateConstructorUsedError;
   String get sky => throw _privateConstructorUsedError;
   String get huminity => throw _privateConstructorUsedError;
-  String get baseTime => throw _privateConstructorUsedError;
+  WeatherType get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +45,7 @@ abstract class $WeatherCopyWith<$Res> {
       String precipitation,
       String sky,
       String huminity,
-      String baseTime});
+      WeatherType type});
 
   $DistrictCopyWith<$Res> get district;
 }
@@ -69,7 +69,7 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
     Object? precipitation = null,
     Object? sky = null,
     Object? huminity = null,
-    Object? baseTime = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       district: null == district
@@ -96,10 +96,10 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
           ? _value.huminity
           : huminity // ignore: cast_nullable_to_non_nullable
               as String,
-      baseTime: null == baseTime
-          ? _value.baseTime
-          : baseTime // ignore: cast_nullable_to_non_nullable
-              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as WeatherType,
     ) as $Val);
   }
 
@@ -126,7 +126,7 @@ abstract class _$$WeatherImplCopyWith<$Res> implements $WeatherCopyWith<$Res> {
       String precipitation,
       String sky,
       String huminity,
-      String baseTime});
+      WeatherType type});
 
   @override
   $DistrictCopyWith<$Res> get district;
@@ -149,7 +149,7 @@ class __$$WeatherImplCopyWithImpl<$Res>
     Object? precipitation = null,
     Object? sky = null,
     Object? huminity = null,
-    Object? baseTime = null,
+    Object? type = null,
   }) {
     return _then(_$WeatherImpl(
       district: null == district
@@ -176,10 +176,10 @@ class __$$WeatherImplCopyWithImpl<$Res>
           ? _value.huminity
           : huminity // ignore: cast_nullable_to_non_nullable
               as String,
-      baseTime: null == baseTime
-          ? _value.baseTime
-          : baseTime // ignore: cast_nullable_to_non_nullable
-              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as WeatherType,
     ));
   }
 }
@@ -194,7 +194,7 @@ class _$WeatherImpl implements _Weather {
       this.precipitation = '',
       this.sky = '',
       this.huminity = '',
-      this.baseTime = ''});
+      this.type = WeatherType.initial});
 
   factory _$WeatherImpl.fromJson(Map<String, dynamic> json) =>
       _$$WeatherImplFromJson(json);
@@ -219,11 +219,11 @@ class _$WeatherImpl implements _Weather {
   final String huminity;
   @override
   @JsonKey()
-  final String baseTime;
+  final WeatherType type;
 
   @override
   String toString() {
-    return 'Weather(district: $district, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, sky: $sky, huminity: $huminity, baseTime: $baseTime)';
+    return 'Weather(district: $district, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, sky: $sky, huminity: $huminity, type: $type)';
   }
 
   @override
@@ -243,14 +243,13 @@ class _$WeatherImpl implements _Weather {
             (identical(other.sky, sky) || other.sky == sky) &&
             (identical(other.huminity, huminity) ||
                 other.huminity == huminity) &&
-            (identical(other.baseTime, baseTime) ||
-                other.baseTime == baseTime));
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, district, temperature,
-      precipitationProbability, precipitation, sky, huminity, baseTime);
+      precipitationProbability, precipitation, sky, huminity, type);
 
   @JsonKey(ignore: true)
   @override
@@ -274,7 +273,7 @@ abstract class _Weather implements Weather {
       final String precipitation,
       final String sky,
       final String huminity,
-      final String baseTime}) = _$WeatherImpl;
+      final WeatherType type}) = _$WeatherImpl;
 
   factory _Weather.fromJson(Map<String, dynamic> json) = _$WeatherImpl.fromJson;
 
@@ -291,7 +290,7 @@ abstract class _Weather implements Weather {
   @override
   String get huminity;
   @override
-  String get baseTime;
+  WeatherType get type;
   @override
   @JsonKey(ignore: true)
   _$$WeatherImplCopyWith<_$WeatherImpl> get copyWith =>

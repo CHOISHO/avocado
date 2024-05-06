@@ -11,6 +11,14 @@ class DateUtil {
     return '';
   }
 
+  static String getUltraShortTermForecastBaseDate(DateTime date) {
+    if (date.hour == 0 && date.minute < 30) {
+      return getYYYYMMDD(date.subtract(const Duration(days: 1)));
+    } else {
+      return getYYYYMMDD(date);
+    }
+  }
+
   static String getUltraShortTermForecastBaseTime(DateTime date) {
     int hour = date.hour;
     int minute = date.minute;

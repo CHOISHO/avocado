@@ -46,8 +46,6 @@ WeatherType getWeatherType(Map<String, String> data) {
 
     WeatherType weatherType = WeatherType.sunny;
 
-    Logger().d(precipitationPerHour);
-
     switch (precipitationType) {
       case '0':
         switch (sky) {

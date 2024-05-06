@@ -7,7 +7,7 @@ import 'package:logger/web.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xml2json/xml2json.dart';
 
-import 'package:avocado/domain/mapper/ultra_short_term_live_mapper.dart';
+import 'package:avocado/domain/mapper/weather_data_mapper.dart';
 import 'package:avocado/domain/model/weather_model.dart';
 import 'package:avocado/util/date.dart';
 import 'package:avocado/util/location.dart';
@@ -23,7 +23,7 @@ class WeatherRepository extends _$WeatherRepository {
 
   @override
   Future<Weather?> build() async {
-    //TODO: WeatherRepository 가 state 를 필요로 하는지 정리
+    //TODO - WeatherRepository 가 state 를 필요로 하는지 정리
     // return await getUltraShortTermLive();
   }
 
@@ -70,7 +70,7 @@ class WeatherRepository extends _$WeatherRepository {
         'pageNo': '1',
         'numOfRows': '1000',
         'dataType': 'JSON',
-        'base_date': DateUtil.getYYYYMMDD(DateTime.now()),
+        'base_date': DateUtil.getUltraShortTermForecastBaseDate(DateTime.now()), // TODO - 00시 00분 예보 API 준비 안 됐을때 처리
         'base_time': DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
         'nx': location.x.toString(),
         'ny': location.y.toString(),
@@ -80,7 +80,6 @@ class WeatherRepository extends _$WeatherRepository {
     try {
       var response = await http.get(url);
 
-      // TODO: API 별 Mapper 필요 체크
       Weather weather = getUltraShortTermForecastMapper(jsonDecode(response.body));
 
       return weather.copyWith(district: location.district);

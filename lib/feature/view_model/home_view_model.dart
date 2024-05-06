@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/data/repository/weather_repository.dart';
@@ -21,13 +20,11 @@ class HomeViewModelState with _$HomeViewModelState {
 class HomeViewModel extends _$HomeViewModel {
   @override
   Future<HomeViewModelState> build() async {
-    // TODO: weather 적정 API 확인 및 파싱
-    Weather? ultraShortTermForecast = await ref.watch(weatherRepositoryProvider.notifier).getShortTermForecast();
-    // Weather? ultraShortTermForecast = await ref.watch(weatherRepositoryProvider.notifier).getUltraShortTermForecast();
+    Weather? weather = await ref.watch(weatherRepositoryProvider.notifier).getUltraShortTermForecast();
 
     return Future.value(
       HomeViewModelState(
-        weather: ultraShortTermForecast ?? const Weather(),
+        weather: weather ?? const Weather(),
       ),
     );
   }

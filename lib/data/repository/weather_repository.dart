@@ -9,6 +9,7 @@ import 'package:xml2json/xml2json.dart';
 
 import 'package:avocado/domain/mapper/weather_data_mapper.dart';
 import 'package:avocado/domain/model/weather_model.dart';
+import 'package:avocado/util/api.dart';
 import 'package:avocado/util/date.dart';
 import 'package:avocado/util/location.dart';
 
@@ -28,59 +29,61 @@ class WeatherRepository extends _$WeatherRepository {
   }
 
   Future<Weather?> getUltraShortTermLive() async {
-    Location? location = await LocationUtil().getLocation();
+    try {
+      Location? location = await LocationUtil().getLocation();
 
-    if (location == null) {
+      if (location == null) {
+        throw 'Location 정보가 없습니다.';
+      }
+
+      Map<String, dynamic> response = await ApiUtil.get(
+        _url,
+        '$_versoin/getUltraSrtNcst',
+        {
+          'serviceKey': dotenv.env['API_SERVICE_KEY']!,
+          'pageNo': '1',
+          'numOfRows': '1000',
+          'dataType': 'JSON',
+          'base_date': DateUtil.getYYYYMMDD(DateTime.now()),
+          'base_time': DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
+          'nx': location.x.toString(),
+          'ny': location.y.toString(),
+        },
+      );
+
+      Weather weather = getUltraShortTermLiveMapper(response);
+
+      return weather.copyWith(district: location.district);
+    } catch (e) {
+      Logger().e(e);
       return null;
     }
-
-    Uri url = Uri.http(
-      _url,
-      '$_versoin/getUltraSrtNcst',
-      {
-        'serviceKey': dotenv.env['API_SERVICE_KEY'],
-        'pageNo': '1',
-        'numOfRows': '1000',
-        'dataType': 'JSON',
-        'base_date': DateUtil.getYYYYMMDD(DateTime.now()),
-        'base_time': DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
-        'nx': location.x.toString(),
-        'ny': location.y.toString(),
-      },
-    );
-
-    var response = await http.get(url);
-
-    Weather weather = getUltraShortTermLiveMapper(jsonDecode(response.body));
-
-    return weather.copyWith(district: location.district);
   }
 
   Future<Weather?> getUltraShortTermForecast() async {
-    Location? location = await LocationUtil().getLocation();
-    if (location == null) {
-      return null;
-    }
-
-    Uri url = Uri.http(
-      _url,
-      '$_versoin/getUltraSrtFcst',
-      {
-        'serviceKey': dotenv.env['API_SERVICE_KEY'],
-        'pageNo': '1',
-        'numOfRows': '1000',
-        'dataType': 'JSON',
-        'base_date': DateUtil.getUltraShortTermForecastBaseDate(DateTime.now()), // TODO - 00시 00분 예보 API 준비 안 됐을때 처리
-        'base_time': DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
-        'nx': location.x.toString(),
-        'ny': location.y.toString(),
-      },
-    );
-
     try {
-      var response = await http.get(url);
+      Location? location = await LocationUtil().getLocation();
 
-      Weather weather = getUltraShortTermForecastMapper(jsonDecode(response.body));
+      if (location == null) {
+        throw 'Location 정보가 없습니다.';
+      }
+
+      Map<String, dynamic> response = await ApiUtil.get(
+        _url,
+        '$_versoin/getUltraSrtFcst',
+        {
+          'serviceKey': dotenv.env['API_SERVICE_KEY']!,
+          'pageNo': '1',
+          'numOfRows': '1000',
+          'dataType': 'JSON',
+          'base_date': DateUtil.getUltraShortTermForecastBaseDate(DateTime.now()),
+          'base_time': DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
+          'nx': location.x.toString(),
+          'ny': location.y.toString(),
+        },
+      );
+
+      Weather weather = getUltraShortTermForecastMapper(response);
 
       return weather.copyWith(district: location.district);
     } catch (e) {
@@ -90,29 +93,29 @@ class WeatherRepository extends _$WeatherRepository {
   }
 
   Future<Weather?> getShortTermForecast() async {
-    Location? location = await LocationUtil().getLocation();
-    if (location == null) {
-      return null;
-    }
-
-    Uri url = Uri.http(
-      _url,
-      '$_versoin/getVilageFcst',
-      {
-        'serviceKey': dotenv.env['API_SERVICE_KEY'],
-        'pageNo': '1',
-        'numOfRows': '30',
-        'dataType': 'JSON',
-        'base_date': DateUtil.getShortTermForecastBaseDate(DateTime.now()),
-        'base_time': DateUtil.getShortTermForecastBaseTime(DateTime.now()),
-        'nx': location.x.toString(),
-        'ny': location.y.toString(),
-      },
-    );
-
     try {
-      var response = await http.get(url);
-      Weather weather = getUltraShortTermForecastMapper(jsonDecode(response.body));
+      Location? location = await LocationUtil().getLocation();
+
+      if (location == null) {
+        throw 'Location 정보가 없습니다.';
+      }
+
+      Map<String, dynamic> response = await ApiUtil.get(
+        _url,
+        '$_versoin/getVilageFcst',
+        {
+          'serviceKey': dotenv.env['API_SERVICE_KEY']!,
+          'pageNo': '1',
+          'numOfRows': '30',
+          'dataType': 'JSON',
+          'base_date': DateUtil.getShortTermForecastBaseDate(DateTime.now()),
+          'base_time': DateUtil.getShortTermForecastBaseTime(DateTime.now()),
+          'nx': location.x.toString(),
+          'ny': location.y.toString(),
+        },
+      );
+
+      Weather weather = getUltraShortTermForecastMapper(response);
 
       return weather.copyWith(district: location.district);
     } catch (e) {

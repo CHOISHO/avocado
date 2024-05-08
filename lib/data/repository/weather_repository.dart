@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:logger/web.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -23,7 +20,7 @@ class WeatherRepository extends _$WeatherRepository {
   final String _versoin = '/1360000/VilageFcstInfoService_2.0';
 
   @override
-  Future<Weather?> build() async {
+  void build() {
     //TODO - WeatherRepository 가 state 를 필요로 하는지 정리
     // return await getUltraShortTermLive();
   }

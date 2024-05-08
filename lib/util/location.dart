@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:logger/logger.dart';
 
 import 'package:avocado/domain/model/district_model.dart';
 
@@ -78,34 +79,39 @@ class LocationUtil {
   }
 
   Future<Location?> getLocation() async {
-    final hasPermission = await _handlePermission();
+    try {
+      final hasPermission = await _handlePermission();
 
-    if (!hasPermission) {
+      if (!hasPermission) {
+        return null;
+      }
+
+      final position = await _geolocatorPlatform.getCurrentPosition();
+
+      GridPosition gridPosition = _converToGridPosition(
+        position.longitude,
+        position.latitude,
+      );
+
+      List<Placemark> placemark = await placemarkFromCoordinates(position.latitude, position.longitude);
+
+      District district = District(
+        administrativeArea: placemark[0].administrativeArea ?? '',
+        subLocality: placemark[0].subLocality ?? '',
+        thoroughfare: placemark[0].thoroughfare ?? '',
+      );
+
+      return Location(
+        latitude: position.latitude.toInt(),
+        longitude: position.longitude.toInt(),
+        x: gridPosition.x,
+        y: gridPosition.y,
+        district: district,
+      );
+    } catch (e) {
+      Logger().e(e);
       return null;
     }
-
-    final position = await _geolocatorPlatform.getCurrentPosition();
-
-    GridPosition gridPosition = _converToGridPosition(
-      position.longitude,
-      position.latitude,
-    );
-
-    List<Placemark> placemark = await placemarkFromCoordinates(position.latitude, position.longitude);
-
-    District district = District(
-      administrativeArea: placemark[0].administrativeArea ?? '',
-      subLocality: placemark[0].subLocality ?? '',
-      thoroughfare: placemark[0].thoroughfare ?? '',
-    );
-
-    return Location(
-      latitude: position.latitude.toInt(),
-      longitude: position.longitude.toInt(),
-      x: gridPosition.x,
-      y: gridPosition.y,
-      district: district,
-    );
   }
 
   GridPosition _converToGridPosition(

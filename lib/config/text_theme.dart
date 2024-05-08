@@ -29,9 +29,9 @@ TextTheme textTheme = const TextTheme(
 );
 
 extension UIThemeExtension on BuildContext {
-  TextStyle get themeTitle1 => Theme.of(this).textTheme.titleMedium ?? const TextStyle();
-  TextStyle get themeTitle2 => Theme.of(this).textTheme.titleSmall ?? const TextStyle();
-  TextStyle get themeBody1 => Theme.of(this).textTheme.bodyMedium ?? const TextStyle();
-  TextStyle get themeBody2 => Theme.of(this).textTheme.bodySmall ?? const TextStyle();
-  TextStyle get themeLabel => Theme.of(this).textTheme.labelMedium ?? const TextStyle();
+  TextStyle get textThemeTitle1 => Theme.of(this).textTheme.titleMedium ?? const TextStyle();
+  TextStyle get textThemeTitle2 => Theme.of(this).textTheme.titleSmall ?? const TextStyle();
+  TextStyle get textThemeBody1 => Theme.of(this).textTheme.bodyMedium ?? const TextStyle();
+  TextStyle get textThemeBody2 => Theme.of(this).textTheme.bodySmall ?? const TextStyle();
+  TextStyle get textThemeLabel => Theme.of(this).textTheme.labelMedium ?? const TextStyle();
 }

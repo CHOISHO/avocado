@@ -31,17 +31,9 @@ class HomeView extends HookConsumerWidget {
                       key: const Key('logo'),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () {
-                          print('TAP');
-                        },
-                        child: SvgPicture.asset(
-                          'assets/icons/setting.svg',
-                          key: const Key('setting_icon'),
-                        )),
+                  IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset('assets/icons/setting.svg'),
                   )
                 ],
               ),
@@ -55,10 +47,14 @@ class HomeView extends HookConsumerWidget {
           const Expanded(
             child: Stack(children: [
               Center(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 20),
                   child: Text(
-                '설정된 알림이 없어요\n우산 챙김 알림을 추가해 보세요 :D',
-                textAlign: TextAlign.center,
-              )),
+                    '설정된 알림이 없어요\n우산 챙김 알림을 추가해 보세요 :D',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
               Positioned(
                 left: 0,
                 right: 0,

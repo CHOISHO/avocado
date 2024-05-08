@@ -1,8 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
+import 'package:avocado/feature/view/search_district_view.dart';
 
 class AddAlarmButton extends StatelessWidget {
   const AddAlarmButton({
@@ -13,7 +15,14 @@ class AddAlarmButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(32),
-      onTap: () {},
+      onTap: () {
+        showMaterialModalBottomSheet(
+          context: context,
+          builder: (context) => const SearchDistrictView(),
+          clipBehavior: Clip.hardEdge,
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+        );
+      },
       child: Ink(
         width: 141,
         height: 48,

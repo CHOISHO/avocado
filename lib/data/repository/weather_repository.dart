@@ -37,7 +37,7 @@ class WeatherRepository extends _$WeatherRepository {
         _url,
         '$_versoin/getUltraSrtNcst',
         {
-          'serviceKey': dotenv.env['API_SERVICE_KEY']!,
+          'serviceKey': dotenv.env['WEATHER_API_SERVICE_KEY']!,
           'pageNo': '1',
           'numOfRows': '1000',
           'dataType': 'JSON',
@@ -69,7 +69,7 @@ class WeatherRepository extends _$WeatherRepository {
         _url,
         '$_versoin/getUltraSrtFcst',
         {
-          'serviceKey': dotenv.env['API_SERVICE_KEY']!,
+          'serviceKey': dotenv.env['WEATHER_API_SERVICE_KEY']!,
           'pageNo': '1',
           'numOfRows': '1000',
           'dataType': 'JSON',
@@ -101,7 +101,7 @@ class WeatherRepository extends _$WeatherRepository {
         _url,
         '$_versoin/getVilageFcst',
         {
-          'serviceKey': dotenv.env['API_SERVICE_KEY']!,
+          'serviceKey': dotenv.env['WEATHER_API_SERVICE_KEY']!,
           'pageNo': '1',
           'numOfRows': '30',
           'dataType': 'JSON',

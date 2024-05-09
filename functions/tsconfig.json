@@ -9,6 +9,9 @@
   },
   "compileOnSave": true,
   "include": [
-    "lib"
+    "lib",
+    "middleware",
+    "controllers",
+    "routes"
   ]
 }

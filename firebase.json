@@ -38,10 +38,8 @@
   ],
   "hosting": {
     "rewrites": [{
-      "source": "/helloWorld",
-      "function": {
-        "functionId": "helloWorld"
-      }
+      "source": "**",
+      "function": "app"
     }]
   }
 }

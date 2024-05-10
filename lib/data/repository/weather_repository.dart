@@ -42,7 +42,8 @@ class WeatherRepository extends _$WeatherRepository {
           'numOfRows': '1000',
           'dataType': 'JSON',
           'base_date': DateUtil.getYYYYMMDD(DateTime.now()),
-          'base_time': DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
+          'base_time':
+              DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
           'nx': location.x.toString(),
           'ny': location.y.toString(),
         },
@@ -73,8 +74,10 @@ class WeatherRepository extends _$WeatherRepository {
           'pageNo': '1',
           'numOfRows': '1000',
           'dataType': 'JSON',
-          'base_date': DateUtil.getUltraShortTermForecastBaseDate(DateTime.now()),
-          'base_time': DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
+          'base_date':
+              DateUtil.getUltraShortTermForecastBaseDate(DateTime.now()),
+          'base_time':
+              DateUtil.getUltraShortTermForecastBaseTime(DateTime.now()),
           'nx': location.x.toString(),
           'ny': location.y.toString(),
         },

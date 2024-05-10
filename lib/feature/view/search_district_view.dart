@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
+import 'package:avocado/feature/view_model/search_district_view_model.dart';
 
 class SearchDistrictView extends HookConsumerWidget {
   const SearchDistrictView({super.key});
@@ -12,7 +13,8 @@ class SearchDistrictView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.only(top: 6),
-      height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,
+      height: MediaQuery.of(context).size.height -
+          MediaQuery.of(context).padding.top,
       child: Column(
         children: [
           Stack(
@@ -24,12 +26,16 @@ class SearchDistrictView extends HookConsumerWidget {
                     padding: const EdgeInsets.only(top: 9.0),
                     child: Text(
                       '지역 검색',
-                      style: context.textThemeBody1.copyWith(fontWeight: FontWeight.w600),
+                      style: context.textThemeBody1
+                          .copyWith(fontWeight: FontWeight.w600),
                     ),
                   )
                 ],
               ),
-              Positioned(child: IconButton(onPressed: () {}, icon: SvgPicture.asset('assets/icons/arrow_left.svg'))),
+              Positioned(
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset('assets/icons/arrow_left.svg'))),
             ],
           ),
           Column(
@@ -59,6 +65,12 @@ class SearchDistrictView extends HookConsumerWidget {
                             color: AvocadoColors.grey04,
                           ),
                         ),
+                        onSubmitted: (value) {
+                          //FIXME: 테스트 함수 호출 -> 실제 로직 구현
+                          ref
+                              .read(searchDistrictViewModelProvider.notifier)
+                              .searchDistricts();
+                        },
                       ),
                     )
                   ],

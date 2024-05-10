@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { logger } from "firebase-functions/v1";
 
-import checkSQLReservedWord from "../middleware/checkSQLReservedWord";
+import checkSQLReservedWord from "../utils/checkSQLReservedWord";
 
 
 type GetDistrictsRequestQueryParamsType = {
@@ -15,7 +15,8 @@ const DistrictController = {
             const query = req.query as GetDistrictsRequestQueryParamsType;
 
             if(checkSQLReservedWord(query.keyword)) {
-                return res.status(200).send('COMPLETE');
+                // TODO - 지역 검색 API 구현
+                return res.status(200).json({items: [{'address': '신정동'}]});
             } else {
                 throw "허용되지 않은 문자가 포함되어 있습니다."
             }

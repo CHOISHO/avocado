@@ -20,10 +20,7 @@ class WeatherRepository extends _$WeatherRepository {
   final String _versoin = '/1360000/VilageFcstInfoService_2.0';
 
   @override
-  void build() {
-    //TODO - WeatherRepository 가 state 를 필요로 하는지 정리
-    // return await getUltraShortTermLive();
-  }
+  void build() {}
 
   Future<Weather?> getUltraShortTermLive() async {
     try {
@@ -49,7 +46,15 @@ class WeatherRepository extends _$WeatherRepository {
         },
       );
 
-      Weather weather = getUltraShortTermLiveMapper(response);
+      Weather weather = const Weather();
+
+      switch (response['response']['header']['resultCode']) {
+        case '00':
+          weather = getUltraShortTermForecastMapper(response);
+          break;
+        case '03':
+          throw '데이터가 없습니다.';
+      }
 
       return weather.copyWith(district: location.district);
     } catch (e) {
@@ -83,7 +88,15 @@ class WeatherRepository extends _$WeatherRepository {
         },
       );
 
-      Weather weather = getUltraShortTermForecastMapper(response);
+      Weather weather = const Weather();
+
+      switch (response['response']['header']['resultCode']) {
+        case '00':
+          weather = getUltraShortTermForecastMapper(response);
+          break;
+        case '03':
+          throw '데이터가 없습니다.';
+      }
 
       return weather.copyWith(district: location.district);
     } catch (e) {
@@ -115,7 +128,16 @@ class WeatherRepository extends _$WeatherRepository {
         },
       );
 
-      Weather weather = getUltraShortTermForecastMapper(response);
+      Weather weather = const Weather();
+
+      switch (response['response']['header']['resultCode']) {
+        case '00':
+          //TODO: getShortTermForecast Mapper 작성
+          weather = getUltraShortTermForecastMapper(response);
+          break;
+        case '03':
+          throw '데이터가 없습니다.';
+      }
 
       return weather.copyWith(district: location.district);
     } catch (e) {

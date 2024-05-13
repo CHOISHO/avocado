@@ -58,8 +58,10 @@ WeatherType getWeatherType(Map<String, String> data) {
         }
         break;
       case '1':
-        String preprecipitationPerHourWithoutUnit = precipitationPerHour.split('mm')[0];
-        double parsedPrecipitationPerHour = double.parse(preprecipitationPerHourWithoutUnit);
+        String preprecipitationPerHourWithoutUnit =
+            precipitationPerHour.split('mm')[0];
+        double parsedPrecipitationPerHour =
+            double.parse(preprecipitationPerHourWithoutUnit);
 
         //NOTE - 세계기상기구 기준, 비 강도
         if (parsedPrecipitationPerHour < 3) {
@@ -98,6 +100,13 @@ WeatherType getWeatherType(Map<String, String> data) {
 }
 
 Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
+  if (data['response'] == null ||
+      data['response']['body'] == null ||
+      data['response']['body']['items'] == null ||
+      data['response']['body']['items']['item'] == null) {
+    throw '데이터가 없습니다.';
+  }
+
   List items = data['response']['body']['items']['item'];
 
   Map<String, List> parsedItems = {};

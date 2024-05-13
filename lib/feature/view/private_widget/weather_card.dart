@@ -47,19 +47,25 @@ class WeatherCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                weatherCardContent[value.type]!.label,
-                style: context.textThemeTitle1
-                    .copyWith(fontWeight: FontWeight.w600),
-              ),
-              Text(
-                weatherCardContent[value.type]!.description,
-                style: context.textThemeBody2
-                    .copyWith(fontWeight: FontWeight.w500),
-              ),
+              weatherCardContent[value.type] != null
+                  ? Text(
+                      weatherCardContent[value.type]!.label,
+                      style: context.textThemeTitle1
+                          .copyWith(fontWeight: FontWeight.w600),
+                    )
+                  : Container(),
+              weatherCardContent[value.type] != null
+                  ? Text(
+                      weatherCardContent[value.type]!.description,
+                      style: context.textThemeBody2
+                          .copyWith(fontWeight: FontWeight.w500),
+                    )
+                  : Container(),
             ],
           ),
-          SvgPicture.asset(weatherCardContent[value.type]!.icon)
+          weatherCardContent[value.type] != null
+              ? SvgPicture.asset(weatherCardContent[value.type]!.icon)
+              : Container()
         ],
       ),
     );

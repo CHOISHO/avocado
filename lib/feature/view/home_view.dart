@@ -40,7 +40,13 @@ class HomeView extends HookConsumerWidget {
             ),
           ),
           data.when(
-            data: (value) => WeatherCard(value: value.weather),
+            data: (value) {
+              if (value.weather != null) {
+                return WeatherCard(value: value.weather!);
+              } else {
+                return Container();
+              }
+            },
             error: (e, st) => const Text('Oops, something unexpected happened'),
             loading: () => const Expanded(
               child: Center(

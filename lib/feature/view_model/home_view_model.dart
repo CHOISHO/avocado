@@ -10,7 +10,7 @@ part 'home_view_model.g.dart';
 @freezed
 class HomeViewModelState with _$HomeViewModelState {
   const factory HomeViewModelState({
-    @Default(Weather()) Weather weather,
+    @Default(null) Weather? weather,
   }) = _HomeViewModelState;
 
   factory HomeViewModelState.fromJson(Map<String, dynamic> json) =>
@@ -27,7 +27,7 @@ class HomeViewModel extends _$HomeViewModel {
 
     return Future.value(
       HomeViewModelState(
-        weather: weather ?? const Weather(),
+        weather: weather,
       ),
     );
   }

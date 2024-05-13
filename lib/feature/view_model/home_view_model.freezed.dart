@@ -20,7 +20,7 @@ HomeViewModelState _$HomeViewModelStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HomeViewModelState {
-  Weather get weather => throw _privateConstructorUsedError;
+  Weather? get weather => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,9 +34,9 @@ abstract class $HomeViewModelStateCopyWith<$Res> {
           HomeViewModelState value, $Res Function(HomeViewModelState) then) =
       _$HomeViewModelStateCopyWithImpl<$Res, HomeViewModelState>;
   @useResult
-  $Res call({Weather weather});
+  $Res call({Weather? weather});
 
-  $WeatherCopyWith<$Res> get weather;
+  $WeatherCopyWith<$Res>? get weather;
 }
 
 /// @nodoc
@@ -52,20 +52,24 @@ class _$HomeViewModelStateCopyWithImpl<$Res, $Val extends HomeViewModelState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? weather = null,
+    Object? weather = freezed,
   }) {
     return _then(_value.copyWith(
-      weather: null == weather
+      weather: freezed == weather
           ? _value.weather
           : weather // ignore: cast_nullable_to_non_nullable
-              as Weather,
+              as Weather?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $WeatherCopyWith<$Res> get weather {
-    return $WeatherCopyWith<$Res>(_value.weather, (value) {
+  $WeatherCopyWith<$Res>? get weather {
+    if (_value.weather == null) {
+      return null;
+    }
+
+    return $WeatherCopyWith<$Res>(_value.weather!, (value) {
       return _then(_value.copyWith(weather: value) as $Val);
     });
   }
@@ -79,10 +83,10 @@ abstract class _$$HomeViewModelStateImplCopyWith<$Res>
       __$$HomeViewModelStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Weather weather});
+  $Res call({Weather? weather});
 
   @override
-  $WeatherCopyWith<$Res> get weather;
+  $WeatherCopyWith<$Res>? get weather;
 }
 
 /// @nodoc
@@ -96,13 +100,13 @@ class __$$HomeViewModelStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? weather = null,
+    Object? weather = freezed,
   }) {
     return _then(_$HomeViewModelStateImpl(
-      weather: null == weather
+      weather: freezed == weather
           ? _value.weather
           : weather // ignore: cast_nullable_to_non_nullable
-              as Weather,
+              as Weather?,
     ));
   }
 }
@@ -110,14 +114,14 @@ class __$$HomeViewModelStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$HomeViewModelStateImpl implements _HomeViewModelState {
-  const _$HomeViewModelStateImpl({this.weather = const Weather()});
+  const _$HomeViewModelStateImpl({this.weather = null});
 
   factory _$HomeViewModelStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeViewModelStateImplFromJson(json);
 
   @override
   @JsonKey()
-  final Weather weather;
+  final Weather? weather;
 
   @override
   String toString() {
@@ -152,14 +156,14 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
 }
 
 abstract class _HomeViewModelState implements HomeViewModelState {
-  const factory _HomeViewModelState({final Weather weather}) =
+  const factory _HomeViewModelState({final Weather? weather}) =
       _$HomeViewModelStateImpl;
 
   factory _HomeViewModelState.fromJson(Map<String, dynamic> json) =
       _$HomeViewModelStateImpl.fromJson;
 
   @override
-  Weather get weather;
+  Weather? get weather;
   @override
   @JsonKey(ignore: true)
   _$$HomeViewModelStateImplCopyWith<_$HomeViewModelStateImpl> get copyWith =>

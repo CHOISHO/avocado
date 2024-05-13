@@ -10,7 +10,7 @@ _$HomeViewModelStateImpl _$$HomeViewModelStateImplFromJson(
         Map<String, dynamic> json) =>
     _$HomeViewModelStateImpl(
       weather: json['weather'] == null
-          ? const Weather()
+          ? null
           : Weather.fromJson(json['weather'] as Map<String, dynamic>),
     );
 
@@ -24,7 +24,7 @@ Map<String, dynamic> _$$HomeViewModelStateImplToJson(
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homeViewModelHash() => r'6c40cd95ba152bf984129e6463bd07d1df33545e';
+String _$homeViewModelHash() => r'aa803d46e9306797bc9502ccc3c3a530b12b0bbe';
 
 /// See also [HomeViewModel].
 @ProviderFor(HomeViewModel)

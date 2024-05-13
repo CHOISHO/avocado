@@ -1,9 +1,11 @@
 import 'package:logger/logger.dart';
+import 'package:logger/web.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'package:avocado/domain/model/district_model.dart';
 import 'package:avocado/util/api.dart';
 
-part 'district_repository.g.dart'; // 자동 생성될 파일
+part 'district_repository.g.dart';
 
 @riverpod
 class DistrictRepository extends _$DistrictRepository {
@@ -13,14 +15,31 @@ class DistrictRepository extends _$DistrictRepository {
   @override
   void build() {}
 
-  Future<List<dynamic>> getDistricts(String keyword, int currentPage) async {
-    var response = await ApiUtil.get(_url, '$_version/district/getDistricts', {
-      'currentPage': currentPage.toString(),
-      'keyword': keyword,
-    });
+  Future<List<District>> getDistricts(String keyword, int currentPage) async {
+    try {
+      var response = await ApiUtil.get(
+        _url,
+        '$_version/district/getDistricts',
+        {
+          'currentPage': currentPage.toString(),
+          'keyword': keyword,
+        },
+      );
 
-    //TODO: 지역 데이터 파싱
+      if (response['data'] == null) {
+        throw '데이터가 없습니다.';
+      }
 
-    return [];
+      List<District> districts = [];
+
+      for (final districtData in response['data']) {
+        districts.add(District.fromJson(districtData));
+      }
+
+      return districts;
+    } catch (e) {
+      Logger().e(e);
+      return [];
+    }
   }
 }

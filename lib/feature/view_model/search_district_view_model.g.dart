@@ -3,16 +3,37 @@
 part of 'search_district_view_model.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$SearchDistrictViewModelStateImpl _$$SearchDistrictViewModelStateImplFromJson(
+        Map<String, dynamic> json) =>
+    _$SearchDistrictViewModelStateImpl(
+      currentPage: json['currentPage'] as int? ?? 1,
+      districts: (json['districts'] as List<dynamic>?)
+              ?.map((e) => District.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+    );
+
+Map<String, dynamic> _$$SearchDistrictViewModelStateImplToJson(
+        _$SearchDistrictViewModelStateImpl instance) =>
+    <String, dynamic>{
+      'currentPage': instance.currentPage,
+      'districts': instance.districts,
+    };
+
+// **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$searchDistrictViewModelHash() =>
-    r'ada715fdc6acc833f5f26e845f94440636622305';
+    r'5f751e74b50f31e973b805054352867ad71cbf6a';
 
 /// See also [SearchDistrictViewModel].
 @ProviderFor(SearchDistrictViewModel)
-final searchDistrictViewModelProvider =
-    AutoDisposeNotifierProvider<SearchDistrictViewModel, void>.internal(
+final searchDistrictViewModelProvider = AutoDisposeNotifierProvider<
+    SearchDistrictViewModel, SearchDistrictViewModelState>.internal(
   SearchDistrictViewModel.new,
   name: r'searchDistrictViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +43,7 @@ final searchDistrictViewModelProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$SearchDistrictViewModel = AutoDisposeNotifier<void>;
+typedef _$SearchDistrictViewModel
+    = AutoDisposeNotifier<SearchDistrictViewModelState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

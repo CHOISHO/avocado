@@ -65,14 +65,14 @@ class SearchDistrictView extends HookConsumerWidget {
                             color: AvocadoColors.grey04,
                           ),
                         ),
-                        onSubmitted: (value) {
-                          //FIXME: 테스트 함수 호출 -> 실제 로직 구현
-                          ref
+                        onSubmitted: (value) async {
+                          await ref
                               .read(searchDistrictViewModelProvider.notifier)
-                              .searchDistricts();
+                              .searchDistricts(value);
                         },
                       ),
-                    )
+                    ),
+                    //TODO: 검색 결과 출력
                   ],
                 ),
               ),

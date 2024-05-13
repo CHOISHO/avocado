@@ -62,7 +62,8 @@ class LocationUtil {
       return Future.error('Location services are disabled.');
     }
 
-    LocationPermission permissionStatus = await _geolocatorPlatform.checkPermission();
+    LocationPermission permissionStatus =
+        await _geolocatorPlatform.checkPermission();
 
     if (permissionStatus == LocationPermission.denied) {
       permissionStatus = await _geolocatorPlatform.requestPermission();
@@ -77,6 +78,9 @@ class LocationUtil {
 
     return true;
   }
+
+  // TODO: 주소로 Location 정보 얻는 메소드
+  // Future<Location?> getLocationFromAddress() async {}
 
   Future<Location?> getLocation() async {
     try {
@@ -93,7 +97,8 @@ class LocationUtil {
         position.latitude,
       );
 
-      List<Placemark> placemark = await placemarkFromCoordinates(position.latitude, position.longitude);
+      List<Placemark> placemark =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
 
       District district = District(
         administrativeArea: placemark[0].administrativeArea ?? '',

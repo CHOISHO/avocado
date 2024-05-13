@@ -20,9 +20,16 @@ District _$DistrictFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$District {
+  @JsonKey(name: 'siNm')
   String get administrativeArea => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sggNm')
   String get subLocality => throw _privateConstructorUsedError;
+  @JsonKey(name: 'emdNm')
   String get thoroughfare => throw _privateConstructorUsedError;
+  @JsonKey(name: 'jibunAddr')
+  String get streetAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'roadAddr')
+  String get streetNameAddress => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +43,11 @@ abstract class $DistrictCopyWith<$Res> {
       _$DistrictCopyWithImpl<$Res, District>;
   @useResult
   $Res call(
-      {String administrativeArea, String subLocality, String thoroughfare});
+      {@JsonKey(name: 'siNm') String administrativeArea,
+      @JsonKey(name: 'sggNm') String subLocality,
+      @JsonKey(name: 'emdNm') String thoroughfare,
+      @JsonKey(name: 'jibunAddr') String streetAddress,
+      @JsonKey(name: 'roadAddr') String streetNameAddress});
 }
 
 /// @nodoc
@@ -55,6 +66,8 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
     Object? administrativeArea = null,
     Object? subLocality = null,
     Object? thoroughfare = null,
+    Object? streetAddress = null,
+    Object? streetNameAddress = null,
   }) {
     return _then(_value.copyWith(
       administrativeArea: null == administrativeArea
@@ -69,6 +82,14 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
           ? _value.thoroughfare
           : thoroughfare // ignore: cast_nullable_to_non_nullable
               as String,
+      streetAddress: null == streetAddress
+          ? _value.streetAddress
+          : streetAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      streetNameAddress: null == streetNameAddress
+          ? _value.streetNameAddress
+          : streetNameAddress // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -82,7 +103,11 @@ abstract class _$$DistrictImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String administrativeArea, String subLocality, String thoroughfare});
+      {@JsonKey(name: 'siNm') String administrativeArea,
+      @JsonKey(name: 'sggNm') String subLocality,
+      @JsonKey(name: 'emdNm') String thoroughfare,
+      @JsonKey(name: 'jibunAddr') String streetAddress,
+      @JsonKey(name: 'roadAddr') String streetNameAddress});
 }
 
 /// @nodoc
@@ -99,6 +124,8 @@ class __$$DistrictImplCopyWithImpl<$Res>
     Object? administrativeArea = null,
     Object? subLocality = null,
     Object? thoroughfare = null,
+    Object? streetAddress = null,
+    Object? streetNameAddress = null,
   }) {
     return _then(_$DistrictImpl(
       administrativeArea: null == administrativeArea
@@ -113,6 +140,14 @@ class __$$DistrictImplCopyWithImpl<$Res>
           ? _value.thoroughfare
           : thoroughfare // ignore: cast_nullable_to_non_nullable
               as String,
+      streetAddress: null == streetAddress
+          ? _value.streetAddress
+          : streetAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+      streetNameAddress: null == streetNameAddress
+          ? _value.streetNameAddress
+          : streetNameAddress // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -121,26 +156,34 @@ class __$$DistrictImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DistrictImpl implements _District {
   const _$DistrictImpl(
-      {this.administrativeArea = '',
-      this.subLocality = '',
-      this.thoroughfare = ''});
+      {@JsonKey(name: 'siNm') this.administrativeArea = '',
+      @JsonKey(name: 'sggNm') this.subLocality = '',
+      @JsonKey(name: 'emdNm') this.thoroughfare = '',
+      @JsonKey(name: 'jibunAddr') this.streetAddress = '',
+      @JsonKey(name: 'roadAddr') this.streetNameAddress = ''});
 
   factory _$DistrictImpl.fromJson(Map<String, dynamic> json) =>
       _$$DistrictImplFromJson(json);
 
   @override
-  @JsonKey()
+  @JsonKey(name: 'siNm')
   final String administrativeArea;
   @override
-  @JsonKey()
+  @JsonKey(name: 'sggNm')
   final String subLocality;
   @override
-  @JsonKey()
+  @JsonKey(name: 'emdNm')
   final String thoroughfare;
+  @override
+  @JsonKey(name: 'jibunAddr')
+  final String streetAddress;
+  @override
+  @JsonKey(name: 'roadAddr')
+  final String streetNameAddress;
 
   @override
   String toString() {
-    return 'District(administrativeArea: $administrativeArea, subLocality: $subLocality, thoroughfare: $thoroughfare)';
+    return 'District(administrativeArea: $administrativeArea, subLocality: $subLocality, thoroughfare: $thoroughfare, streetAddress: $streetAddress, streetNameAddress: $streetNameAddress)';
   }
 
   @override
@@ -153,13 +196,17 @@ class _$DistrictImpl implements _District {
             (identical(other.subLocality, subLocality) ||
                 other.subLocality == subLocality) &&
             (identical(other.thoroughfare, thoroughfare) ||
-                other.thoroughfare == thoroughfare));
+                other.thoroughfare == thoroughfare) &&
+            (identical(other.streetAddress, streetAddress) ||
+                other.streetAddress == streetAddress) &&
+            (identical(other.streetNameAddress, streetNameAddress) ||
+                other.streetNameAddress == streetNameAddress));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, administrativeArea, subLocality, thoroughfare);
+  int get hashCode => Object.hash(runtimeType, administrativeArea, subLocality,
+      thoroughfare, streetAddress, streetNameAddress);
 
   @JsonKey(ignore: true)
   @override
@@ -177,19 +224,31 @@ class _$DistrictImpl implements _District {
 
 abstract class _District implements District {
   const factory _District(
-      {final String administrativeArea,
-      final String subLocality,
-      final String thoroughfare}) = _$DistrictImpl;
+          {@JsonKey(name: 'siNm') final String administrativeArea,
+          @JsonKey(name: 'sggNm') final String subLocality,
+          @JsonKey(name: 'emdNm') final String thoroughfare,
+          @JsonKey(name: 'jibunAddr') final String streetAddress,
+          @JsonKey(name: 'roadAddr') final String streetNameAddress}) =
+      _$DistrictImpl;
 
   factory _District.fromJson(Map<String, dynamic> json) =
       _$DistrictImpl.fromJson;
 
   @override
+  @JsonKey(name: 'siNm')
   String get administrativeArea;
   @override
+  @JsonKey(name: 'sggNm')
   String get subLocality;
   @override
+  @JsonKey(name: 'emdNm')
   String get thoroughfare;
+  @override
+  @JsonKey(name: 'jibunAddr')
+  String get streetAddress;
+  @override
+  @JsonKey(name: 'roadAddr')
+  String get streetNameAddress;
   @override
   @JsonKey(ignore: true)
   _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>

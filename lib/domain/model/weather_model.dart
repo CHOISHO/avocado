@@ -19,7 +19,8 @@ class Weather with _$Weather {
     @Default(WeatherType.initial) WeatherType type,
   }) = _Weather;
 
-  factory Weather.fromJson(Map<String, dynamic> json) => _$WeatherFromJson(json);
+  factory Weather.fromJson(Map<String, dynamic> json) =>
+      _$WeatherFromJson(json);
 }
 
 enum WeatherType {

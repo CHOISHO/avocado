@@ -110,7 +110,7 @@ class __$$HomeViewModelStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$HomeViewModelStateImpl implements _HomeViewModelState {
-  _$HomeViewModelStateImpl({this.weather = const Weather()});
+  const _$HomeViewModelStateImpl({this.weather = const Weather()});
 
   factory _$HomeViewModelStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeViewModelStateImplFromJson(json);
@@ -152,7 +152,7 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
 }
 
 abstract class _HomeViewModelState implements HomeViewModelState {
-  factory _HomeViewModelState({final Weather weather}) =
+  const factory _HomeViewModelState({final Weather weather}) =
       _$HomeViewModelStateImpl;
 
   factory _HomeViewModelState.fromJson(Map<String, dynamic> json) =

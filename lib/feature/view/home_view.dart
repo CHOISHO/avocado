@@ -39,11 +39,15 @@ class HomeView extends HookConsumerWidget {
               ),
             ),
           ),
-          switch (data) {
-            AsyncData<HomeViewModelState>(:final value) => WeatherCard(value: value.weather),
-            AsyncError() => const Text('Oops, something unexpected happened'),
-            _ => const Expanded(child: Center(child: CircularProgressIndicator())),
-          },
+          data.when(
+            data: (value) => WeatherCard(value: value.weather),
+            error: (e, st) => const Text('Oops, something unexpected happened'),
+            loading: () => const Expanded(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
           const Expanded(
             child: Stack(children: [
               Center(

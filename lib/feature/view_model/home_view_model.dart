@@ -9,18 +9,21 @@ part 'home_view_model.g.dart';
 
 @freezed
 class HomeViewModelState with _$HomeViewModelState {
-  factory HomeViewModelState({
+  const factory HomeViewModelState({
     @Default(Weather()) Weather weather,
   }) = _HomeViewModelState;
 
-  factory HomeViewModelState.fromJson(Map<String, dynamic> json) => _$HomeViewModelStateFromJson(json);
+  factory HomeViewModelState.fromJson(Map<String, dynamic> json) =>
+      _$HomeViewModelStateFromJson(json);
 }
 
 @riverpod
 class HomeViewModel extends _$HomeViewModel {
   @override
   Future<HomeViewModelState> build() async {
-    Weather? weather = await ref.watch(weatherRepositoryProvider.notifier).getUltraShortTermForecast();
+    Weather? weather = await ref
+        .watch(weatherRepositoryProvider.notifier)
+        .getUltraShortTermForecast();
 
     return Future.value(
       HomeViewModelState(

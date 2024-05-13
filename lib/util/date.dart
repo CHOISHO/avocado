@@ -26,9 +26,9 @@ class DateUtil {
     String ultraShortTermForecastBaseTime;
 
     if (minute < 30) {
-      ultraShortTermForecastBaseTime = '${(hour - 1)}00';
+      ultraShortTermForecastBaseTime = '${(hour - 1)}30';
     } else {
-      ultraShortTermForecastBaseTime = '${hour}00';
+      ultraShortTermForecastBaseTime = '${hour}30';
     }
 
     return ultraShortTermForecastBaseTime;
@@ -52,14 +52,17 @@ class DateUtil {
     if (filteredBaseTimeList.isEmpty) {
       shortTermForecastBaseTime = 23;
     } else {
-      shortTermForecastBaseTime = filteredBaseTimeList[filteredBaseTimeList.length - 1];
-      bool isNotReadyForForcastServer = shortTermForecastBaseTime == hour && minute < 10;
+      shortTermForecastBaseTime =
+          filteredBaseTimeList[filteredBaseTimeList.length - 1];
+      bool isNotReadyForForcastServer =
+          shortTermForecastBaseTime == hour && minute < 10;
 
       if (isNotReadyForForcastServer) {
         if (shortTermForecastBaseTime == 2) {
           shortTermForecastBaseTime = 23;
         } else {
-          shortTermForecastBaseTime = filteredBaseTimeList[filteredBaseTimeList.length - 2];
+          shortTermForecastBaseTime =
+              filteredBaseTimeList[filteredBaseTimeList.length - 2];
         }
       }
     }

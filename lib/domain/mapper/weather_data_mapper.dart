@@ -111,6 +111,7 @@ Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
 
   Map<String, List> parsedItems = {};
 
+  // INFO: 시간대별 데이터 파싱
   for (var item in items) {
     if (parsedItems[item['fcstTime']] == null) {
       parsedItems[item['fcstTime']] = [item];
@@ -119,11 +120,12 @@ Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
     }
   }
 
-  // TODO: 초단기예보 아이템 모델 정의
-  var filtered = parsedItems[parsedItems.keys.toList()[0]];
+  // INFO: 현재 시간 아이템 필터
+  var filtered = parsedItems['${DateTime.now().hour}00'];
 
-  Map<String, String> temp = {};
+  Map<String, String> parsedByCategory = {};
 
+  // INFO: 카테고리별 value 값 할당
   try {
     for (var item in filtered!) {
       String? category = item['category'];
@@ -133,7 +135,7 @@ Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
 
         if (parsedCategory != null) {
           String value = item['fcstValue'] ?? '';
-          temp[parsedCategory] = value;
+          parsedByCategory[parsedCategory] = value;
         } else {
           continue;
         }
@@ -145,9 +147,9 @@ Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
     Logger().e(e);
   }
 
-  WeatherType weatherType = getWeatherType(temp);
+  WeatherType weatherType = getWeatherType(parsedByCategory);
 
-  return Weather.fromJson(temp).copyWith(type: weatherType);
+  return Weather.fromJson(parsedByCategory).copyWith(type: weatherType);
 }
 
 Map<String, String> _category = {

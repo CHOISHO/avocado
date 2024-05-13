@@ -21,17 +21,19 @@ class DateUtil {
 
   static String getUltraShortTermForecastBaseTime(DateTime date) {
     int hour = date.hour;
-    int minute = date.minute;
 
-    String ultraShortTermForecastBaseTime;
+    // TODO: 현재 시간 기준 최적의 BaseTime 로직 검증 필요
 
-    if (minute < 30) {
-      ultraShortTermForecastBaseTime = '${(hour - 1)}30';
-    } else {
-      ultraShortTermForecastBaseTime = '${hour}30';
-    }
+    // int minute = date.minute;
 
-    return ultraShortTermForecastBaseTime;
+    // if (minute < 30) {
+    //   ultraShortTermForecastBaseTime = '${(hour - 1)}30';
+    // } else {
+    //   ultraShortTermForecastBaseTime = '${hour}30';
+    // }
+
+    // INFO: 현재 시간 30분에 기상청 서버에서 데이터가 준비되지 않아 현재시간 2시간 전 기준으로 BaseTime 반환
+    return '${(hour - 2)}00';
   }
 
   static String getShortTermForecastBaseTime(DateTime date) {

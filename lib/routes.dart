@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:avocado/feature/view/home_view.dart';
+import 'package:avocado/feature/view/home/home_view.dart';
 
 class RoutesName {
   static String home = '/home';

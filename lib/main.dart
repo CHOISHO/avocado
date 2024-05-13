@@ -6,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/text_theme.dart';
-import 'package:avocado/feature/view/home_view.dart';
+import 'package:avocado/feature/view/home/home_view.dart';
 import 'package:avocado/firebase_options.dart';
 import 'package:avocado/routes.dart';
 

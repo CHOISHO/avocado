@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
-import 'package:avocado/feature/view/private_widget/add_alarm_button.dart';
-import 'package:avocado/feature/view/private_widget/weather_card.dart';
+import 'package:avocado/feature/view/home/private_widget/add_alarm_button.dart';
+import 'package:avocado/feature/view/home/private_widget/weather_card.dart';
 import 'package:avocado/feature/view_model/home_view_model.dart';
 
 class HomeView extends HookConsumerWidget {

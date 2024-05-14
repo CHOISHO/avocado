@@ -1,3 +1,5 @@
+import 'package:logger/web.dart';
+
 class DateUtil {
   static String getYYYYMMDD(DateTime date) {
     String year = date.year.toString();
@@ -33,10 +35,20 @@ class DateUtil {
     // }
 
     // INFO: 현재 시간 30분에 기상청 서버에서 데이터가 준비되지 않아 현재시간 2시간 전 기준으로 BaseTime 반환
-    return '${(hour - 2)}00';
+    int calculatedHour;
+
+    if (hour < 2) {
+      calculatedHour = hour + 22; // INFO: 0시, 1시의 2시간 전인 22시,23시를 계산하기 위함
+    } else {
+      calculatedHour = hour - 2;
+    }
+
+    return '${calculatedHour.toString().padLeft(2, '0')}00';
   }
 
   static String getShortTermForecastBaseTime(DateTime date) {
+    List<int> shortTermForecastBaseTimeList = [2, 5, 8, 11, 14, 17, 20, 23];
+
     int hour = date.hour;
 
     int minute = date.minute;
@@ -80,5 +92,3 @@ class DateUtil {
     }
   }
 }
-
-List<int> shortTermForecastBaseTimeList = [2, 5, 8, 11, 14, 17, 20, 23];

@@ -8,11 +8,40 @@ void main() {
   // - API 제공시간: 0045, 0145, 0245 ~ 2145, 2245, 2345
   group('getUltraShortTermForecastBaseDate', () {
     test('20240505 00시 29분에 기준 날짜 20240504를 반환한다.', () {
-      expect(DateUtil.getUltraShortTermForecastBaseDate(DateTime(2024, 5, 5, 0, 2)), '20240504');
+      expect(
+        DateUtil.getUltraShortTermForecastBaseDate(DateTime(2024, 5, 5, 0, 2)),
+        '20240504',
+      );
     });
 
     test('20240505 00시 30분에 기준 날짜 20240505를 반환한다.', () {
-      expect(DateUtil.getUltraShortTermForecastBaseDate(DateTime(2024, 5, 5, 0, 30)), '20240505');
+      expect(
+        DateUtil.getUltraShortTermForecastBaseDate(DateTime(2024, 5, 5, 0, 30)),
+        '20240505',
+      );
+    });
+  });
+
+  group('getUltraShortTermForecastBaseTime', () {
+    test('20240505 00시 29분에 기준 시간 2200을 반환한다.', () {
+      expect(
+        DateUtil.getUltraShortTermForecastBaseTime(DateTime(2024, 5, 5, 0, 2)),
+        '2200',
+      );
+    });
+
+    test('20240505 01시 30분에 기준 시간 2300을 반환한다.', () {
+      expect(
+        DateUtil.getUltraShortTermForecastBaseTime(DateTime(2024, 5, 5, 1, 30)),
+        '2300',
+      );
+    });
+
+    test('20240505 02시 00분에 기준 시간 0000을 반환한다.', () {
+      expect(
+        DateUtil.getUltraShortTermForecastBaseTime(DateTime(2024, 5, 5, 2, 0)),
+        '0000',
+      );
     });
   });
 
@@ -26,31 +55,57 @@ void main() {
     int day = today.day;
 
     test('00시 30분에 단기예보 기준시간 23시 00분을 반환한다.', () {
-      expect(DateUtil.getShortTermForecastBaseTime(DateTime(year, month, day, 0, 30)), '2300');
+      expect(
+        DateUtil.getShortTermForecastBaseTime(
+            DateTime(year, month, day, 0, 30)),
+        '2300',
+      );
     });
 
     test('00시 30분에 단기예보 기준시간 23시 00분을 반환한다.', () {
-      expect(DateUtil.getShortTermForecastBaseTime(DateTime(year, month, day, 0, 30)), '2300');
+      expect(
+        DateUtil.getShortTermForecastBaseTime(
+            DateTime(year, month, day, 0, 30)),
+        '2300',
+      );
     });
 
     test('02시 09분에 단기예보 기준시간 23시 00분을 반환한다.', () {
-      expect(DateUtil.getShortTermForecastBaseTime(DateTime(year, month, day, 2, 9)), '2300');
+      expect(
+        DateUtil.getShortTermForecastBaseTime(DateTime(year, month, day, 2, 9)),
+        '2300',
+      );
     });
 
     test('02시 30분에 단기예보 기준시간 02시 00분을 반환한다.', () {
-      expect(DateUtil.getShortTermForecastBaseTime(DateTime(year, month, day, 2, 30)), '0200');
+      expect(
+        DateUtil.getShortTermForecastBaseTime(
+            DateTime(year, month, day, 2, 30)),
+        '0200',
+      );
     });
 
     test('07시 09분에 단기예보 기준시간 05시 00분을 반환한다.', () {
-      expect(DateUtil.getShortTermForecastBaseTime(DateTime(year, month, day, 7, 9)), '0500');
+      expect(
+        DateUtil.getShortTermForecastBaseTime(DateTime(year, month, day, 7, 9)),
+        '0500',
+      );
     });
 
     test('23시 09분에 단기예보 기준시간 시 20시 00분을 반환한다.', () {
-      expect(DateUtil.getShortTermForecastBaseTime(DateTime(year, month, day, 23, 9)), '2000');
+      expect(
+        DateUtil.getShortTermForecastBaseTime(
+            DateTime(year, month, day, 23, 9)),
+        '2000',
+      );
     });
 
     test('23시 30분에 단기예보 기준시간 23시 00분을 반환한다.', () {
-      expect(DateUtil.getShortTermForecastBaseTime(DateTime(year, month, day, 23, 30)), '2300');
+      expect(
+        DateUtil.getShortTermForecastBaseTime(
+            DateTime(year, month, day, 23, 30)),
+        '2300',
+      );
     });
   });
 }

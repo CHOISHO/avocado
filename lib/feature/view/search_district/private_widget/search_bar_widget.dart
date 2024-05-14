@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +16,8 @@ class SearchBarWidget extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Timer? timer;
+
     return Column(
       children: [
         Container(
@@ -34,6 +38,18 @@ class SearchBarWidget extends HookConsumerWidget {
                 child: TextField(
                   cursorColor: AvocadoColors.main,
                   cursorWidth: 1,
+                  onChanged: (String value) {
+                    if (timer?.isActive ?? false) timer?.cancel();
+
+                    timer = Timer(
+                      const Duration(milliseconds: 1000),
+                      () async {
+                        await ref
+                            .read(searchDistrictViewModelProvider.notifier)
+                            .searchDistricts(value);
+                      },
+                    );
+                  },
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: '지역을 입력해 주세요.',
@@ -41,11 +57,6 @@ class SearchBarWidget extends HookConsumerWidget {
                       color: AvocadoColors.grey04,
                     ),
                   ),
-                  onSubmitted: (value) async {
-                    await ref
-                        .read(searchDistrictViewModelProvider.notifier)
-                        .searchDistricts(value);
-                  },
                 ),
               ),
             ],

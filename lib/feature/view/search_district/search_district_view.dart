@@ -10,17 +10,26 @@ class SearchDistrictView extends HookConsumerWidget {
   const SearchDistrictView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      padding: const EdgeInsets.only(top: 6),
-      height: MediaQuery.of(context).size.height -
-          MediaQuery.of(context).padding.top,
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SearchDistrictHeaderWidget(),
-          SearchBarWidget(),
-          DistrictListWidget(),
-        ],
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.only(top: 6),
+        height: MediaQuery.of(context).size.height -
+            MediaQuery.of(context).padding.top,
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SearchDistrictHeaderWidget(),
+            SearchBarWidget(),
+            DistrictListWidget(),
+          ],
+        ),
       ),
     );
   }

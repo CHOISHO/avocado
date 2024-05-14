@@ -26,7 +26,7 @@ class DistrictListWidget extends HookConsumerWidget {
             (index) => Container(
               padding: const EdgeInsets.all(16),
               child: Text(
-                districts[index].streetAddress,
+                districts[index].streetNameAddress,
                 style: context.textThemeBody1,
                 textAlign: TextAlign.start,
                 maxLines: 1,

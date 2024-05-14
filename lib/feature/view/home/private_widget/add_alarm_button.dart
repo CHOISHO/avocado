@@ -20,8 +20,12 @@ class AddAlarmButton extends StatelessWidget {
           context: context,
           builder: (context) => const SearchDistrictView(),
           clipBehavior: Clip.hardEdge,
+          enableDrag: false,
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(12),
+            ),
+          ),
         );
       },
       child: Ink(

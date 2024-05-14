@@ -121,7 +121,8 @@ Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
   }
 
   // INFO: 현재 시간 아이템 필터
-  var filtered = parsedItems['${DateTime.now().hour}00'];
+  var filtered =
+      parsedItems['${DateTime.now().hour.toString().padLeft(2, '0')}00'];
 
   Map<String, String> parsedByCategory = {};
 
@@ -146,6 +147,8 @@ Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
   } catch (e) {
     Logger().e(e);
   }
+
+  Logger().d(parsedByCategory);
 
   WeatherType weatherType = getWeatherType(parsedByCategory);
 

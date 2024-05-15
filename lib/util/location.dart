@@ -79,8 +79,38 @@ class LocationUtil {
     return true;
   }
 
-  // TODO: 주소로 Location 정보 얻는 메소드
-  // Future<Location?> getLocationFromAddress() async {}
+  Future<Location?> getLocationFromAddress(String address) async {
+    try {
+      var positions = await locationFromAddress(address);
+
+      var position = positions[0];
+
+      GridPosition gridPosition = _converToGridPosition(
+        position.longitude,
+        position.latitude,
+      );
+
+      List<Placemark> placemark =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+
+      District district = District(
+        administrativeArea: placemark[0].administrativeArea ?? '',
+        subLocality: placemark[0].subLocality ?? '',
+        thoroughfare: placemark[0].thoroughfare ?? '',
+      );
+
+      return Location(
+        latitude: position.latitude.toInt(),
+        longitude: position.longitude.toInt(),
+        x: gridPosition.x,
+        y: gridPosition.y,
+        district: district,
+      );
+    } catch (e) {
+      Logger().e(e);
+      return null;
+    }
+  }
 
   Future<Location?> getLocation() async {
     try {

@@ -63,9 +63,15 @@ class WeatherRepository extends _$WeatherRepository {
     }
   }
 
-  Future<Weather?> getUltraShortTermForecast() async {
+  Future<Weather?> getUltraShortTermForecast([String? address]) async {
     try {
-      Location? location = await LocationUtil().getLocation();
+      Location? location;
+
+      if (address == null) {
+        location = await LocationUtil().getLocation();
+      } else {
+        location = await LocationUtil().getLocationFromAddress(address);
+      }
 
       if (location == null) {
         throw 'Location 정보가 없습니다.';

@@ -28,7 +28,7 @@ Map<String, dynamic> _$$SearchDistrictViewModelStateImplToJson(
 // **************************************************************************
 
 String _$searchDistrictViewModelHash() =>
-    r'5f751e74b50f31e973b805054352867ad71cbf6a';
+    r'd7f75016098d515eb2b21c648e7cf411fa901c1f';
 
 /// See also [SearchDistrictViewModel].
 @ProviderFor(SearchDistrictViewModel)

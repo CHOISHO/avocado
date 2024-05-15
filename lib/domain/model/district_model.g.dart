@@ -13,6 +13,7 @@ _$DistrictImpl _$$DistrictImplFromJson(Map<String, dynamic> json) =>
       thoroughfare: json['emdNm'] as String? ?? '',
       streetAddress: json['jibunAddr'] as String? ?? '',
       streetNameAddress: json['roadAddr'] as String? ?? '',
+      englishStreetNameAddress: json['engAddr'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$DistrictImplToJson(_$DistrictImpl instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$DistrictImplToJson(_$DistrictImpl instance) =>
       'emdNm': instance.thoroughfare,
       'jibunAddr': instance.streetAddress,
       'roadAddr': instance.streetNameAddress,
+      'engAddr': instance.englishStreetNameAddress,
     };

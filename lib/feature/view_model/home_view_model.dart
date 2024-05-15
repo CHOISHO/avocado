@@ -31,4 +31,13 @@ class HomeViewModel extends _$HomeViewModel {
       ),
     );
   }
+
+  Future<void> setDistrict(String value) async {
+    Weather? weather = await ref
+        .read(weatherRepositoryProvider.notifier)
+        .getUltraShortTermForecast(value);
+
+    final previousState = state.asData!.value;
+    state = AsyncData(previousState.copyWith(weather: weather));
+  }
 }

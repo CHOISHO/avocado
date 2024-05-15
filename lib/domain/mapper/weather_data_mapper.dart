@@ -148,8 +148,6 @@ Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
     Logger().e(e);
   }
 
-  Logger().d(parsedByCategory);
-
   WeatherType weatherType = getWeatherType(parsedByCategory);
 
   return Weather.fromJson(parsedByCategory).copyWith(type: weatherType);

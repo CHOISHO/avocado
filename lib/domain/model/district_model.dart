@@ -11,6 +11,7 @@ class District with _$District {
     @Default('') @JsonKey(name: 'emdNm') String thoroughfare,
     @Default('') @JsonKey(name: 'jibunAddr') String streetAddress,
     @Default('') @JsonKey(name: 'roadAddr') String streetNameAddress,
+    @Default('') @JsonKey(name: 'engAddr') String englishStreetNameAddress,
   }) = _District;
 
   factory District.fromJson(Map<String, dynamic> json) =>

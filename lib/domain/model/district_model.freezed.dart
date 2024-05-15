@@ -30,6 +30,8 @@ mixin _$District {
   String get streetAddress => throw _privateConstructorUsedError;
   @JsonKey(name: 'roadAddr')
   String get streetNameAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'engAddr')
+  String get englishStreetNameAddress => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +49,8 @@ abstract class $DistrictCopyWith<$Res> {
       @JsonKey(name: 'sggNm') String subLocality,
       @JsonKey(name: 'emdNm') String thoroughfare,
       @JsonKey(name: 'jibunAddr') String streetAddress,
-      @JsonKey(name: 'roadAddr') String streetNameAddress});
+      @JsonKey(name: 'roadAddr') String streetNameAddress,
+      @JsonKey(name: 'engAddr') String englishStreetNameAddress});
 }
 
 /// @nodoc
@@ -68,6 +71,7 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
     Object? thoroughfare = null,
     Object? streetAddress = null,
     Object? streetNameAddress = null,
+    Object? englishStreetNameAddress = null,
   }) {
     return _then(_value.copyWith(
       administrativeArea: null == administrativeArea
@@ -90,6 +94,10 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
           ? _value.streetNameAddress
           : streetNameAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      englishStreetNameAddress: null == englishStreetNameAddress
+          ? _value.englishStreetNameAddress
+          : englishStreetNameAddress // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -107,7 +115,8 @@ abstract class _$$DistrictImplCopyWith<$Res>
       @JsonKey(name: 'sggNm') String subLocality,
       @JsonKey(name: 'emdNm') String thoroughfare,
       @JsonKey(name: 'jibunAddr') String streetAddress,
-      @JsonKey(name: 'roadAddr') String streetNameAddress});
+      @JsonKey(name: 'roadAddr') String streetNameAddress,
+      @JsonKey(name: 'engAddr') String englishStreetNameAddress});
 }
 
 /// @nodoc
@@ -126,6 +135,7 @@ class __$$DistrictImplCopyWithImpl<$Res>
     Object? thoroughfare = null,
     Object? streetAddress = null,
     Object? streetNameAddress = null,
+    Object? englishStreetNameAddress = null,
   }) {
     return _then(_$DistrictImpl(
       administrativeArea: null == administrativeArea
@@ -148,6 +158,10 @@ class __$$DistrictImplCopyWithImpl<$Res>
           ? _value.streetNameAddress
           : streetNameAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      englishStreetNameAddress: null == englishStreetNameAddress
+          ? _value.englishStreetNameAddress
+          : englishStreetNameAddress // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -160,7 +174,8 @@ class _$DistrictImpl implements _District {
       @JsonKey(name: 'sggNm') this.subLocality = '',
       @JsonKey(name: 'emdNm') this.thoroughfare = '',
       @JsonKey(name: 'jibunAddr') this.streetAddress = '',
-      @JsonKey(name: 'roadAddr') this.streetNameAddress = ''});
+      @JsonKey(name: 'roadAddr') this.streetNameAddress = '',
+      @JsonKey(name: 'engAddr') this.englishStreetNameAddress = ''});
 
   factory _$DistrictImpl.fromJson(Map<String, dynamic> json) =>
       _$$DistrictImplFromJson(json);
@@ -180,10 +195,13 @@ class _$DistrictImpl implements _District {
   @override
   @JsonKey(name: 'roadAddr')
   final String streetNameAddress;
+  @override
+  @JsonKey(name: 'engAddr')
+  final String englishStreetNameAddress;
 
   @override
   String toString() {
-    return 'District(administrativeArea: $administrativeArea, subLocality: $subLocality, thoroughfare: $thoroughfare, streetAddress: $streetAddress, streetNameAddress: $streetNameAddress)';
+    return 'District(administrativeArea: $administrativeArea, subLocality: $subLocality, thoroughfare: $thoroughfare, streetAddress: $streetAddress, streetNameAddress: $streetNameAddress, englishStreetNameAddress: $englishStreetNameAddress)';
   }
 
   @override
@@ -200,13 +218,16 @@ class _$DistrictImpl implements _District {
             (identical(other.streetAddress, streetAddress) ||
                 other.streetAddress == streetAddress) &&
             (identical(other.streetNameAddress, streetNameAddress) ||
-                other.streetNameAddress == streetNameAddress));
+                other.streetNameAddress == streetNameAddress) &&
+            (identical(
+                    other.englishStreetNameAddress, englishStreetNameAddress) ||
+                other.englishStreetNameAddress == englishStreetNameAddress));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, administrativeArea, subLocality,
-      thoroughfare, streetAddress, streetNameAddress);
+      thoroughfare, streetAddress, streetNameAddress, englishStreetNameAddress);
 
   @JsonKey(ignore: true)
   @override
@@ -228,7 +249,8 @@ abstract class _District implements District {
           @JsonKey(name: 'sggNm') final String subLocality,
           @JsonKey(name: 'emdNm') final String thoroughfare,
           @JsonKey(name: 'jibunAddr') final String streetAddress,
-          @JsonKey(name: 'roadAddr') final String streetNameAddress}) =
+          @JsonKey(name: 'roadAddr') final String streetNameAddress,
+          @JsonKey(name: 'engAddr') final String englishStreetNameAddress}) =
       _$DistrictImpl;
 
   factory _District.fromJson(Map<String, dynamic> json) =
@@ -249,6 +271,9 @@ abstract class _District implements District {
   @override
   @JsonKey(name: 'roadAddr')
   String get streetNameAddress;
+  @override
+  @JsonKey(name: 'engAddr')
+  String get englishStreetNameAddress;
   @override
   @JsonKey(ignore: true)
   _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>

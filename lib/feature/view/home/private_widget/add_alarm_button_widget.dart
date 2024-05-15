@@ -6,8 +6,8 @@ import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/feature/view/search_district/search_district_view.dart';
 
-class AddAlarmButton extends StatelessWidget {
-  const AddAlarmButton({
+class AddAlarmButtonWidget extends StatelessWidget {
+  const AddAlarmButtonWidget({
     super.key,
   });
 

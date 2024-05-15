@@ -1,60 +1,23 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
-import 'package:avocado/feature/view/home/private_widget/add_alarm_button.dart';
-import 'package:avocado/feature/view/home/private_widget/weather_card.dart';
-import 'package:avocado/feature/view_model/home_view_model.dart';
+import 'package:avocado/feature/view/home/private_widget/add_alarm_button_widget.dart';
+import 'package:avocado/feature/view/home/private_widget/home_header_widget.dart';
+import 'package:avocado/feature/view/home/private_widget/weather_card_widget.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<HomeViewModelState> data = ref.watch(homeViewModelProvider);
-
     return Scaffold(
       backgroundColor: AvocadoColors.grey05,
-      body: Column(
+      body: const Column(
         children: [
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: SvgPicture.asset(
-                      'assets/icons/Logo.svg',
-                      key: const Key('logo'),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset('assets/icons/setting.svg'),
-                  )
-                ],
-              ),
-            ),
-          ),
-          data.when(
-            data: (value) {
-              if (value.weather != null) {
-                return WeatherCard(value: value.weather!);
-              } else {
-                return Container();
-              }
-            },
-            error: (e, st) => const Text('Oops, something unexpected happened'),
-            loading: () => const Expanded(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          ),
-          const Expanded(
+          HomeHeaderWidget(),
+          WeatherCardWidget(),
+          Expanded(
             child: Stack(children: [
               Center(
                 child: Padding(
@@ -72,7 +35,7 @@ class HomeView extends HookConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    AddAlarmButton(),
+                    AddAlarmButtonWidget(),
                   ],
                 ),
               )

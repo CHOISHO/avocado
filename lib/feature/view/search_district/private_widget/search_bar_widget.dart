@@ -42,7 +42,7 @@ class SearchBarWidget extends HookConsumerWidget {
                     if (timer?.isActive ?? false) timer?.cancel();
 
                     timer = Timer(
-                      const Duration(milliseconds: 1000),
+                      const Duration(milliseconds: 500),
                       () async {
                         await ref
                             .read(searchDistrictViewModelProvider.notifier)

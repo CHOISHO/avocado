@@ -187,24 +187,29 @@ class __$$AlarmModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AlarmModelImpl implements _AlarmModel {
   const _$AlarmModelImpl(
-      {required this.time,
-      required this.district1,
-      required this.district2,
-      required this.district3,
-      required this.period});
+      {this.time = '',
+      this.district1 = const District(),
+      this.district2 = const District(),
+      this.district3 = const District(),
+      this.period = ''});
 
   factory _$AlarmModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AlarmModelImplFromJson(json);
 
   @override
+  @JsonKey()
   final String time;
   @override
+  @JsonKey()
   final District district1;
   @override
+  @JsonKey()
   final District district2;
   @override
+  @JsonKey()
   final District district3;
   @override
+  @JsonKey()
   final String period;
 
   @override
@@ -248,11 +253,11 @@ class _$AlarmModelImpl implements _AlarmModel {
 
 abstract class _AlarmModel implements AlarmModel {
   const factory _AlarmModel(
-      {required final String time,
-      required final District district1,
-      required final District district2,
-      required final District district3,
-      required final String period}) = _$AlarmModelImpl;
+      {final String time,
+      final District district1,
+      final District district2,
+      final District district3,
+      final String period}) = _$AlarmModelImpl;
 
   factory _AlarmModel.fromJson(Map<String, dynamic> json) =
       _$AlarmModelImpl.fromJson;

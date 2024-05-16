@@ -8,11 +8,11 @@ part 'alarm_model.g.dart';
 @freezed
 class AlarmModel with _$AlarmModel {
   const factory AlarmModel({
-    required String time,
-    required District district1,
-    required District district2,
-    required District district3,
-    required String period,
+    @Default('') String time,
+    @Default(District()) District district1,
+    @Default(District()) District district2,
+    @Default(District()) District district3,
+    @Default('') String period,
   }) = _AlarmModel;
 
   factory AlarmModel.fromJson(Map<String, dynamic> json) =>

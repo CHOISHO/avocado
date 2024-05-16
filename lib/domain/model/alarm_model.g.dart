@@ -8,11 +8,17 @@ part of 'alarm_model.dart';
 
 _$AlarmModelImpl _$$AlarmModelImplFromJson(Map<String, dynamic> json) =>
     _$AlarmModelImpl(
-      time: json['time'] as String,
-      district1: District.fromJson(json['district1'] as Map<String, dynamic>),
-      district2: District.fromJson(json['district2'] as Map<String, dynamic>),
-      district3: District.fromJson(json['district3'] as Map<String, dynamic>),
-      period: json['period'] as String,
+      time: json['time'] as String? ?? '',
+      district1: json['district1'] == null
+          ? const District()
+          : District.fromJson(json['district1'] as Map<String, dynamic>),
+      district2: json['district2'] == null
+          ? const District()
+          : District.fromJson(json['district2'] as Map<String, dynamic>),
+      district3: json['district3'] == null
+          ? const District()
+          : District.fromJson(json['district3'] as Map<String, dynamic>),
+      period: json['period'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$AlarmModelImplToJson(_$AlarmModelImpl instance) =>

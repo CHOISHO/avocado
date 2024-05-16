@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
+import 'package:avocado/feature/view/add_alarm/add_alarm_view.dart';
 
 class AddAlarmButtonWidget extends StatelessWidget {
   const AddAlarmButtonWidget({
@@ -13,7 +14,11 @@ class AddAlarmButtonWidget extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(32),
       onTap: () {
-        //TODO: 알람 설정 뷰 연결
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const AddAlarmView(),
+          ),
+        );
       },
       child: Ink(
         width: 141,

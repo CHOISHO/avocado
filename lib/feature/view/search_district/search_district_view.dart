@@ -20,8 +20,8 @@ class SearchDistrictView extends HookConsumerWidget {
       },
       child: Container(
         padding: const EdgeInsets.only(top: 6),
-        height: MediaQuery.of(context).size.height -
-            MediaQuery.of(context).padding.top,
+        height: MediaQuery.sizeOf(context).height -
+            MediaQuery.paddingOf(context).top,
         child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

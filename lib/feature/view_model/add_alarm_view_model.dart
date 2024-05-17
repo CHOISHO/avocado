@@ -22,4 +22,12 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
   AddAlarmViewModelState build() {
     return const AddAlarmViewModelState();
   }
+
+  void setPeriod(AlarmPeriodType period) {
+    state = state.copyWith(
+      alarm: state.alarm.copyWith(period: period),
+    );
+
+    // TODO: 날짜 지정 로직 - selectedDate 변수를 상태값으로 따로 저장하는게 나을듯
+  }
 }

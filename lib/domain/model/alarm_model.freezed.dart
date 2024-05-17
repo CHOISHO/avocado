@@ -24,7 +24,7 @@ mixin _$AlarmModel {
   District get district1 => throw _privateConstructorUsedError;
   District get district2 => throw _privateConstructorUsedError;
   District get district3 => throw _privateConstructorUsedError;
-  String get period => throw _privateConstructorUsedError;
+  AlarmPeriodType get period => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +43,7 @@ abstract class $AlarmModelCopyWith<$Res> {
       District district1,
       District district2,
       District district3,
-      String period});
+      AlarmPeriodType period});
 
   $DistrictCopyWith<$Res> get district1;
   $DistrictCopyWith<$Res> get district2;
@@ -89,7 +89,7 @@ class _$AlarmModelCopyWithImpl<$Res, $Val extends AlarmModel>
       period: null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
-              as String,
+              as AlarmPeriodType,
     ) as $Val);
   }
 
@@ -131,7 +131,7 @@ abstract class _$$AlarmModelImplCopyWith<$Res>
       District district1,
       District district2,
       District district3,
-      String period});
+      AlarmPeriodType period});
 
   @override
   $DistrictCopyWith<$Res> get district1;
@@ -178,7 +178,7 @@ class __$$AlarmModelImplCopyWithImpl<$Res>
       period: null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
-              as String,
+              as AlarmPeriodType,
     ));
   }
 }
@@ -191,7 +191,7 @@ class _$AlarmModelImpl implements _AlarmModel {
       this.district1 = const District(),
       this.district2 = const District(),
       this.district3 = const District(),
-      this.period = ''});
+      this.period = AlarmPeriodType.everyday});
 
   factory _$AlarmModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AlarmModelImplFromJson(json);
@@ -210,7 +210,7 @@ class _$AlarmModelImpl implements _AlarmModel {
   final District district3;
   @override
   @JsonKey()
-  final String period;
+  final AlarmPeriodType period;
 
   @override
   String toString() {
@@ -257,7 +257,7 @@ abstract class _AlarmModel implements AlarmModel {
       final District district1,
       final District district2,
       final District district3,
-      final String period}) = _$AlarmModelImpl;
+      final AlarmPeriodType period}) = _$AlarmModelImpl;
 
   factory _AlarmModel.fromJson(Map<String, dynamic> json) =
       _$AlarmModelImpl.fromJson;
@@ -271,7 +271,7 @@ abstract class _AlarmModel implements AlarmModel {
   @override
   District get district3;
   @override
-  String get period;
+  AlarmPeriodType get period;
   @override
   @JsonKey(ignore: true)
   _$$AlarmModelImplCopyWith<_$AlarmModelImpl> get copyWith =>

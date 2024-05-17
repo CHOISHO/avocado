@@ -42,7 +42,9 @@ class SelectWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                onTap();
+              },
               borderRadius: BorderRadius.circular(16),
               child: Center(
                 child: value.isEmpty

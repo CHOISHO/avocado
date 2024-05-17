@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
-import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_period_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_widget.dart';
-import 'package:avocado/feature/view_model/add_alarm_view_model.dart';
 
 class AddAlarmView extends ConsumerWidget {
   const AddAlarmView({super.key});

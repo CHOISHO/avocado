@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/text_theme.dart';
+import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_period_widget.dart';
+import 'package:avocado/feature/view/add_alarm/private_widget/select_time_modal_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_widget.dart';
+import 'package:avocado/feature/view_model/add_alarm_view_model.dart';
+import 'package:avocado/util/date.dart';
 
 class AddAlarmView extends ConsumerWidget {
   const AddAlarmView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    AlarmModel alarm = ref.watch(addAlarmViewModelProvider).alarm;
+
     return Scaffold(
       appBar: AppBar(
         leading: TextButton(
@@ -56,10 +62,11 @@ class AddAlarmView extends ConsumerWidget {
             ),
             SelectWidget(
               label: '시각',
-              value: '',
+              value:
+                  alarm.time != null ? DateUtil.getHHColonMM(alarm.time!) : '',
               hintText: '알림 시각을 선택해 주세요.',
               onTap: () {
-                // TODO: 알림 시각 선택 모달
+                showSelectTimeModalWidget(context);
               },
             ),
             SelectWidget(

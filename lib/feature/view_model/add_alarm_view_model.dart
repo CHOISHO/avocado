@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/domain/model/alarm_model.dart';
@@ -21,6 +22,12 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
   @override
   AddAlarmViewModelState build() {
     return const AddAlarmViewModelState();
+  }
+
+  void setTime(int time) {
+    state = state.copyWith(
+      alarm: state.alarm.copyWith(time: time),
+    );
   }
 
   void setPeriod(AlarmPeriodType period) {

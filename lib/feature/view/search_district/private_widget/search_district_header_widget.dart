@@ -28,7 +28,7 @@ class SearchDistrictHeaderWidget extends StatelessWidget {
         ),
         Positioned(
             child: IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pop(),
                 icon: SvgPicture.asset('assets/icons/arrow_left.svg'))),
       ],
     );

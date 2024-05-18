@@ -8,7 +8,7 @@ part of 'alarm_model.dart';
 
 _$AlarmModelImpl _$$AlarmModelImplFromJson(Map<String, dynamic> json) =>
     _$AlarmModelImpl(
-      time: json['time'] as String? ?? '',
+      time: json['time'] as int? ?? null,
       district1: json['district1'] == null
           ? const District()
           : District.fromJson(json['district1'] as Map<String, dynamic>),

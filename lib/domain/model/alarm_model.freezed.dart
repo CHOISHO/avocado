@@ -20,7 +20,7 @@ AlarmModel _$AlarmModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AlarmModel {
-  String get time => throw _privateConstructorUsedError;
+  int? get time => throw _privateConstructorUsedError;
   District get district1 => throw _privateConstructorUsedError;
   District get district2 => throw _privateConstructorUsedError;
   District get district3 => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $AlarmModelCopyWith<$Res> {
       _$AlarmModelCopyWithImpl<$Res, AlarmModel>;
   @useResult
   $Res call(
-      {String time,
+      {int? time,
       District district1,
       District district2,
       District district3,
@@ -63,17 +63,17 @@ class _$AlarmModelCopyWithImpl<$Res, $Val extends AlarmModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? time = null,
+    Object? time = freezed,
     Object? district1 = null,
     Object? district2 = null,
     Object? district3 = null,
     Object? period = null,
   }) {
     return _then(_value.copyWith(
-      time: null == time
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int?,
       district1: null == district1
           ? _value.district1
           : district1 // ignore: cast_nullable_to_non_nullable
@@ -127,7 +127,7 @@ abstract class _$$AlarmModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String time,
+      {int? time,
       District district1,
       District district2,
       District district3,
@@ -152,17 +152,17 @@ class __$$AlarmModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? time = null,
+    Object? time = freezed,
     Object? district1 = null,
     Object? district2 = null,
     Object? district3 = null,
     Object? period = null,
   }) {
     return _then(_$AlarmModelImpl(
-      time: null == time
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int?,
       district1: null == district1
           ? _value.district1
           : district1 // ignore: cast_nullable_to_non_nullable
@@ -187,7 +187,7 @@ class __$$AlarmModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AlarmModelImpl implements _AlarmModel {
   const _$AlarmModelImpl(
-      {this.time = '',
+      {this.time = null,
       this.district1 = const District(),
       this.district2 = const District(),
       this.district3 = const District(),
@@ -198,7 +198,7 @@ class _$AlarmModelImpl implements _AlarmModel {
 
   @override
   @JsonKey()
-  final String time;
+  final int? time;
   @override
   @JsonKey()
   final District district1;
@@ -253,7 +253,7 @@ class _$AlarmModelImpl implements _AlarmModel {
 
 abstract class _AlarmModel implements AlarmModel {
   const factory _AlarmModel(
-      {final String time,
+      {final int? time,
       final District district1,
       final District district2,
       final District district3,
@@ -263,7 +263,7 @@ abstract class _AlarmModel implements AlarmModel {
       _$AlarmModelImpl.fromJson;
 
   @override
-  String get time;
+  int? get time;
   @override
   District get district1;
   @override

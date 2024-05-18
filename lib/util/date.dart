@@ -91,4 +91,8 @@ class DateUtil {
       return getYYYYMMDD(date);
     }
   }
+
+  static String getHHColonMM(int time) {
+    return '${time.toString().padLeft(2, '0')}:00';
+  }
 }

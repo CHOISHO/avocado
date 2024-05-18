@@ -4,11 +4,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/domain/model/district_model.dart';
-import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/feature/view_model/search_district_view_model.dart';
 
 class DistrictListWidget extends ConsumerWidget {
+  final Function(String selectedDistrict) onSelect;
+
   const DistrictListWidget({
+    required this.onSelect,
     super.key,
   });
 
@@ -26,9 +28,7 @@ class DistrictListWidget extends ConsumerWidget {
             districts.length,
             (index) => GestureDetector(
               onTap: () {
-                ref
-                    .read(homeViewModelProvider.notifier)
-                    .setDistrict(districts[index].englishStreetNameAddress);
+                onSelect(districts[index].englishStreetNameAddress);
                 Navigator.pop(context);
               },
               child: Container(

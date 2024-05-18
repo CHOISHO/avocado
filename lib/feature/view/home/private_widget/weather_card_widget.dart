@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/domain/model/weather_model.dart';
-import 'package:avocado/feature/view/search_district/search_district_view.dart';
+import 'package:avocado/feature/view/add_alarm/private_widget/select_district_modal_widget.dart';
 import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/feature/widget/shadow_card.dart';
 
@@ -41,16 +40,11 @@ class WeatherCardWidget extends ConsumerWidget {
                               const MaterialStatePropertyAll(Size(132, 26)),
                         ),
                         onPressed: () {
-                          showMaterialModalBottomSheet(
-                            context: context,
-                            builder: (context) => const SearchDistrictView(),
-                            clipBehavior: Clip.hardEdge,
-                            enableDrag: false,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(12),
-                              ),
-                            ),
+                          showSelectDistrictModalWidget(
+                            context,
+                            (selectedDistrict) => ref
+                                .read(homeViewModelProvider.notifier)
+                                .setDistrict(selectedDistrict),
                           );
                         },
                         child: Row(

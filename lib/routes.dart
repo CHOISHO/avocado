@@ -12,6 +12,8 @@ class RoutesName {
 
 Map<String, WidgetBuilder> routes = {
   RoutesName.home: (context) => const HomeView(),
-  RoutesName.searchDistrict: (context) => const SearchDistrictView(),
+  RoutesName.searchDistrict: (context) => SearchDistrictView(
+        onSelected: (selectedDistrict) {},
+      ),
   RoutesName.addAlarm: (context) => const AddAlarmView(),
 };

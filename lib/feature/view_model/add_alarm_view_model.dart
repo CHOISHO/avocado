@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/domain/model/alarm_model.dart';
+import 'package:avocado/domain/model/district_model.dart';
 
 part 'add_alarm_view_model.freezed.dart';
 part 'add_alarm_view_model.g.dart';
@@ -27,6 +27,30 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
   void setTime(int time) {
     state = state.copyWith(
       alarm: state.alarm.copyWith(time: time),
+    );
+  }
+
+  void setDistrict1(District district) {
+    state = state.copyWith(
+      alarm: state.alarm.copyWith(
+        district1: district,
+      ),
+    );
+  }
+
+  void setDistrict2(District district) {
+    state = state.copyWith(
+      alarm: state.alarm.copyWith(
+        district2: district,
+      ),
+    );
+  }
+
+  void setDistrict3(District district) {
+    state = state.copyWith(
+      alarm: state.alarm.copyWith(
+        district3: district,
+      ),
     );
   }
 

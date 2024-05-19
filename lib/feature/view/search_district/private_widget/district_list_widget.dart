@@ -7,7 +7,7 @@ import 'package:avocado/domain/model/district_model.dart';
 import 'package:avocado/feature/view_model/search_district_view_model.dart';
 
 class DistrictListWidget extends ConsumerWidget {
-  final Function(String selectedDistrict) onSelect;
+  final Function(District selectedDistrict) onSelect;
 
   const DistrictListWidget({
     required this.onSelect,
@@ -28,7 +28,7 @@ class DistrictListWidget extends ConsumerWidget {
             districts.length,
             (index) => GestureDetector(
               onTap: () {
-                onSelect(districts[index].englishStreetNameAddress);
+                onSelect(districts[index]);
                 Navigator.pop(context);
               },
               child: Container(

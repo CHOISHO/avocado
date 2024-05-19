@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/domain/model/alarm_model.dart';
+import 'package:avocado/feature/view/add_alarm/private_widget/select_district_modal_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_period_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_time_modal_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_widget.dart';
@@ -71,26 +72,50 @@ class AddAlarmView extends ConsumerWidget {
             ),
             SelectWidget(
               label: '지역 1',
-              value: '',
+              value: ref
+                  .watch(addAlarmViewModelProvider)
+                  .alarm
+                  .district1
+                  .streetNameAddress,
               hintText: '확인 지역을 선택해 주세요.',
               onTap: () {
-                // TODO: 알림 지역 선택 모달
+                showSelectDistrictModalWidget(context, (selectedDistrict) {
+                  ref
+                      .read(addAlarmViewModelProvider.notifier)
+                      .setDistrict1(selectedDistrict);
+                });
               },
             ),
             SelectWidget(
               label: '지역 2',
-              value: '',
+              value: ref
+                  .watch(addAlarmViewModelProvider)
+                  .alarm
+                  .district2
+                  .streetNameAddress,
               hintText: '확인 지역을 선택해 주세요.',
               onTap: () {
-                // TODO: 알림 지역 선택 모달
+                showSelectDistrictModalWidget(context, (selectedDistrict) {
+                  ref
+                      .read(addAlarmViewModelProvider.notifier)
+                      .setDistrict2(selectedDistrict);
+                });
               },
             ),
             SelectWidget(
               label: '지역 3',
-              value: '',
+              value: ref
+                  .watch(addAlarmViewModelProvider)
+                  .alarm
+                  .district3
+                  .streetNameAddress,
               hintText: '확인 지역을 선택해 주세요.',
               onTap: () {
-                // TODO: 알림 지역 선택 모달
+                showSelectDistrictModalWidget(context, (selectedDistrict) {
+                  ref
+                      .read(addAlarmViewModelProvider.notifier)
+                      .setDistrict3(selectedDistrict);
+                });
               },
             ),
             const SelectPeriodWidget()

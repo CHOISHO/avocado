@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:avocado/domain/model/district_model.dart';
 import 'package:avocado/feature/view/search_district/private_widget/district_list_widget.dart';
 import 'package:avocado/feature/view/search_district/private_widget/search_bar_widget.dart';
 import 'package:avocado/feature/view/search_district/private_widget/search_district_header_widget.dart';
 
 class SearchDistrictView extends StatelessWidget {
-  final Function(String selectedDistrict) onSelected;
+  final Function(District selectedDistrict) onSelected;
 
   const SearchDistrictView({
     required this.onSelected,

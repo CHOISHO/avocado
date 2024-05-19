@@ -44,7 +44,9 @@ class WeatherCardWidget extends ConsumerWidget {
                             context,
                             (selectedDistrict) => ref
                                 .read(homeViewModelProvider.notifier)
-                                .setDistrict(selectedDistrict),
+                                .setDistrict(
+                                  selectedDistrict.englishStreetNameAddress,
+                                ),
                           );
                         },
                         child: Row(

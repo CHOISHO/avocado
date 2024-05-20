@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/domain/model/district_model.dart';
+import 'package:avocado/util/date.dart';
 
 part 'add_alarm_view_model.freezed.dart';
 part 'add_alarm_view_model.g.dart';
@@ -56,9 +57,21 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
 
   void setPeriod(AlarmPeriodType period) {
     state = state.copyWith(
-      alarm: state.alarm.copyWith(period: period),
+      alarm: state.alarm.copyWith(
+        period: period,
+        customPeriod: null,
+      ),
     );
+  }
 
-    // TODO: 날짜 지정 로직 - selectedDate 변수를 상태값으로 따로 저장하는게 나을듯
+  void setCustomPeriod(DateTime date) {
+    state = state.copyWith(
+      alarm: state.alarm.copyWith(
+        period: AlarmPeriodType.custom,
+        customPeriod: DateUtil.getYYYYMMDD(
+          date,
+        ),
+      ),
+    );
   }
 }

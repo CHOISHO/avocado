@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/domain/model/district_model.dart';
+import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/util/date.dart';
 
 part 'add_alarm_view_model.freezed.dart';
@@ -73,5 +74,9 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
         ),
       ),
     );
+  }
+
+  void addAlarm() {
+    ref.read(homeViewModelProvider.notifier).addAlarm(state.alarm);
   }
 }

@@ -21,6 +21,7 @@ _$AlarmModelImpl _$$AlarmModelImplFromJson(Map<String, dynamic> json) =>
       period: $enumDecodeNullable(_$AlarmPeriodTypeEnumMap, json['period']) ??
           AlarmPeriodType.everyday,
       customPeriod: json['customPeriod'] as String? ?? null,
+      isActivated: json['isActivated'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$AlarmModelImplToJson(_$AlarmModelImpl instance) =>
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$AlarmModelImplToJson(_$AlarmModelImpl instance) =>
       'district3': instance.district3,
       'period': _$AlarmPeriodTypeEnumMap[instance.period]!,
       'customPeriod': instance.customPeriod,
+      'isActivated': instance.isActivated,
     };
 
 const _$AlarmPeriodTypeEnumMap = {

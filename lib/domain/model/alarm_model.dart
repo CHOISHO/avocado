@@ -14,6 +14,7 @@ class AlarmModel with _$AlarmModel {
     @Default(District()) District district3,
     @Default(AlarmPeriodType.everyday) AlarmPeriodType period,
     @Default(null) String? customPeriod,
+    @Default(false) bool isActivated,
   }) = _AlarmModel;
 
   factory AlarmModel.fromJson(Map<String, dynamic> json) =>

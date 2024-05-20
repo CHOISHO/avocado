@@ -21,6 +21,7 @@ HomeViewModelState _$HomeViewModelStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$HomeViewModelState {
   Weather? get weather => throw _privateConstructorUsedError;
+  List<AlarmModel> get alarms => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $HomeViewModelStateCopyWith<$Res> {
           HomeViewModelState value, $Res Function(HomeViewModelState) then) =
       _$HomeViewModelStateCopyWithImpl<$Res, HomeViewModelState>;
   @useResult
-  $Res call({Weather? weather});
+  $Res call({Weather? weather, List<AlarmModel> alarms});
 
   $WeatherCopyWith<$Res>? get weather;
 }
@@ -53,12 +54,17 @@ class _$HomeViewModelStateCopyWithImpl<$Res, $Val extends HomeViewModelState>
   @override
   $Res call({
     Object? weather = freezed,
+    Object? alarms = null,
   }) {
     return _then(_value.copyWith(
       weather: freezed == weather
           ? _value.weather
           : weather // ignore: cast_nullable_to_non_nullable
               as Weather?,
+      alarms: null == alarms
+          ? _value.alarms
+          : alarms // ignore: cast_nullable_to_non_nullable
+              as List<AlarmModel>,
     ) as $Val);
   }
 
@@ -83,7 +89,7 @@ abstract class _$$HomeViewModelStateImplCopyWith<$Res>
       __$$HomeViewModelStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Weather? weather});
+  $Res call({Weather? weather, List<AlarmModel> alarms});
 
   @override
   $WeatherCopyWith<$Res>? get weather;
@@ -101,12 +107,17 @@ class __$$HomeViewModelStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? weather = freezed,
+    Object? alarms = null,
   }) {
     return _then(_$HomeViewModelStateImpl(
       weather: freezed == weather
           ? _value.weather
           : weather // ignore: cast_nullable_to_non_nullable
               as Weather?,
+      alarms: null == alarms
+          ? _value._alarms
+          : alarms // ignore: cast_nullable_to_non_nullable
+              as List<AlarmModel>,
     ));
   }
 }
@@ -114,7 +125,9 @@ class __$$HomeViewModelStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$HomeViewModelStateImpl implements _HomeViewModelState {
-  const _$HomeViewModelStateImpl({this.weather = null});
+  const _$HomeViewModelStateImpl(
+      {this.weather = null, final List<AlarmModel> alarms = const []})
+      : _alarms = alarms;
 
   factory _$HomeViewModelStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeViewModelStateImplFromJson(json);
@@ -122,10 +135,18 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
   @override
   @JsonKey()
   final Weather? weather;
+  final List<AlarmModel> _alarms;
+  @override
+  @JsonKey()
+  List<AlarmModel> get alarms {
+    if (_alarms is EqualUnmodifiableListView) return _alarms;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_alarms);
+  }
 
   @override
   String toString() {
-    return 'HomeViewModelState(weather: $weather)';
+    return 'HomeViewModelState(weather: $weather, alarms: $alarms)';
   }
 
   @override
@@ -133,12 +154,14 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeViewModelStateImpl &&
-            (identical(other.weather, weather) || other.weather == weather));
+            (identical(other.weather, weather) || other.weather == weather) &&
+            const DeepCollectionEquality().equals(other._alarms, _alarms));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, weather);
+  int get hashCode => Object.hash(
+      runtimeType, weather, const DeepCollectionEquality().hash(_alarms));
 
   @JsonKey(ignore: true)
   @override
@@ -156,14 +179,17 @@ class _$HomeViewModelStateImpl implements _HomeViewModelState {
 }
 
 abstract class _HomeViewModelState implements HomeViewModelState {
-  const factory _HomeViewModelState({final Weather? weather}) =
-      _$HomeViewModelStateImpl;
+  const factory _HomeViewModelState(
+      {final Weather? weather,
+      final List<AlarmModel> alarms}) = _$HomeViewModelStateImpl;
 
   factory _HomeViewModelState.fromJson(Map<String, dynamic> json) =
       _$HomeViewModelStateImpl.fromJson;
 
   @override
   Weather? get weather;
+  @override
+  List<AlarmModel> get alarms;
   @override
   @JsonKey(ignore: true)
   _$$HomeViewModelStateImplCopyWith<_$HomeViewModelStateImpl> get copyWith =>

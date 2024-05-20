@@ -12,12 +12,17 @@ _$HomeViewModelStateImpl _$$HomeViewModelStateImplFromJson(
       weather: json['weather'] == null
           ? null
           : Weather.fromJson(json['weather'] as Map<String, dynamic>),
+      alarms: (json['alarms'] as List<dynamic>?)
+              ?.map((e) => AlarmModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$HomeViewModelStateImplToJson(
         _$HomeViewModelStateImpl instance) =>
     <String, dynamic>{
       'weather': instance.weather,
+      'alarms': instance.alarms,
     };
 
 // **************************************************************************

@@ -40,7 +40,9 @@ class AddAlarmView extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () {
-              // TODO: 알림 저장 로직
+              ref.read(addAlarmViewModelProvider.notifier).addAlarm();
+
+              Navigator.pop(context);
             },
             child: Text(
               '저장',

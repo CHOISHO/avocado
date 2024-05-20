@@ -49,9 +49,19 @@ class SelectPeriodWidget extends ConsumerWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(16),
                     onTap: () {
-                      ref
-                          .read(addAlarmViewModelProvider.notifier)
-                          .setPeriod(period);
+                      if (index == 3) {
+                        showDatePicker(
+                          context: context,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(DateTime.now().year +
+                              1), // TODO: 정책적으로 지원가능한 날짜 확인
+                          barrierDismissible: false,
+                        );
+                      } else {
+                        ref
+                            .read(addAlarmViewModelProvider.notifier)
+                            .setPeriod(period);
+                      }
                     },
                     child: SizedBox(
                       width: (MediaQuery.sizeOf(context).width -

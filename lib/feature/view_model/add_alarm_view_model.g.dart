@@ -24,7 +24,7 @@ Map<String, dynamic> _$$AddAlarmViewModelStateImplToJson(
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addAlarmViewModelHash() => r'd9b0f9cd11b854dfbc081fa821acbd124dadc3f2';
+String _$addAlarmViewModelHash() => r'6019bc01b4155964d4845dbf087e8646fbf0412f';
 
 /// See also [AddAlarmViewModel].
 @ProviderFor(AddAlarmViewModel)

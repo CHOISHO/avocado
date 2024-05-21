@@ -108,4 +108,18 @@ void main() {
       );
     });
   });
+
+  group('getHHColonMMWithAMPM', () {
+    test('0 에 대해서 오전 00:00 을 반환한다.', () {
+      expect(DateUtil.getHHColonMMWithAMPM(0), '오전 00:00');
+    });
+
+    test('12 에 대해서 오전 12:00 을 반환한다.', () {
+      expect(DateUtil.getHHColonMMWithAMPM(12), '오후 12:00');
+    });
+
+    test('23 에 대해서 오후 23:00 을 반환한다.', () {
+      expect(DateUtil.getHHColonMMWithAMPM(23), '오후 23:00');
+    });
+  });
 }

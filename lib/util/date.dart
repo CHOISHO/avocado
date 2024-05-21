@@ -95,4 +95,15 @@ class DateUtil {
   static String getHHColonMM(int time) {
     return '${time.toString().padLeft(2, '0')}:00';
   }
+
+  static String getHHColonMMWithAMPM(int time) {
+    String AMPM;
+
+    if (time >= 12) {
+      AMPM = '오후';
+    } else {
+      AMPM = '오전';
+    }
+    return '$AMPM ${time.toString().padLeft(2, '0')}:00';
+  }
 }

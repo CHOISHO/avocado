@@ -9,9 +9,9 @@ part 'alarm_model.g.dart';
 class AlarmModel with _$AlarmModel {
   const factory AlarmModel({
     @Default(null) int? time,
-    @Default(District()) District district1,
-    @Default(District()) District district2,
-    @Default(District()) District district3,
+    @Default(null) District? district1,
+    @Default(null) District? district2,
+    @Default(null) District? district3,
     @Default(AlarmPeriodType.everyday) AlarmPeriodType period,
     @Default(null) String? customPeriod,
     @Default(false) bool isActivated,

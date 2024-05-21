@@ -21,9 +21,9 @@ AlarmModel _$AlarmModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AlarmModel {
   int? get time => throw _privateConstructorUsedError;
-  District get district1 => throw _privateConstructorUsedError;
-  District get district2 => throw _privateConstructorUsedError;
-  District get district3 => throw _privateConstructorUsedError;
+  District? get district1 => throw _privateConstructorUsedError;
+  District? get district2 => throw _privateConstructorUsedError;
+  District? get district3 => throw _privateConstructorUsedError;
   AlarmPeriodType get period => throw _privateConstructorUsedError;
   String? get customPeriod => throw _privateConstructorUsedError;
   bool get isActivated => throw _privateConstructorUsedError;
@@ -42,16 +42,16 @@ abstract class $AlarmModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? time,
-      District district1,
-      District district2,
-      District district3,
+      District? district1,
+      District? district2,
+      District? district3,
       AlarmPeriodType period,
       String? customPeriod,
       bool isActivated});
 
-  $DistrictCopyWith<$Res> get district1;
-  $DistrictCopyWith<$Res> get district2;
-  $DistrictCopyWith<$Res> get district3;
+  $DistrictCopyWith<$Res>? get district1;
+  $DistrictCopyWith<$Res>? get district2;
+  $DistrictCopyWith<$Res>? get district3;
 }
 
 /// @nodoc
@@ -68,9 +68,9 @@ class _$AlarmModelCopyWithImpl<$Res, $Val extends AlarmModel>
   @override
   $Res call({
     Object? time = freezed,
-    Object? district1 = null,
-    Object? district2 = null,
-    Object? district3 = null,
+    Object? district1 = freezed,
+    Object? district2 = freezed,
+    Object? district3 = freezed,
     Object? period = null,
     Object? customPeriod = freezed,
     Object? isActivated = null,
@@ -80,18 +80,18 @@ class _$AlarmModelCopyWithImpl<$Res, $Val extends AlarmModel>
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as int?,
-      district1: null == district1
+      district1: freezed == district1
           ? _value.district1
           : district1 // ignore: cast_nullable_to_non_nullable
-              as District,
-      district2: null == district2
+              as District?,
+      district2: freezed == district2
           ? _value.district2
           : district2 // ignore: cast_nullable_to_non_nullable
-              as District,
-      district3: null == district3
+              as District?,
+      district3: freezed == district3
           ? _value.district3
           : district3 // ignore: cast_nullable_to_non_nullable
-              as District,
+              as District?,
       period: null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
@@ -109,24 +109,36 @@ class _$AlarmModelCopyWithImpl<$Res, $Val extends AlarmModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $DistrictCopyWith<$Res> get district1 {
-    return $DistrictCopyWith<$Res>(_value.district1, (value) {
+  $DistrictCopyWith<$Res>? get district1 {
+    if (_value.district1 == null) {
+      return null;
+    }
+
+    return $DistrictCopyWith<$Res>(_value.district1!, (value) {
       return _then(_value.copyWith(district1: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $DistrictCopyWith<$Res> get district2 {
-    return $DistrictCopyWith<$Res>(_value.district2, (value) {
+  $DistrictCopyWith<$Res>? get district2 {
+    if (_value.district2 == null) {
+      return null;
+    }
+
+    return $DistrictCopyWith<$Res>(_value.district2!, (value) {
       return _then(_value.copyWith(district2: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $DistrictCopyWith<$Res> get district3 {
-    return $DistrictCopyWith<$Res>(_value.district3, (value) {
+  $DistrictCopyWith<$Res>? get district3 {
+    if (_value.district3 == null) {
+      return null;
+    }
+
+    return $DistrictCopyWith<$Res>(_value.district3!, (value) {
       return _then(_value.copyWith(district3: value) as $Val);
     });
   }
@@ -142,19 +154,19 @@ abstract class _$$AlarmModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? time,
-      District district1,
-      District district2,
-      District district3,
+      District? district1,
+      District? district2,
+      District? district3,
       AlarmPeriodType period,
       String? customPeriod,
       bool isActivated});
 
   @override
-  $DistrictCopyWith<$Res> get district1;
+  $DistrictCopyWith<$Res>? get district1;
   @override
-  $DistrictCopyWith<$Res> get district2;
+  $DistrictCopyWith<$Res>? get district2;
   @override
-  $DistrictCopyWith<$Res> get district3;
+  $DistrictCopyWith<$Res>? get district3;
 }
 
 /// @nodoc
@@ -169,9 +181,9 @@ class __$$AlarmModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? time = freezed,
-    Object? district1 = null,
-    Object? district2 = null,
-    Object? district3 = null,
+    Object? district1 = freezed,
+    Object? district2 = freezed,
+    Object? district3 = freezed,
     Object? period = null,
     Object? customPeriod = freezed,
     Object? isActivated = null,
@@ -181,18 +193,18 @@ class __$$AlarmModelImplCopyWithImpl<$Res>
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as int?,
-      district1: null == district1
+      district1: freezed == district1
           ? _value.district1
           : district1 // ignore: cast_nullable_to_non_nullable
-              as District,
-      district2: null == district2
+              as District?,
+      district2: freezed == district2
           ? _value.district2
           : district2 // ignore: cast_nullable_to_non_nullable
-              as District,
-      district3: null == district3
+              as District?,
+      district3: freezed == district3
           ? _value.district3
           : district3 // ignore: cast_nullable_to_non_nullable
-              as District,
+              as District?,
       period: null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
@@ -214,9 +226,9 @@ class __$$AlarmModelImplCopyWithImpl<$Res>
 class _$AlarmModelImpl implements _AlarmModel {
   const _$AlarmModelImpl(
       {this.time = null,
-      this.district1 = const District(),
-      this.district2 = const District(),
-      this.district3 = const District(),
+      this.district1 = null,
+      this.district2 = null,
+      this.district3 = null,
       this.period = AlarmPeriodType.everyday,
       this.customPeriod = null,
       this.isActivated = false});
@@ -229,13 +241,13 @@ class _$AlarmModelImpl implements _AlarmModel {
   final int? time;
   @override
   @JsonKey()
-  final District district1;
+  final District? district1;
   @override
   @JsonKey()
-  final District district2;
+  final District? district2;
   @override
   @JsonKey()
-  final District district3;
+  final District? district3;
   @override
   @JsonKey()
   final AlarmPeriodType period;
@@ -292,9 +304,9 @@ class _$AlarmModelImpl implements _AlarmModel {
 abstract class _AlarmModel implements AlarmModel {
   const factory _AlarmModel(
       {final int? time,
-      final District district1,
-      final District district2,
-      final District district3,
+      final District? district1,
+      final District? district2,
+      final District? district3,
       final AlarmPeriodType period,
       final String? customPeriod,
       final bool isActivated}) = _$AlarmModelImpl;
@@ -305,11 +317,11 @@ abstract class _AlarmModel implements AlarmModel {
   @override
   int? get time;
   @override
-  District get district1;
+  District? get district1;
   @override
-  District get district2;
+  District? get district2;
   @override
-  District get district3;
+  District? get district3;
   @override
   AlarmPeriodType get period;
   @override

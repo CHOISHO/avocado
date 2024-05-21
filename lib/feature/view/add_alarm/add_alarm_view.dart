@@ -75,10 +75,11 @@ class AddAlarmView extends ConsumerWidget {
             SelectWidget(
               label: '지역 1',
               value: ref
-                  .watch(addAlarmViewModelProvider)
-                  .alarm
-                  .district1
-                  .streetNameAddress,
+                      .watch(addAlarmViewModelProvider)
+                      .alarm
+                      .district1
+                      ?.streetNameAddress ??
+                  '',
               hintText: '확인 지역을 선택해 주세요.',
               onTap: () {
                 showSelectDistrictModalWidget(context, (selectedDistrict) {
@@ -91,10 +92,11 @@ class AddAlarmView extends ConsumerWidget {
             SelectWidget(
               label: '지역 2',
               value: ref
-                  .watch(addAlarmViewModelProvider)
-                  .alarm
-                  .district2
-                  .streetNameAddress,
+                      .watch(addAlarmViewModelProvider)
+                      .alarm
+                      .district2
+                      ?.streetNameAddress ??
+                  '',
               hintText: '확인 지역을 선택해 주세요.',
               onTap: () {
                 showSelectDistrictModalWidget(context, (selectedDistrict) {
@@ -107,10 +109,11 @@ class AddAlarmView extends ConsumerWidget {
             SelectWidget(
               label: '지역 3',
               value: ref
-                  .watch(addAlarmViewModelProvider)
-                  .alarm
-                  .district3
-                  .streetNameAddress,
+                      .watch(addAlarmViewModelProvider)
+                      .alarm
+                      .district3
+                      ?.streetNameAddress ??
+                  '',
               hintText: '확인 지역을 선택해 주세요.',
               onTap: () {
                 showSelectDistrictModalWidget(context, (selectedDistrict) {

@@ -46,7 +46,14 @@ class AlarmListWidget extends ConsumerWidget {
                 return [
                   ...List.generate(value.alarms.length, (index) {
                     var alarm = value.alarms[index];
-                    return AlarmCardWidget(alarm: alarm);
+                    return AlarmCardWidget(
+                      alarm: alarm,
+                      onToggleAlarm: () {
+                        ref
+                            .read(homeViewModelProvider.notifier)
+                            .toggleAlarm(index);
+                      },
+                    );
                   })
                 ];
               },
@@ -100,9 +107,11 @@ class AlarmCardWidget extends StatelessWidget {
   const AlarmCardWidget({
     super.key,
     required this.alarm,
+    required this.onToggleAlarm,
   });
 
   final AlarmModel alarm;
+  final Function onToggleAlarm;
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +189,7 @@ class AlarmCardWidget extends StatelessWidget {
                 activeTrackColor: AvocadoColors.main,
                 inactiveTrackColor: AvocadoColors.grey04,
                 onChanged: (value) {
-                  //TODO: 알람 on/off 로직
+                  onToggleAlarm();
                 },
               ),
             ),

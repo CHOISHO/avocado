@@ -53,22 +53,17 @@ class HomeViewModel extends _$HomeViewModel {
     );
   }
 
-  // void toggleAlarm(int index) {
-  //   final previousState = state.asData!.value;
-  //   var tempAlarm = previousState.alarms;
+  void toggleAlarm(int index) {
+    final previousState = state.asData!.value;
+    var tempAlarm = previousState.alarms.toList();
 
-  //   for (var i = 0; i < tempAlarm.length; i++) {
-  //     if (i == index) {
-  //       tempAlarm[i] = tempAlarm[i].copyWith(
-  //         isActivated: !tempAlarm[i].isActivated,
-  //       );
-  //     }
-  //   }
+    tempAlarm[index] =
+        tempAlarm[index].copyWith(isActivated: !tempAlarm[index].isActivated);
 
-  //   state = AsyncData(
-  //     previousState.copyWith(
-  //       alarms: tempAlarm,
-  //     ),
-  //   );
-  // }
+    state = AsyncData(
+      previousState.copyWith(
+        alarms: tempAlarm,
+      ),
+    );
+  }
 }

@@ -231,7 +231,7 @@ class _$AlarmModelImpl implements _AlarmModel {
       this.district3 = null,
       this.period = AlarmPeriodType.everyday,
       this.customPeriod = null,
-      this.isActivated = false});
+      this.isActivated = true});
 
   factory _$AlarmModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AlarmModelImplFromJson(json);

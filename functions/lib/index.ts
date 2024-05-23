@@ -1,8 +1,7 @@
-import {HttpsOptions, onRequest} from "firebase-functions/v2/https";
-import  * as express  from 'express';
+import * as express from 'express';
+import { HttpsOptions, onRequest } from 'firebase-functions/v2/https';
 
-import districtRoutes from "./routes/districtRoutes";
-
+import districtRoutes from './routes/districtRoutes';
 
 const httpsOptoins: HttpsOptions = { region: 'asia-northeast3'};
 

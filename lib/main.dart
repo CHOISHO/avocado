@@ -1,10 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
 
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/feature/view/home/home_view.dart';
@@ -17,7 +20,12 @@ void main() async {
   // - 실패시 화면
   await dotenv.load(fileName: '.env');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
+
+  final userCredential = await FirebaseAuth.instance.signInAnonymously();
+
+  if (kDebugMode) {
+    FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
+  }
 
   runApp(
     const ProviderScope(

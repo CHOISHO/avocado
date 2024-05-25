@@ -17,7 +17,7 @@ class ApiUtil {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-      throw Exception(response.statusCode);
+      throw Exception('${response.statusCode} ${response.body}');
     }
   }
 }

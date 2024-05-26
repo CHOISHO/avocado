@@ -7,7 +7,7 @@ const AuthController = {
     create: async (req: Request, res: Response) => {
         try {
             const userRecord = await admin.auth().createUser({
-                uid: `anonymous_${Date.now()}`,
+                uid: Date.now().toString(),
             });
     
             const customToken = await admin.auth().createCustomToken(userRecord.uid);

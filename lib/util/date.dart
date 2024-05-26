@@ -1,6 +1,12 @@
-import 'package:logger/web.dart';
-
 class DateUtil {
+  factory DateUtil() {
+    return _instance;
+  }
+
+  DateUtil._internal();
+
+  static final DateUtil _instance = DateUtil._internal();
+
   static String getYYYYMMDD(DateTime date) {
     String year = date.year.toString();
     String month = date.month.toString().padLeft(2, '0');

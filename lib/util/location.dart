@@ -53,15 +53,15 @@ class LamcParameter {
 }
 
 class LocationUtil {
-  static final LocationUtil _instance = LocationUtil._internal();
-
-  final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
-
   factory LocationUtil() {
     return _instance;
   }
 
   LocationUtil._internal();
+
+  static final LocationUtil _instance = LocationUtil._internal();
+
+  final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
   Future<bool> _handlePermission() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();

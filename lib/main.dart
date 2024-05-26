@@ -2,26 +2,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:logger/logger.dart';
 
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/feature/view/home/home_view.dart';
 import 'package:avocado/firebase_options.dart';
 import 'package:avocado/routes.dart';
+import 'package:avocado/util/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // TODO: ERROR 분기 처리
-  // - 실패시 화면
-  await dotenv.load(fileName: '.env');
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  final userCredential = await FirebaseAuth.instance.signInAnonymously();
+  await dotenv.load(fileName: '.env');
+
+  await SharedPreferencesUtil().init();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   if (kDebugMode) {
     FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
@@ -41,7 +40,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         fontFamily: 'Pretendard',
         textTheme: textTheme,
@@ -55,7 +53,7 @@ class MyApp extends StatelessWidget {
         Locale('ko'),
       ],
       routes: routes,
-      home: const HomeView(),
+      home: const HomeView(), // TODO: SPLASH SCREEN
     );
   }
 }

@@ -48,7 +48,6 @@ type GetAddressResponseDataType = {
     }
 };
 
-
 const DistrictController = {
     getDistricts: async (req: Request, res: Response) => {
         try {

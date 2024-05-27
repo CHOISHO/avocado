@@ -38,7 +38,8 @@ class UserRepository extends _$UserRepository {
 
       if (idToken != null) {
         var user = await ApiUtil.post(_url, '/auth/login', {'token': idToken});
-        Logger().d(user);
+
+        // TODO: user 정보 저장
       } else {
         throw 'idToken 이 존재하지 않습니다.';
       }

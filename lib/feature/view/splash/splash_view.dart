@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/feature/view/home/home_view.dart';
+import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/feature/view_model/splash_view_model.dart';
 
 class SplashView extends HookConsumerWidget {
@@ -38,9 +39,11 @@ class SplashView extends HookConsumerWidget {
             await ref.read(splashViewModelProvider.notifier).auth();
 
         if (authStatus == AuthStatus.success) {
+          await ref.watch(homeViewModelProvider.notifier).init();
+
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => HomeView(),
+              builder: (context) => const HomeView(),
             ),
           );
         } else {

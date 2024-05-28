@@ -29,7 +29,7 @@ Map<String, dynamic> _$$HomeViewModelStateImplToJson(
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homeViewModelHash() => r'6985ccee3565f0a78ce7ce1a8a076c910ae11c3e';
+String _$homeViewModelHash() => r'faa83dda13aa3416e246d80b429a13fb600b0842';
 
 /// See also [HomeViewModel].
 @ProviderFor(HomeViewModel)

@@ -50,7 +50,7 @@ class SplashView extends HookConsumerWidget {
 
           await ref.watch(homeViewModelProvider.notifier).init();
 
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => const HomeView(),
           ));
         } else {

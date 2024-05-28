@@ -6,20 +6,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/feature/view_model/add_alarm_view_model.dart';
+import 'package:avocado/feature/widget/show_modal.dart';
 import 'package:avocado/util/date.dart';
 
 void showSelectTimeModalWidget(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    clipBehavior: Clip.hardEdge,
-    enableDrag: false,
-    isDismissible: false,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(12),
-      ),
-    ),
-    builder: (BuildContext context) => const SelectTimeModalWidget(),
+  showModal(
+    context,
+    const SelectTimeModalWidget(),
   );
 }
 

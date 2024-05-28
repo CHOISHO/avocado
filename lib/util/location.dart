@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:avocado/domain/model/district_model.dart';
 
@@ -63,7 +64,11 @@ class LocationUtil {
 
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
-  Future<bool> _handlePermission() async {
+  Future<bool> get permissionStatusIsDenied => Permission.location.isDenied;
+
+  Future<bool> handlePermission() async {
+    bool isPermitted = true;
+
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!serviceEnabled) {
@@ -73,18 +78,13 @@ class LocationUtil {
     LocationPermission permissionStatus =
         await _geolocatorPlatform.checkPermission();
 
-    if (permissionStatus == LocationPermission.denied) {
+    if (permissionStatus == LocationPermission.denied ||
+        permissionStatus == LocationPermission.deniedForever) {
+      isPermitted = false;
       permissionStatus = await _geolocatorPlatform.requestPermission();
-      if (permissionStatus == LocationPermission.denied) {
-        return false;
-      }
     }
 
-    if (permissionStatus == LocationPermission.deniedForever) {
-      return false;
-    }
-
-    return true;
+    return isPermitted;
   }
 
   Future<Location?> getLocationFromAddress(String address) async {
@@ -122,7 +122,7 @@ class LocationUtil {
 
   Future<Location?> getLocation() async {
     try {
-      final hasPermission = await _handlePermission();
+      final hasPermission = await handlePermission();
 
       if (!hasPermission) {
         return null;

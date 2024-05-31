@@ -11,45 +11,64 @@ class AddAlarmButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(32),
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const AddAlarmView(),
-          ),
-        );
-      },
-      child: Ink(
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
         width: 141,
         height: 48,
+        margin: const EdgeInsets.only(left: 16),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [AvocadoColors.main, AvocadoColors.sub],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AvocadoColors.black.withOpacity(0.16),
-              blurRadius: 12,
-              spreadRadius: 0,
-              offset: const Offset(0, 0),
-            ),
-            BoxShadow(
-              color: AvocadoColors.black.withOpacity(0.08),
-              blurRadius: 20,
-              spreadRadius: 0,
-              offset: const Offset(4, 0),
-            ),
-          ],
           borderRadius: BorderRadius.circular(32),
-          color: AvocadoColors.mainLight,
         ),
-        child: Center(
-          child: Text(
-            '+ 알람 설정',
-            style: context.textThemeBody1.copyWith(color: AvocadoColors.white),
+        clipBehavior: Clip.hardEdge,
+        child: FloatingActionButton(
+          onPressed: () {},
+          splashColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(32),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AddAlarmView(),
+                ),
+              );
+            },
+            child: Ink(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [AvocadoColors.main, AvocadoColors.sub],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: AvocadoColors.black.withOpacity(0.16),
+                    blurRadius: 12,
+                    spreadRadius: 0,
+                    offset: const Offset(0, 0),
+                  ),
+                  BoxShadow(
+                    color: AvocadoColors.black.withOpacity(0.08),
+                    blurRadius: 20,
+                    spreadRadius: 0,
+                    offset: const Offset(4, 0),
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(32),
+                color: AvocadoColors.mainLight,
+              ),
+              child: Center(
+                child: Text(
+                  '+ 알람 설정',
+                  style: context.textThemeBody1
+                      .copyWith(color: AvocadoColors.white),
+                ),
+              ),
+            ),
           ),
         ),
       ),

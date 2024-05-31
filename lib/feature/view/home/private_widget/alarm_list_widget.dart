@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/domain/model/alarm_model.dart';
-import 'package:avocado/feature/view/home/private_widget/add_alarm_button_widget.dart';
 import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/feature/widget/shadow_card.dart';
 import 'package:avocado/util/date.dart';
@@ -19,8 +18,10 @@ class AlarmListWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var data = ref.watch(homeViewModelProvider);
 
-    return Expanded(
-      child: Stack(children: [
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         data.when(
           data: (data) => data.alarms.isNotEmpty
               ? Padding(
@@ -38,35 +39,31 @@ class AlarmListWidget extends ConsumerWidget {
           },
           loading: () => Container(),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 42.0),
-          child: Column(
-            children: data.when(
-              data: (value) {
-                return [
-                  ...List.generate(value.alarms.length, (index) {
-                    var alarm = value.alarms[index];
-                    return AlarmCardWidget(
-                      alarm: alarm,
-                      onToggleAlarm: () {
-                        ref
-                            .read(homeViewModelProvider.notifier)
-                            .toggleAlarm(index);
-                      },
-                    );
-                  })
-                ];
-              },
-              error: (e, st) => [
-                const Center(
-                  child: Text('Oops, something unexpected happened'),
-                )
-              ],
-              loading: () => [
-                const Center(
-                  child: CircularProgressIndicator(),
-                )
-              ],
+        SizedBox(
+          height: MediaQuery.sizeOf(context).height - 355,
+          child: data.when(
+            data: (value) {
+              return ListView.builder(
+                itemCount: value.alarms.length,
+                padding: const EdgeInsets.only(top: 0, bottom: 60),
+                itemBuilder: (context, index) {
+                  var alarm = value.alarms[index];
+                  return AlarmCardWidget(
+                    alarm: alarm,
+                    onToggleAlarm: () {
+                      ref
+                          .read(homeViewModelProvider.notifier)
+                          .toggleAlarm(index);
+                    },
+                  );
+                },
+              );
+            },
+            error: (e, st) => const Center(
+              child: Text('Oops, something unexpected happened'),
+            ),
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
             ),
           ),
         ),
@@ -87,18 +84,7 @@ class AlarmListWidget extends ConsumerWidget {
           },
           loading: () => Container(),
         ),
-        const Positioned(
-          left: 0,
-          right: 0,
-          bottom: 10,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AddAlarmButtonWidget(),
-            ],
-          ),
-        )
-      ]),
+      ],
     );
   }
 }
@@ -118,7 +104,9 @@ class AlarmCardWidget extends StatelessWidget {
     return shadowCard(
       SizedBox(
         width: double.infinity,
-        child: Stack(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,9 +167,8 @@ class AlarmCardWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Positioned(
-              top: -5,
-              right: 0,
+            SizedBox(
+              height: 30,
               child: Switch(
                 value: alarm.isActivated,
                 activeColor: AvocadoColors.main,

@@ -18,47 +18,52 @@ class AlarmListWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var data = ref.watch(homeViewModelProvider);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        data.when(
-          data: (data) => data.alarms.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    '알림',
-                    style: context.textThemeTitle2.copyWith(
-                      fontWeight: FontWeight.w600,
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height - 280,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          data.when(
+            data: (data) => data.alarms.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      '알림',
+                      style: context.textThemeTitle2.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                )
-              : Container(),
-          error: (Object error, StackTrace stackTrace) {
-            return Container();
-          },
-          loading: () => Container(),
-        ),
-        SizedBox(
-          height: MediaQuery.sizeOf(context).height - 335,
-          child: data.when(
-            data: (value) {
-              return ListView.builder(
-                itemCount: value.alarms.length,
-                padding: const EdgeInsets.only(top: 0, bottom: 60),
-                itemBuilder: (context, index) {
-                  var alarm = value.alarms[index];
-                  return AlarmCardWidget(
-                    alarm: alarm,
-                    onToggleAlarm: () {
-                      ref
-                          .read(homeViewModelProvider.notifier)
-                          .toggleAlarm(index);
-                    },
-                  );
-                },
-              );
+                  )
+                : Container(),
+            error: (Object error, StackTrace stackTrace) {
+              return Container();
             },
+            loading: () => Container(),
+          ),
+          data.when(
+            data: (value) => value.alarms.isNotEmpty
+                ? Expanded(
+                    child: SizedBox(
+                      child: ListView.builder(
+                        itemCount: value.alarms.length,
+                        padding: const EdgeInsets.only(top: 0, bottom: 60),
+                        itemBuilder: (context, index) {
+                          var alarm = value.alarms[index];
+                          return AlarmCardWidget(
+                            alarm: alarm,
+                            onToggleAlarm: () {
+                              ref
+                                  .read(homeViewModelProvider.notifier)
+                                  .toggleAlarm(index);
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  )
+                : Container(),
             error: (e, st) => const Center(
               child: Text('Oops, something unexpected happened'),
             ),
@@ -66,25 +71,27 @@ class AlarmListWidget extends ConsumerWidget {
               child: CircularProgressIndicator(),
             ),
           ),
-        ),
-        data.when(
-          data: (data) => data.alarms.isEmpty
-              ? const Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: Text(
-                      '설정된 알림이 없어요\n우산 챙김 알림을 추가해 보세요 :D',
-                      textAlign: TextAlign.center,
+          data.when(
+            data: (data) => data.alarms.isEmpty
+                ? const Expanded(
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 20),
+                        child: Text(
+                          '설정된 알림이 없어요\n우산 챙김 알림을 추가해 보세요 :D',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     ),
-                  ),
-                )
-              : Container(),
-          error: (Object error, StackTrace stackTrace) {
-            return Container();
-          },
-          loading: () => Container(),
-        ),
-      ],
+                  )
+                : Container(),
+            error: (Object error, StackTrace stackTrace) {
+              return Container();
+            },
+            loading: () => Container(),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -40,7 +40,7 @@ class AlarmListWidget extends ConsumerWidget {
           loading: () => Container(),
         ),
         SizedBox(
-          height: MediaQuery.sizeOf(context).height - 355,
+          height: MediaQuery.sizeOf(context).height - 335,
           child: data.when(
             data: (value) {
               return ListView.builder(

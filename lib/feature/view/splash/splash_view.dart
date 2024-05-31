@@ -48,11 +48,11 @@ class SplashView extends HookConsumerWidget {
             await showModal(context, const PermissionCheckView());
           }
 
-          await ref.watch(homeViewModelProvider.notifier).init();
-
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => const HomeView(),
-          ));
+          if (!ref.watch(homeViewModelProvider).isLoading) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const HomeView(),
+            ));
+          }
         } else {
           // TODO: error popup
         }

@@ -24,21 +24,19 @@ class HomeViewModelState with _$HomeViewModelState {
 class HomeViewModel extends _$HomeViewModel {
   @override
   Future<HomeViewModelState> build() async {
-    return Future.value(
-      const HomeViewModelState(),
-    );
+    return await _init();
   }
 
-  Future<void> init() async {
+  Future<HomeViewModelState> _init() async {
     Weather? weather = await ref
-        .watch(weatherRepositoryProvider.notifier)
+        .read(weatherRepositoryProvider.notifier)
         .getUltraShortTermForecast();
 
     List<AlarmModel> alarms = AlarmRepository().getAlarms();
 
-    final previousState = state.asData!.value;
-    state = AsyncData(
-      previousState.copyWith(weather: weather, alarms: alarms),
+    return HomeViewModelState(
+      weather: weather,
+      alarms: alarms,
     );
   }
 

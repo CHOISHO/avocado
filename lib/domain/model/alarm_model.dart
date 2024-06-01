@@ -24,7 +24,7 @@ class AlarmModel with _$AlarmModel {
 enum AlarmPeriodType {
   everyday('everyday', '매일'),
   weekday('weekday', '주중'),
-  weekend('weekend', '강한 비'),
+  weekend('weekend', '주말'),
   custom('custom', '날짜지정');
 
   const AlarmPeriodType(this.value, this.label);

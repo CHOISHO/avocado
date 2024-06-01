@@ -14,7 +14,7 @@ class SelectPeriodWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedPeriod = ref.watch(addAlarmViewModelProvider).alarm.period;
+    final state = ref.watch(addAlarmViewModelProvider);
 
     return Container(
       margin: const EdgeInsets.only(top: 24),
@@ -37,7 +37,7 @@ class SelectPeriodWidget extends ConsumerWidget {
               AlarmPeriodType.values.length,
               (index) {
                 final period = AlarmPeriodType.values[index];
-                final isSelected = selectedPeriod == period;
+                final isSelected = state.alarm.period == period;
 
                 return Ink(
                   height: 56,

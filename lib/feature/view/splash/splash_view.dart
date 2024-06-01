@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/feature/view/home/home_view.dart';
 import 'package:avocado/feature/view/permission_check_view/permission_check_view.dart';
-import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/feature/view_model/splash_view_model.dart';
 import 'package:avocado/feature/widget/show_modal.dart';
 import 'package:avocado/util/location.dart';
@@ -46,9 +45,7 @@ class SplashView extends HookConsumerWidget {
           if (await PushNotificationUtil().permissionStatusIsDenied ||
               await LocationUtil().permissionStatusIsDenied) {
             await showModal(context, const PermissionCheckView());
-          }
-
-          if (!ref.watch(homeViewModelProvider).isLoading) {
+          } else {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const HomeView(),
             ));

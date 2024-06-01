@@ -22,6 +22,8 @@ AddAlarmViewModelState _$AddAlarmViewModelStateFromJson(
 /// @nodoc
 mixin _$AddAlarmViewModelState {
   AlarmModel get alarm => throw _privateConstructorUsedError;
+  bool get isEditMode => throw _privateConstructorUsedError;
+  int? get selectedIndex => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,7 @@ abstract class $AddAlarmViewModelStateCopyWith<$Res> {
           $Res Function(AddAlarmViewModelState) then) =
       _$AddAlarmViewModelStateCopyWithImpl<$Res, AddAlarmViewModelState>;
   @useResult
-  $Res call({AlarmModel alarm});
+  $Res call({AlarmModel alarm, bool isEditMode, int? selectedIndex});
 
   $AlarmModelCopyWith<$Res> get alarm;
 }
@@ -55,12 +57,22 @@ class _$AddAlarmViewModelStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? alarm = null,
+    Object? isEditMode = null,
+    Object? selectedIndex = freezed,
   }) {
     return _then(_value.copyWith(
       alarm: null == alarm
           ? _value.alarm
           : alarm // ignore: cast_nullable_to_non_nullable
               as AlarmModel,
+      isEditMode: null == isEditMode
+          ? _value.isEditMode
+          : isEditMode // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedIndex: freezed == selectedIndex
+          ? _value.selectedIndex
+          : selectedIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -82,7 +94,7 @@ abstract class _$$AddAlarmViewModelStateImplCopyWith<$Res>
       __$$AddAlarmViewModelStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AlarmModel alarm});
+  $Res call({AlarmModel alarm, bool isEditMode, int? selectedIndex});
 
   @override
   $AlarmModelCopyWith<$Res> get alarm;
@@ -102,12 +114,22 @@ class __$$AddAlarmViewModelStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? alarm = null,
+    Object? isEditMode = null,
+    Object? selectedIndex = freezed,
   }) {
     return _then(_$AddAlarmViewModelStateImpl(
       alarm: null == alarm
           ? _value.alarm
           : alarm // ignore: cast_nullable_to_non_nullable
               as AlarmModel,
+      isEditMode: null == isEditMode
+          ? _value.isEditMode
+          : isEditMode // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedIndex: freezed == selectedIndex
+          ? _value.selectedIndex
+          : selectedIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -115,7 +137,10 @@ class __$$AddAlarmViewModelStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AddAlarmViewModelStateImpl implements _AddAlarmViewModelState {
-  const _$AddAlarmViewModelStateImpl({this.alarm = const AlarmModel()});
+  const _$AddAlarmViewModelStateImpl(
+      {this.alarm = const AlarmModel(),
+      this.isEditMode = false,
+      this.selectedIndex = null});
 
   factory _$AddAlarmViewModelStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$AddAlarmViewModelStateImplFromJson(json);
@@ -123,10 +148,16 @@ class _$AddAlarmViewModelStateImpl implements _AddAlarmViewModelState {
   @override
   @JsonKey()
   final AlarmModel alarm;
+  @override
+  @JsonKey()
+  final bool isEditMode;
+  @override
+  @JsonKey()
+  final int? selectedIndex;
 
   @override
   String toString() {
-    return 'AddAlarmViewModelState(alarm: $alarm)';
+    return 'AddAlarmViewModelState(alarm: $alarm, isEditMode: $isEditMode, selectedIndex: $selectedIndex)';
   }
 
   @override
@@ -134,12 +165,17 @@ class _$AddAlarmViewModelStateImpl implements _AddAlarmViewModelState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddAlarmViewModelStateImpl &&
-            (identical(other.alarm, alarm) || other.alarm == alarm));
+            (identical(other.alarm, alarm) || other.alarm == alarm) &&
+            (identical(other.isEditMode, isEditMode) ||
+                other.isEditMode == isEditMode) &&
+            (identical(other.selectedIndex, selectedIndex) ||
+                other.selectedIndex == selectedIndex));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, alarm);
+  int get hashCode =>
+      Object.hash(runtimeType, alarm, isEditMode, selectedIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -157,14 +193,20 @@ class _$AddAlarmViewModelStateImpl implements _AddAlarmViewModelState {
 }
 
 abstract class _AddAlarmViewModelState implements AddAlarmViewModelState {
-  const factory _AddAlarmViewModelState({final AlarmModel alarm}) =
-      _$AddAlarmViewModelStateImpl;
+  const factory _AddAlarmViewModelState(
+      {final AlarmModel alarm,
+      final bool isEditMode,
+      final int? selectedIndex}) = _$AddAlarmViewModelStateImpl;
 
   factory _AddAlarmViewModelState.fromJson(Map<String, dynamic> json) =
       _$AddAlarmViewModelStateImpl.fromJson;
 
   @override
   AlarmModel get alarm;
+  @override
+  bool get isEditMode;
+  @override
+  int? get selectedIndex;
   @override
   @JsonKey(ignore: true)
   _$$AddAlarmViewModelStateImplCopyWith<_$AddAlarmViewModelStateImpl>

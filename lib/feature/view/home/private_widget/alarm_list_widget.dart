@@ -5,6 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/domain/model/alarm_model.dart';
+import 'package:avocado/feature/view/add_alarm/add_alarm_view.dart';
+import 'package:avocado/feature/view_model/add_alarm_view_model.dart';
 import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/feature/widget/shadow_card.dart';
 import 'package:avocado/util/date.dart';
@@ -51,8 +53,18 @@ class AlarmListWidget extends ConsumerWidget {
                         padding: const EdgeInsets.only(top: 0, bottom: 60),
                         itemBuilder: (context, index) {
                           var alarm = value.alarms[index];
+
                           return AlarmCardWidget(
                             alarm: alarm,
+                            onTapCard: () {
+                              ref
+                                  .read(addAlarmViewModelProvider.notifier)
+                                  .init(index, alarm);
+
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const AddAlarmView(),
+                              ));
+                            },
                             onToggleAlarm: () {
                               ref
                                   .read(homeViewModelProvider.notifier)
@@ -100,16 +112,21 @@ class AlarmCardWidget extends StatelessWidget {
   const AlarmCardWidget({
     super.key,
     required this.alarm,
+    required this.onTapCard,
     required this.onToggleAlarm,
   });
 
   final AlarmModel alarm;
+  final Function onTapCard;
   final Function onToggleAlarm;
 
   @override
   Widget build(BuildContext context) {
-    return shadowCard(
-      SizedBox(
+    return GestureDetector(
+      onTap: () {
+        onTapCard();
+      },
+      child: shadowCard(SizedBox(
         width: double.infinity,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +206,7 @@ class AlarmCardWidget extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 }

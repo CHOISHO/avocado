@@ -13,17 +13,27 @@ part 'add_alarm_view_model.g.dart';
 class AddAlarmViewModelState with _$AddAlarmViewModelState {
   const factory AddAlarmViewModelState({
     @Default(AlarmModel()) AlarmModel alarm,
+    @Default(false) bool isEditMode,
+    @Default(null) int? selectedIndex,
   }) = _AddAlarmViewModelState;
 
   factory AddAlarmViewModelState.fromJson(Map<String, dynamic> json) =>
       _$AddAlarmViewModelStateFromJson(json);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AddAlarmViewModel extends _$AddAlarmViewModel {
   @override
   AddAlarmViewModelState build() {
     return const AddAlarmViewModelState();
+  }
+
+  void init(int index, AlarmModel alarm) {
+    state = state.copyWith(
+      alarm: alarm,
+      isEditMode: true,
+      selectedIndex: index,
+    );
   }
 
   void setTime(int time) {
@@ -78,5 +88,13 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
 
   void addAlarm() {
     ref.read(homeViewModelProvider.notifier).addAlarm(state.alarm);
+  }
+
+  void editAlarm() {
+    if (state.selectedIndex != null) {
+      ref
+          .read(homeViewModelProvider.notifier)
+          .editAlarm(state.selectedIndex!, state.alarm);
+    }
   }
 }

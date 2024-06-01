@@ -12,24 +12,28 @@ _$AddAlarmViewModelStateImpl _$$AddAlarmViewModelStateImplFromJson(
       alarm: json['alarm'] == null
           ? const AlarmModel()
           : AlarmModel.fromJson(json['alarm'] as Map<String, dynamic>),
+      isEditMode: json['isEditMode'] as bool? ?? false,
+      selectedIndex: json['selectedIndex'] as int? ?? null,
     );
 
 Map<String, dynamic> _$$AddAlarmViewModelStateImplToJson(
         _$AddAlarmViewModelStateImpl instance) =>
     <String, dynamic>{
       'alarm': instance.alarm,
+      'isEditMode': instance.isEditMode,
+      'selectedIndex': instance.selectedIndex,
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addAlarmViewModelHash() => r'6797f9ddcff4c44307d801e66455ac4a38e5ec92';
+String _$addAlarmViewModelHash() => r'4d4e5a5e1aa759daf3366a3107114c13718e6a9c';
 
 /// See also [AddAlarmViewModel].
 @ProviderFor(AddAlarmViewModel)
-final addAlarmViewModelProvider = AutoDisposeNotifierProvider<AddAlarmViewModel,
-    AddAlarmViewModelState>.internal(
+final addAlarmViewModelProvider =
+    NotifierProvider<AddAlarmViewModel, AddAlarmViewModelState>.internal(
   AddAlarmViewModel.new,
   name: r'addAlarmViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -39,6 +43,6 @@ final addAlarmViewModelProvider = AutoDisposeNotifierProvider<AddAlarmViewModel,
   allTransitiveDependencies: null,
 );
 
-typedef _$AddAlarmViewModel = AutoDisposeNotifier<AddAlarmViewModelState>;
+typedef _$AddAlarmViewModel = Notifier<AddAlarmViewModelState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

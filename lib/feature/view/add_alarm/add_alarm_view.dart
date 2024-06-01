@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/text_theme.dart';
-import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_district_modal_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_period_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_time_modal_widget.dart';
@@ -16,7 +15,7 @@ class AddAlarmView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AlarmModel alarm = ref.watch(addAlarmViewModelProvider).alarm;
+    var state = ref.watch(addAlarmViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +39,11 @@ class AddAlarmView extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () {
-              ref.read(addAlarmViewModelProvider.notifier).addAlarm();
+              if (state.isEditMode) {
+                ref.read(addAlarmViewModelProvider.notifier).editAlarm();
+              } else {
+                ref.read(addAlarmViewModelProvider.notifier).addAlarm();
+              }
 
               Navigator.pop(context);
             },
@@ -65,8 +68,9 @@ class AddAlarmView extends ConsumerWidget {
             ),
             SelectWidget(
               label: '시각',
-              value:
-                  alarm.time != null ? DateUtil.getHHColonMM(alarm.time!) : '',
+              value: state.alarm.time != null
+                  ? DateUtil.getHHColonMM(state.alarm.time!)
+                  : '',
               hintText: '알림 시각을 선택해 주세요.',
               onTap: () {
                 showSelectTimeModalWidget(context);
@@ -74,12 +78,7 @@ class AddAlarmView extends ConsumerWidget {
             ),
             SelectWidget(
               label: '지역 1',
-              value: ref
-                      .watch(addAlarmViewModelProvider)
-                      .alarm
-                      .district1
-                      ?.streetNameAddress ??
-                  '',
+              value: state.alarm.district1?.streetNameAddress ?? '',
               hintText: '확인 지역을 선택해 주세요.',
               onTap: () {
                 showSelectDistrictModalWidget(context, (selectedDistrict) {
@@ -91,12 +90,7 @@ class AddAlarmView extends ConsumerWidget {
             ),
             SelectWidget(
               label: '지역 2',
-              value: ref
-                      .watch(addAlarmViewModelProvider)
-                      .alarm
-                      .district2
-                      ?.streetNameAddress ??
-                  '',
+              value: state.alarm.district2?.streetNameAddress ?? '',
               hintText: '확인 지역을 선택해 주세요.',
               onTap: () {
                 showSelectDistrictModalWidget(context, (selectedDistrict) {
@@ -108,12 +102,7 @@ class AddAlarmView extends ConsumerWidget {
             ),
             SelectWidget(
               label: '지역 3',
-              value: ref
-                      .watch(addAlarmViewModelProvider)
-                      .alarm
-                      .district3
-                      ?.streetNameAddress ??
-                  '',
+              value: state.alarm.district3?.streetNameAddress ?? '',
               hintText: '확인 지역을 선택해 주세요.',
               onTap: () {
                 showSelectDistrictModalWidget(context, (selectedDistrict) {

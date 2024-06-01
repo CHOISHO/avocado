@@ -61,6 +61,26 @@ class HomeViewModel extends _$HomeViewModel {
     );
   }
 
+  void editAlarm(int index, AlarmModel editedAlarm) {
+    final previousState = state.asData!.value;
+
+    List<AlarmModel> newAlarms = [];
+
+    for (var i = 0; i < previousState.alarms.length; i++) {
+      if (index == i) {
+        newAlarms.add(editedAlarm);
+      } else {
+        newAlarms.add(previousState.alarms[i]);
+      }
+    }
+
+    state = AsyncData(
+      previousState.copyWith(
+        alarms: newAlarms,
+      ),
+    );
+  }
+
   void toggleAlarm(int index) {
     final previousState = state.asData!.value;
     var tempAlarm = previousState.alarms.toList();

@@ -25,7 +25,7 @@ class SelectPeriodWidget extends ConsumerWidget {
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
               '주기',
-              style: context.textThemeBody2.copyWith(
+              style: context.textThemeBodySmall.copyWith(
                 color: AvocadoColors.grey02,
                 fontWeight: FontWeight.w600,
               ),
@@ -77,7 +77,7 @@ class SelectPeriodWidget extends ConsumerWidget {
                       child: Center(
                         child: Text(
                           AlarmPeriodType.values[index].label,
-                          style: context.textThemeBody1.copyWith(
+                          style: context.textThemeBodyMedium.copyWith(
                             color: isSelected
                                 ? AvocadoColors.white
                                 : AvocadoColors.grey04,
@@ -90,7 +90,7 @@ class SelectPeriodWidget extends ConsumerWidget {
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );

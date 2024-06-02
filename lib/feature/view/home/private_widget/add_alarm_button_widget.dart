@@ -64,7 +64,7 @@ class AddAlarmButtonWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   '+ 알람 설정',
-                  style: context.textThemeBody1
+                  style: context.textThemeBodyMedium
                       .copyWith(color: AvocadoColors.white),
                 ),
               ),

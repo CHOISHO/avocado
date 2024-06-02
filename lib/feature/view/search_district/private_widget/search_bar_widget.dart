@@ -53,7 +53,7 @@ class SearchBarWidget extends HookConsumerWidget {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: '지역을 입력해 주세요.',
-                    hintStyle: context.textThemeBody1.copyWith(
+                    hintStyle: context.textThemeBodyMedium.copyWith(
                       color: AvocadoColors.grey04,
                     ),
                   ),

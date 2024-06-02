@@ -28,7 +28,7 @@ class SelectWidget extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
               label,
-              style: context.textThemeBody2.copyWith(
+              style: context.textThemeBodySmall.copyWith(
                 color: AvocadoColors.grey02,
                 fontWeight: FontWeight.w600,
               ),
@@ -50,14 +50,14 @@ class SelectWidget extends StatelessWidget {
                 child: value.isEmpty
                     ? Text(
                         hintText,
-                        style: context.textThemeBody1.copyWith(
+                        style: context.textThemeBodyMedium.copyWith(
                           color: AvocadoColors.grey04,
                           fontWeight: FontWeight.w500,
                         ),
                       )
                     : Text(
                         value,
-                        style: context.textThemeBody1.copyWith(
+                        style: context.textThemeBodyMedium.copyWith(
                           color: AvocadoColors.main,
                           fontWeight: FontWeight.w500,
                         ),

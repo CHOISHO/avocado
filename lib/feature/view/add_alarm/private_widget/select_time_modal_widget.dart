@@ -95,7 +95,7 @@ class _SelectTimeModalWidgetState extends State<SelectTimeModalWidget> {
                     child: Center(
                       child: Text(
                         '선택 완료',
-                        style: context.textThemeTitle2.copyWith(
+                        style: context.textThemeTitleSmall.copyWith(
                           color: AvocadoColors.white,
                           fontWeight: FontWeight.w600,
                         ),

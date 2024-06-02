@@ -41,14 +41,14 @@ TextTheme textTheme = TextTheme(
 );
 
 extension UIThemeExtension on BuildContext {
-  TextStyle get textThemeTitle1 =>
+  TextStyle get textThemeTitleMedium =>
       Theme.of(this).textTheme.titleMedium ?? const TextStyle();
-  TextStyle get textThemeTitle2 =>
+  TextStyle get textThemeTitleSmall =>
       Theme.of(this).textTheme.titleSmall ?? const TextStyle();
-  TextStyle get textThemeBody1 =>
+  TextStyle get textThemeBodyMedium =>
       Theme.of(this).textTheme.bodyMedium ?? const TextStyle();
-  TextStyle get textThemeBody2 =>
+  TextStyle get textThemeBodySmall =>
       Theme.of(this).textTheme.bodySmall ?? const TextStyle();
-  TextStyle get textThemeLabel =>
+  TextStyle get textThemeLabelMedium =>
       Theme.of(this).textTheme.labelMedium ?? const TextStyle();
 }

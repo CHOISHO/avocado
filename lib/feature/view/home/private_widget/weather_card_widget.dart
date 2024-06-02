@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
@@ -54,7 +54,7 @@ class WeatherCardWidget extends ConsumerWidget {
                           children: [
                             Text(
                               '${value.weather!.district.administrativeArea}, ${value.weather!.district.subLocality} ${value.weather!.district.thoroughfare}',
-                              style: context.textThemeLabel
+                              style: context.textThemeLabelMedium
                                   .copyWith(color: AvocadoColors.white),
                             ),
                             Padding(
@@ -71,7 +71,7 @@ class WeatherCardWidget extends ConsumerWidget {
                       weatherCardContent[value.weather!.type] != null
                           ? Text(
                               weatherCardContent[value.weather!.type]!.label,
-                              style: context.textThemeTitle1
+                              style: context.textThemeTitleMedium
                                   .copyWith(fontWeight: FontWeight.w600),
                             )
                           : Container(),
@@ -79,7 +79,7 @@ class WeatherCardWidget extends ConsumerWidget {
                           ? Text(
                               weatherCardContent[value.weather!.type]!
                                   .description,
-                              style: context.textThemeBody2
+                              style: context.textThemeBodySmall
                                   .copyWith(fontWeight: FontWeight.w500),
                             )
                           : Container(),

@@ -33,7 +33,7 @@ class AlarmListWidget extends ConsumerWidget {
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       '알림',
-                      style: context.textThemeTitle2.copyWith(
+                      style: context.textThemeTitleSmall.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -139,14 +139,14 @@ class AlarmCardWidget extends StatelessWidget {
                   children: [
                     Text(
                       '${alarm.period.label} ',
-                      style: context.textThemeBody1
+                      style: context.textThemeBodyMedium
                           .copyWith(fontWeight: FontWeight.w500),
                     ),
                     Text(
                       alarm.time != null
                           ? DateUtil.getHHColonMMWithAMPM(alarm.time!)
                           : '',
-                      style: context.textThemeBody1.copyWith(
+                      style: context.textThemeBodyMedium.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AvocadoColors.main,
                       ),
@@ -159,33 +159,33 @@ class AlarmCardWidget extends StatelessWidget {
                       alarm.district1?.thoroughfare != null
                           ? '${alarm.district1?.thoroughfare}'
                           : '',
-                      style: context.textThemeBody1
+                      style: context.textThemeBodyMedium
                           .copyWith(fontWeight: FontWeight.w500),
                     ),
                     Text(
                       alarm.district2?.thoroughfare != null
                           ? ', ${alarm.district2?.thoroughfare}'
                           : '',
-                      style: context.textThemeBody1
+                      style: context.textThemeBodyMedium
                           .copyWith(fontWeight: FontWeight.w500),
                     ),
                     Text(
                       alarm.district3?.thoroughfare != null
                           ? ', ${alarm.district3?.thoroughfare}'
                           : '',
-                      style: context.textThemeBody1
+                      style: context.textThemeBodyMedium
                           .copyWith(fontWeight: FontWeight.w500),
                     ),
                     Text(
                       '에',
-                      style: context.textThemeBody1
+                      style: context.textThemeBodyMedium
                           .copyWith(fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
                 Text(
                   '비가 오면 알려줄게요.',
-                  style: context.textThemeBody1.copyWith(
+                  style: context.textThemeBodyMedium.copyWith(
                     color: AvocadoColors.grey02,
                   ),
                 ),

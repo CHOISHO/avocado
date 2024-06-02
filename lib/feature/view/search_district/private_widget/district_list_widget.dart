@@ -35,7 +35,7 @@ class DistrictListWidget extends ConsumerWidget {
                 padding: const EdgeInsets.all(16),
                 child: Text(
                   districts[index].streetNameAddress,
-                  style: context.textThemeBody1,
+                  style: context.textThemeBodyMedium,
                   textAlign: TextAlign.start,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

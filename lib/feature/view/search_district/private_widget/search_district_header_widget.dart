@@ -20,7 +20,7 @@ class SearchDistrictHeaderWidget extends StatelessWidget {
               padding: const EdgeInsets.only(top: 9.0),
               child: Text(
                 '지역 검색',
-                style: context.textThemeBody1
+                style: context.textThemeBodyMedium
                     .copyWith(fontWeight: FontWeight.w600),
               ),
             )

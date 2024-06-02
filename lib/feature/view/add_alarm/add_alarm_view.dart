@@ -25,13 +25,14 @@ class AddAlarmView extends ConsumerWidget {
           },
           child: Text(
             '취소',
-            style: context.textThemeBody1.copyWith(fontWeight: FontWeight.w600),
+            style: context.textThemeBodyMedium
+                .copyWith(fontWeight: FontWeight.w600),
           ),
         ),
         title: Center(
           child: Text(
             '알림 추가',
-            style: context.textThemeBody1.copyWith(
+            style: context.textThemeBodyMedium.copyWith(
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -49,7 +50,7 @@ class AddAlarmView extends ConsumerWidget {
             },
             child: Text(
               '저장',
-              style: context.textThemeBody1.copyWith(
+              style: context.textThemeBodyMedium.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -63,8 +64,8 @@ class AddAlarmView extends ConsumerWidget {
           children: [
             Text(
               '우산을 챙겨야 할 때,\n푸시 알림으로 알려드릴게요!',
-              style:
-                  context.textThemeBody1.copyWith(fontWeight: FontWeight.w500),
+              style: context.textThemeBodyMedium
+                  .copyWith(fontWeight: FontWeight.w500),
             ),
             SelectWidget(
               label: '시각',

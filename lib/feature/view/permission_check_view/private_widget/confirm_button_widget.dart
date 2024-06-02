@@ -52,7 +52,7 @@ class ConfirmButtonWidget extends StatelessWidget {
         child: Center(
           child: Text(
             '확인',
-            style: context.textThemeTitle2.copyWith(
+            style: context.textThemeTitleSmall.copyWith(
               color: AvocadoColors.white,
               fontWeight: FontWeight.w600,
             ),

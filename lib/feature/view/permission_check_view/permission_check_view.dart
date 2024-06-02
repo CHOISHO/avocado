@@ -26,7 +26,7 @@ class PermissionCheckView extends HookWidget {
                   child: Text(
                     '우산 챙김 알림 서비스 ‘비오니\n사용을 위해 다음 권한의 허용이 필요해요.',
                     textAlign: TextAlign.center,
-                    style: context.textThemeTitle2.copyWith(
+                    style: context.textThemeTitleSmall.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -49,7 +49,7 @@ class PermissionCheckView extends HookWidget {
                                   padding: const EdgeInsets.only(left: 4),
                                   child: Text(
                                     '위치',
-                                    style: context.textThemeBody1.copyWith(
+                                    style: context.textThemeBodyMedium.copyWith(
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -59,7 +59,7 @@ class PermissionCheckView extends HookWidget {
                           ),
                           Text(
                             '비 예보 설정 지역 검색 시 사용',
-                            style: context.textThemeBody2.copyWith(
+                            style: context.textThemeBodyMedium.copyWith(
                               fontWeight: FontWeight.w500,
                               color: AvocadoColors.grey01,
                             ),
@@ -81,7 +81,7 @@ class PermissionCheckView extends HookWidget {
                                   padding: const EdgeInsets.only(left: 4),
                                   child: Text(
                                     '알림',
-                                    style: context.textThemeBody1.copyWith(
+                                    style: context.textThemeBodyMedium.copyWith(
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -91,7 +91,7 @@ class PermissionCheckView extends HookWidget {
                           ),
                           Text(
                             '우산 챙김 푸시 알림 전송 시 사용',
-                            style: context.textThemeBody2.copyWith(
+                            style: context.textThemeBodySmall.copyWith(
                               fontWeight: FontWeight.w500,
                               color: AvocadoColors.grey01,
                             ),
@@ -118,13 +118,13 @@ class PermissionCheckView extends HookWidget {
                     children: [
                       Text(
                         '· 허용하지 않을 시 비오니 서비스 이용에 제한이 있을 수 있어요.',
-                        style: context.textThemeLabel.copyWith(
+                        style: context.textThemeLabelMedium.copyWith(
                           color: AvocadoColors.grey03,
                         ),
                       ),
                       Text(
                         '· ‘설정 > 비오니’ 에서 언제든지 허용 여부를 변경할 수 있어요.',
-                        style: context.textThemeLabel.copyWith(
+                        style: context.textThemeLabelMedium.copyWith(
                           color: AvocadoColors.grey03,
                         ),
                       ),

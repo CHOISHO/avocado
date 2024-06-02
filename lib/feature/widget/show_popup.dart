@@ -10,6 +10,7 @@ Future<void> showPopup(BuildContext context, Widget child) async {
       builder: (context) {
         return Center(
           child: Container(
+            width: MediaQuery.sizeOf(context).width - 16 * 2,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: AvocadoColors.white,

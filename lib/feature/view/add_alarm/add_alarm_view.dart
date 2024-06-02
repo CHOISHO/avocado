@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
+import 'package:avocado/feature/view/add_alarm/private_widget/remove_alarm_remind_popup_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_district_modal_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_period_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_time_modal_widget.dart';
@@ -113,7 +115,27 @@ class AddAlarmView extends ConsumerWidget {
                 });
               },
             ),
-            const SelectPeriodWidget()
+            const SelectPeriodWidget(),
+            state.isEditMode
+                ? GestureDetector(
+                    onTap: () {
+                      showRemoveAlarmRemindPopupWidget(
+                          context, (selectedDistrict) => null);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Center(
+                        child: Text(
+                          '알림 삭제',
+                          style: context.textThemeBodyMedium.copyWith(
+                            color: AvocadoColors.red,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),

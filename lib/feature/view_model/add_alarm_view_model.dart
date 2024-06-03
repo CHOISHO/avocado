@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'package:avocado/data/repository/alarm_repository.dart';
 import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/domain/model/district_model.dart';
-import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/util/date.dart';
 
 part 'add_alarm_view_model.freezed.dart';
@@ -26,6 +26,14 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
   @override
   AddAlarmViewModelState build() {
     return const AddAlarmViewModelState();
+  }
+
+  void reset() {
+    state = state.copyWith(
+      alarm: const AlarmModel(),
+      isEditMode: false,
+      selectedIndex: null,
+    );
   }
 
   void init(int index, AlarmModel alarm) {
@@ -87,13 +95,13 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
   }
 
   void addAlarm() {
-    ref.read(homeViewModelProvider.notifier).addAlarm(state.alarm);
+    ref.read(alarmRepositoryProvider.notifier).addAlarm(state.alarm);
   }
 
   void editAlarm() {
     if (state.selectedIndex != null) {
       ref
-          .read(homeViewModelProvider.notifier)
+          .read(alarmRepositoryProvider.notifier)
           .editAlarm(state.selectedIndex!, state.alarm);
     }
   }
@@ -101,7 +109,7 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
   void removeAlarm() {
     if (state.selectedIndex != null) {
       ref
-          .read(homeViewModelProvider.notifier)
+          .read(alarmRepositoryProvider.notifier)
           .removeAlarm(state.selectedIndex!);
     }
   }

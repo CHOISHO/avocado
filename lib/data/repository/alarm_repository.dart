@@ -1,26 +1,35 @@
 import 'dart:convert';
 
 import 'package:logger/logger.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/util/shared_preferences.dart';
 
-class AlarmRepository {
-  factory AlarmRepository() {
-    return _instance;
+part 'alarm_repository.g.dart';
+
+@riverpod
+class AlarmRepository extends _$AlarmRepository {
+  @override
+  List<AlarmModel> build() {
+    return init();
   }
 
-  AlarmRepository._internal();
+  List<AlarmModel> init() {
+    List<String> alarms =
+        SharedPreferencesUtil().getStringList('alarms')?.toList() ?? [];
 
-  static final AlarmRepository _instance = AlarmRepository._internal();
+    var parsedAlarms =
+        alarms.map((e) => AlarmModel.fromJson(jsonDecode(e))).toList();
+
+    return parsedAlarms;
+  }
 
   Future<void> addAlarm(AlarmModel alarm) async {
     try {
-      List<String> alarms =
-          SharedPreferencesUtil().getStringList('alarms')?.toList() ?? [];
+      var newAlarms = [...state, alarm];
 
-      await SharedPreferencesUtil()
-          .setStringList('alarms', [...alarms, jsonEncode(alarm.toJson())]);
+      updateAlarm(newAlarms);
     } catch (error) {
       Logger().e(error);
     }
@@ -36,9 +45,38 @@ class AlarmRepository {
     return parsedAlarms;
   }
 
-  Future<void> updateAlarm(List<AlarmModel> alarms) async {
+  void editAlarm(int index, AlarmModel editedAlarm) {
+    // TODO: server update
+    final newAlarms = [...state];
+
+    newAlarms[index] = editedAlarm;
+
+    updateAlarm(newAlarms);
+  }
+
+  void toggleAlarm(int index) {
+    final newAlarms = [...state];
+
+    newAlarms[index] =
+        newAlarms[index].copyWith(isActivated: !newAlarms[index].isActivated);
+
+    updateAlarm(newAlarms);
+  }
+
+  void removeAlarm(int index) {
+    // TODO: server update
+    final newAlarms = [...state];
+
+    newAlarms.removeAt(index);
+
+    updateAlarm(newAlarms);
+  }
+
+  Future<void> updateAlarm(List<AlarmModel> newAlarms) async {
+    state = newAlarms;
+
     List<String> jsonifiedAlarms =
-        alarms.map((alarm) => jsonEncode(alarm.toJson())).toList();
+        newAlarms.map((alarm) => jsonEncode(alarm.toJson())).toList();
 
     await SharedPreferencesUtil().setStringList('alarms', jsonifiedAlarms);
   }

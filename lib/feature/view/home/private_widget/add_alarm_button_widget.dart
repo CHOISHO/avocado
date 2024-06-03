@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/feature/view/add_alarm/add_alarm_view.dart';
+import 'package:avocado/feature/view_model/add_alarm_view_model.dart';
 
-class AddAlarmButtonWidget extends StatelessWidget {
+class AddAlarmButtonWidget extends ConsumerWidget {
   const AddAlarmButtonWidget({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -31,6 +34,8 @@ class AddAlarmButtonWidget extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(32),
             onTap: () {
+              ref.read(addAlarmViewModelProvider.notifier).reset();
+
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const AddAlarmView(),

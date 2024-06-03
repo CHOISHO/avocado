@@ -119,8 +119,13 @@ class AddAlarmView extends ConsumerWidget {
             state.isEditMode
                 ? GestureDetector(
                     onTap: () {
-                      showRemoveAlarmRemindPopupWidget(
-                          context, (selectedDistrict) => null);
+                      showRemoveAlarmRemindPopupWidget(context, onConfirm: () {
+                        ref
+                            .read(addAlarmViewModelProvider.notifier)
+                            .removeAlarm();
+
+                        Navigator.of(context).pop();
+                      });
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(24),

@@ -13,7 +13,7 @@ class GradientConfirmButton extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: () {
-        // onTap();
+        onTap();
       },
       child: Ink(
         height: 56,

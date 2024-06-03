@@ -97,4 +97,12 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
           .editAlarm(state.selectedIndex!, state.alarm);
     }
   }
+
+  void removeAlarm() {
+    if (state.selectedIndex != null) {
+      ref
+          .read(homeViewModelProvider.notifier)
+          .removeAlarm(state.selectedIndex!);
+    }
+  }
 }

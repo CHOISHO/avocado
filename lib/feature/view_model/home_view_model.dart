@@ -50,48 +50,66 @@ class HomeViewModel extends _$HomeViewModel {
   }
 
   void addAlarm(AlarmModel alarm) {
-    AlarmRepository().addAlarm(alarm);
-
+    // TODO: server update
+    // REFACT: AlarmRepository 를 참조하여 구현 가능한가?
     final previousState = state.asData!.value;
-
-    state = AsyncData(
-      previousState.copyWith(
-        alarms: [...previousState.alarms, alarm],
-      ),
-    );
-  }
-
-  void editAlarm(int index, AlarmModel editedAlarm) {
-    final previousState = state.asData!.value;
-
-    List<AlarmModel> newAlarms = [];
-
-    for (var i = 0; i < previousState.alarms.length; i++) {
-      if (index == i) {
-        newAlarms.add(editedAlarm);
-      } else {
-        newAlarms.add(previousState.alarms[i]);
-      }
-    }
+    final newAlarms = [...previousState.alarms, alarm];
 
     state = AsyncData(
       previousState.copyWith(
         alarms: newAlarms,
       ),
     );
+
+    AlarmRepository().updateAlarm(newAlarms);
   }
 
-  void toggleAlarm(int index) {
+  void editAlarm(int index, AlarmModel editedAlarm) {
+    // TODO: server update
     final previousState = state.asData!.value;
-    var tempAlarm = previousState.alarms.toList();
+    final newAlarms = [...previousState.alarms];
 
-    tempAlarm[index] =
-        tempAlarm[index].copyWith(isActivated: !tempAlarm[index].isActivated);
+    newAlarms[index] = editedAlarm;
 
     state = AsyncData(
       previousState.copyWith(
-        alarms: tempAlarm,
+        alarms: newAlarms,
       ),
     );
+
+    AlarmRepository().updateAlarm(newAlarms);
+  }
+
+  void removeAlarm(int index) {
+    // TODO: server update
+    final previousState = state.asData!.value;
+    final newAlarms = [...previousState.alarms];
+
+    newAlarms.removeAt(index);
+
+    state = AsyncData(
+      previousState.copyWith(
+        alarms: newAlarms,
+      ),
+    );
+
+    AlarmRepository().updateAlarm(newAlarms);
+  }
+
+  void toggleAlarm(int index) {
+    // TODO: server update
+    final previousState = state.asData!.value;
+    final newAlarms = [...previousState.alarms];
+
+    newAlarms[index] =
+        newAlarms[index].copyWith(isActivated: !newAlarms[index].isActivated);
+
+    state = AsyncData(
+      previousState.copyWith(
+        alarms: newAlarms,
+      ),
+    );
+
+    AlarmRepository().updateAlarm(newAlarms);
   }
 }

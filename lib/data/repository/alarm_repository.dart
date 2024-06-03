@@ -35,4 +35,11 @@ class AlarmRepository {
 
     return parsedAlarms;
   }
+
+  Future<void> updateAlarm(List<AlarmModel> alarms) async {
+    List<String> jsonifiedAlarms =
+        alarms.map((alarm) => jsonEncode(alarm.toJson())).toList();
+
+    await SharedPreferencesUtil().setStringList('alarms', jsonifiedAlarms);
+  }
 }

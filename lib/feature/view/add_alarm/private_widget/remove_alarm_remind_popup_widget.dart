@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:avocado/config/text_theme.dart';
-import 'package:avocado/domain/model/district_model.dart';
 import 'package:avocado/feature/widget/gradient_cancel_button_widget.dart';
 import 'package:avocado/feature/widget/gradient_confirm_button_widget.dart';
 import 'package:avocado/feature/widget/show_popup.dart';
 
 void showRemoveAlarmRemindPopupWidget(
-  BuildContext context,
-  Function(District selectedDistrict) onConfirm,
-) {
+  BuildContext context, {
+  required Function() onConfirm,
+}) {
   showPopup(
     context,
     Material(
@@ -41,7 +40,8 @@ void showRemoveAlarmRemindPopupWidget(
             padding: const EdgeInsets.only(top: 32, bottom: 8),
             child: GradientConfirmButton(
               onTap: () {
-                // TODO: 알림 삭제
+                onConfirm();
+                Navigator.of(context).pop();
               },
             ),
           ),

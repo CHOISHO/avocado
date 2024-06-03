@@ -87,9 +87,7 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
     state = state.copyWith(
       alarm: state.alarm.copyWith(
         period: AlarmPeriodType.custom,
-        customPeriod: DateUtil.getYYYYMMDD(
-          date,
-        ),
+        customPeriod: date,
       ),
     );
   }

@@ -13,7 +13,7 @@ class AlarmModel with _$AlarmModel {
     @Default(null) District? district2,
     @Default(null) District? district3,
     @Default(AlarmPeriodType.everyday) AlarmPeriodType period,
-    @Default(null) String? customPeriod,
+    @Default(null) DateTime? customPeriod,
     @Default(true) bool isActivated,
   }) = _AlarmModel;
 

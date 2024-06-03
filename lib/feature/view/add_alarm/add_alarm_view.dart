@@ -59,89 +59,92 @@ class AddAlarmView extends ConsumerWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '우산을 챙겨야 할 때,\n푸시 알림으로 알려드릴게요!',
-              style: context.textThemeBodyMedium
-                  .copyWith(fontWeight: FontWeight.w500),
-            ),
-            SelectWidget(
-              label: '시각',
-              value: state.alarm.time != null
-                  ? DateUtil.getHHColonMM(state.alarm.time!)
-                  : '',
-              hintText: '알림 시각을 선택해 주세요.',
-              onTap: () {
-                showSelectTimeModalWidget(context);
-              },
-            ),
-            SelectWidget(
-              label: '지역 1',
-              value: state.alarm.district1?.streetNameAddress ?? '',
-              hintText: '확인 지역을 선택해 주세요.',
-              onTap: () {
-                showSelectDistrictModalWidget(context, (selectedDistrict) {
-                  ref
-                      .read(addAlarmViewModelProvider.notifier)
-                      .setDistrict1(selectedDistrict);
-                });
-              },
-            ),
-            SelectWidget(
-              label: '지역 2',
-              value: state.alarm.district2?.streetNameAddress ?? '',
-              hintText: '확인 지역을 선택해 주세요.',
-              onTap: () {
-                showSelectDistrictModalWidget(context, (selectedDistrict) {
-                  ref
-                      .read(addAlarmViewModelProvider.notifier)
-                      .setDistrict2(selectedDistrict);
-                });
-              },
-            ),
-            SelectWidget(
-              label: '지역 3',
-              value: state.alarm.district3?.streetNameAddress ?? '',
-              hintText: '확인 지역을 선택해 주세요.',
-              onTap: () {
-                showSelectDistrictModalWidget(context, (selectedDistrict) {
-                  ref
-                      .read(addAlarmViewModelProvider.notifier)
-                      .setDistrict3(selectedDistrict);
-                });
-              },
-            ),
-            const SelectPeriodWidget(),
-            state.isEditMode
-                ? GestureDetector(
-                    onTap: () {
-                      showRemoveAlarmRemindPopupWidget(context, onConfirm: () {
-                        ref
-                            .read(addAlarmViewModelProvider.notifier)
-                            .removeAlarm();
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '우산을 챙겨야 할 때,\n푸시 알림으로 알려드릴게요!',
+                style: context.textThemeBodyMedium
+                    .copyWith(fontWeight: FontWeight.w500),
+              ),
+              SelectWidget(
+                label: '시각',
+                value: state.alarm.time != null
+                    ? DateUtil.getHHColonMM(state.alarm.time!)
+                    : '',
+                hintText: '알림 시각을 선택해 주세요.',
+                onTap: () {
+                  showSelectTimeModalWidget(context);
+                },
+              ),
+              SelectWidget(
+                label: '지역 1',
+                value: state.alarm.district1?.streetNameAddress ?? '',
+                hintText: '확인 지역을 선택해 주세요.',
+                onTap: () {
+                  showSelectDistrictModalWidget(context, (selectedDistrict) {
+                    ref
+                        .read(addAlarmViewModelProvider.notifier)
+                        .setDistrict1(selectedDistrict);
+                  });
+                },
+              ),
+              SelectWidget(
+                label: '지역 2',
+                value: state.alarm.district2?.streetNameAddress ?? '',
+                hintText: '확인 지역을 선택해 주세요.',
+                onTap: () {
+                  showSelectDistrictModalWidget(context, (selectedDistrict) {
+                    ref
+                        .read(addAlarmViewModelProvider.notifier)
+                        .setDistrict2(selectedDistrict);
+                  });
+                },
+              ),
+              SelectWidget(
+                label: '지역 3',
+                value: state.alarm.district3?.streetNameAddress ?? '',
+                hintText: '확인 지역을 선택해 주세요.',
+                onTap: () {
+                  showSelectDistrictModalWidget(context, (selectedDistrict) {
+                    ref
+                        .read(addAlarmViewModelProvider.notifier)
+                        .setDistrict3(selectedDistrict);
+                  });
+                },
+              ),
+              const SelectPeriodWidget(),
+              state.isEditMode
+                  ? GestureDetector(
+                      onTap: () {
+                        showRemoveAlarmRemindPopupWidget(context,
+                            onConfirm: () {
+                          ref
+                              .read(addAlarmViewModelProvider.notifier)
+                              .removeAlarm();
 
-                        Navigator.of(context).pop();
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Center(
-                        child: Text(
-                          '알림 삭제',
-                          style: context.textThemeBodyMedium.copyWith(
-                            color: AvocadoColors.red,
-                            fontWeight: FontWeight.w600,
+                          Navigator.of(context).pop();
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Center(
+                          child: Text(
+                            '알림 삭제',
+                            style: context.textThemeBodyMedium.copyWith(
+                              color: AvocadoColors.red,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                : Container(),
-          ],
+                    )
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );

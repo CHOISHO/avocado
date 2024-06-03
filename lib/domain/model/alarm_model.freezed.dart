@@ -25,7 +25,7 @@ mixin _$AlarmModel {
   District? get district2 => throw _privateConstructorUsedError;
   District? get district3 => throw _privateConstructorUsedError;
   AlarmPeriodType get period => throw _privateConstructorUsedError;
-  String? get customPeriod => throw _privateConstructorUsedError;
+  DateTime? get customPeriod => throw _privateConstructorUsedError;
   bool get isActivated => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $AlarmModelCopyWith<$Res> {
       District? district2,
       District? district3,
       AlarmPeriodType period,
-      String? customPeriod,
+      DateTime? customPeriod,
       bool isActivated});
 
   $DistrictCopyWith<$Res>? get district1;
@@ -99,7 +99,7 @@ class _$AlarmModelCopyWithImpl<$Res, $Val extends AlarmModel>
       customPeriod: freezed == customPeriod
           ? _value.customPeriod
           : customPeriod // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
       isActivated: null == isActivated
           ? _value.isActivated
           : isActivated // ignore: cast_nullable_to_non_nullable
@@ -158,7 +158,7 @@ abstract class _$$AlarmModelImplCopyWith<$Res>
       District? district2,
       District? district3,
       AlarmPeriodType period,
-      String? customPeriod,
+      DateTime? customPeriod,
       bool isActivated});
 
   @override
@@ -212,7 +212,7 @@ class __$$AlarmModelImplCopyWithImpl<$Res>
       customPeriod: freezed == customPeriod
           ? _value.customPeriod
           : customPeriod // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
       isActivated: null == isActivated
           ? _value.isActivated
           : isActivated // ignore: cast_nullable_to_non_nullable
@@ -253,7 +253,7 @@ class _$AlarmModelImpl implements _AlarmModel {
   final AlarmPeriodType period;
   @override
   @JsonKey()
-  final String? customPeriod;
+  final DateTime? customPeriod;
   @override
   @JsonKey()
   final bool isActivated;
@@ -308,7 +308,7 @@ abstract class _AlarmModel implements AlarmModel {
       final District? district2,
       final District? district3,
       final AlarmPeriodType period,
-      final String? customPeriod,
+      final DateTime? customPeriod,
       final bool isActivated}) = _$AlarmModelImpl;
 
   factory _AlarmModel.fromJson(Map<String, dynamic> json) =
@@ -325,7 +325,7 @@ abstract class _AlarmModel implements AlarmModel {
   @override
   AlarmPeriodType get period;
   @override
-  String? get customPeriod;
+  DateTime? get customPeriod;
   @override
   bool get isActivated;
   @override

@@ -12,24 +12,19 @@ _$HomeViewModelStateImpl _$$HomeViewModelStateImplFromJson(
       weather: json['weather'] == null
           ? null
           : Weather.fromJson(json['weather'] as Map<String, dynamic>),
-      alarms: (json['alarms'] as List<dynamic>?)
-              ?.map((e) => AlarmModel.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
     );
 
 Map<String, dynamic> _$$HomeViewModelStateImplToJson(
         _$HomeViewModelStateImpl instance) =>
     <String, dynamic>{
       'weather': instance.weather,
-      'alarms': instance.alarms,
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$homeViewModelHash() => r'5fedd1be298afc27679bf4b38de6bcbb5fba091d';
+String _$homeViewModelHash() => r'e51cb4585fccbf4d124a795674b4f76450a7412a';
 
 /// See also [HomeViewModel].
 @ProviderFor(HomeViewModel)

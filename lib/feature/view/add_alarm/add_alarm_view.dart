@@ -33,7 +33,7 @@ class AddAlarmView extends ConsumerWidget {
         ),
         title: Center(
           child: Text(
-            '알림 추가',
+            state.isEditMode ? '알림 편집' : '알림 추가',
             style: context.textThemeBodyMedium.copyWith(
               fontWeight: FontWeight.w600,
             ),

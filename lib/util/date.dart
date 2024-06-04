@@ -121,6 +121,14 @@ class DateUtil {
 
     return '$year년 $month월 $day일 (${weekdays[weekdayIndex]})';
   }
+
+  static String getLocalTimeDateWithoutWeekday(DateTime date) {
+    String year = date.year.toString();
+    String month = date.month.toString().padLeft(2, '0');
+    String day = date.day.toString().padLeft(2, '0');
+
+    return '$year년 $month월 $day일';
+  }
 }
 
 List<String> weekdays = ['월', '화', '수', '목', '금', '토', '일'];

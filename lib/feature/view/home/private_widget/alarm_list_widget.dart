@@ -113,7 +113,10 @@ class AlarmCardWidget extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${alarm.period.label} ',
+                      alarm.period == AlarmPeriodType.custom &&
+                              alarm.customPeriod != null
+                          ? '${DateUtil.getLocalTimeDateWithoutWeekday(alarm.customPeriod!)} '
+                          : '${alarm.period.label} ',
                       style: context.textThemeBodyMedium
                           .copyWith(fontWeight: FontWeight.w500),
                     ),

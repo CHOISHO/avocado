@@ -68,14 +68,12 @@ class AlarmListWidget extends ConsumerWidget {
                 )
               ],
             )
-          : const Expanded(
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Text(
-                    '설정된 알림이 없어요\n우산 챙김 알림을 추가해 보세요 :D',
-                    textAlign: TextAlign.center,
-                  ),
+          : const Center(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: Text(
+                  '설정된 알림이 없어요\n우산 챙김 알림을 추가해 보세요 :D',
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

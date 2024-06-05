@@ -21,28 +21,27 @@ class UserRepository extends _$UserRepository {
 
       String token = response['token'];
 
-      await FirebaseAuth.instance.signInWithCustomToken(token);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCustomToken(token);
 
-      await SharedPreferencesUtil().setString('token', token);
+      var idToken = await userCredential.user?.getIdToken();
 
-      return token;
+      if (idToken != null) {
+        await SharedPreferencesUtil().setString('token', idToken);
+      }
+
+      return idToken;
     } catch (e) {
       Logger().e(e);
       return null;
     }
   }
 
-  Future<void> login() async {
+  Future<void> login(String idToken) async {
     try {
-      String? idToken = await FirebaseAuth.instance.currentUser?.getIdToken();
+      var user = await ApiUtil.post(_url, '/auth/login', {'token': idToken});
 
-      if (idToken != null) {
-        var user = await ApiUtil.post(_url, '/auth/login', {'token': idToken});
-
-        // TODO: user 정보 저장
-      } else {
-        throw 'idToken 이 존재하지 않습니다.';
-      }
+      // TODO: user 정보 저장
     } catch (error) {
       Logger().e(error);
       // TODO: 로그인 error 처리

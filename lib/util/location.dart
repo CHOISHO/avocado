@@ -80,8 +80,12 @@ class LocationUtil {
 
     if (permissionStatus == LocationPermission.denied ||
         permissionStatus == LocationPermission.deniedForever) {
-      isPermitted = false;
       permissionStatus = await _geolocatorPlatform.requestPermission();
+    }
+
+    if (permissionStatus == LocationPermission.denied ||
+        permissionStatus == LocationPermission.deniedForever) {
+      isPermitted = false;
     }
 
     return isPermitted;

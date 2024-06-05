@@ -27,14 +27,12 @@ class SplashViewModel extends _$SplashViewModel {
         var token = await ref.read(userRepositoryProvider.notifier).create();
 
         if (token != null) {
-          await ref.read(userRepositoryProvider.notifier).login(token);
+          await ref.read(userRepositoryProvider.notifier).login();
         } else {
           throw 'token 이 없습니다.';
         }
       } else {
-        await ref
-            .read(userRepositoryProvider.notifier)
-            .login(tokenFromLocalStorage);
+        await ref.read(userRepositoryProvider.notifier).login();
       }
 
       return AuthStatus.success;

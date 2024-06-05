@@ -32,7 +32,7 @@ class UserRepository extends _$UserRepository {
     }
   }
 
-  Future<void> login(String token) async {
+  Future<void> login() async {
     try {
       String? idToken = await FirebaseAuth.instance.currentUser?.getIdToken();
 

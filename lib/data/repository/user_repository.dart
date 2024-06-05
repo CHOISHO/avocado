@@ -29,10 +29,6 @@ class UserRepository extends _$UserRepository {
 
       var idToken = await userCredential.user?.getIdToken();
 
-      if (idToken != null) {
-        await SharedPreferencesUtil().setString('token', idToken);
-      }
-
       return idToken;
     } catch (e) {
       Logger().e(e);

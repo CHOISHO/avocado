@@ -3,6 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:logger/web.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'package:avocado/domain/model/user_model.dart';
 import 'package:avocado/util/api.dart';
 import 'package:avocado/util/shared_preferences.dart';
 
@@ -13,7 +14,9 @@ class UserRepository extends _$UserRepository {
   final String _url = 'bioni-avocado.firebaseapp.com';
 
   @override
-  void build() {}
+  UserModel build() {
+    return UserModel();
+  }
 
   Future<String?> create() async {
     try {
@@ -40,6 +43,8 @@ class UserRepository extends _$UserRepository {
   Future<void> login(String idToken) async {
     try {
       var user = await ApiUtil.post(_url, '/auth/login', {'token': idToken});
+
+      state = state.copyWith(idToken: idToken);
 
       // TODO: user 정보 저장
     } catch (error) {

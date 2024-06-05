@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/data/repository/alarm_repository.dart';
@@ -19,10 +20,6 @@ class SplashView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // INFO: 앱 데이터 초기화
-    ref.watch(alarmRepositoryProvider);
-    var homeState = ref.watch(homeViewModelProvider);
-
     final animationController = useAnimationController(
       duration: const Duration(seconds: 1),
     )..repeat(); // 애니메이션을 반복합니다.
@@ -42,38 +39,46 @@ class SplashView extends HookConsumerWidget {
       ),
     ]).animate(animationController);
 
+    // INFO: 앱 데이터 초기화
+    ref.watch(alarmRepositoryProvider);
+    var homeState = ref.watch(homeViewModelProvider);
+
     useEffect(() {
+      Future<void> checkPermissionAndShowModal() async {
+        if (await PushNotificationUtil().permissionStatusIsDenied ||
+            await LocationUtil().permissionStatusIsDenied) {
+          await showModal(context, const PermissionCheckView());
+        }
+      }
+
       Future<void> auth() async {
         var authStatus =
             await ref.read(splashViewModelProvider.notifier).auth();
 
-        if (authStatus == AuthStatus.success) {
-          if (await PushNotificationUtil().permissionStatusIsDenied ||
-              await LocationUtil().permissionStatusIsDenied) {
-            await showModal(context, const PermissionCheckView());
-
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const HomeView(),
-            ));
-          }
-        } else {
-          // TODO: error popup
-        }
+        // TODO: auth 실패시 처리
       }
 
+      checkPermissionAndShowModal();
       auth();
 
       return null;
-    }, const []);
+    }, []);
 
     useEffect(() {
-      if (homeState.value != null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => const HomeView(),
-          ));
-        });
+      Future<void> navigate() async {
+        if (homeState.value != null &&
+            !await PushNotificationUtil().permissionStatusIsDenied &&
+            !await LocationUtil().permissionStatusIsDenied) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const HomeView(),
+            ));
+          });
+        }
       }
+
+      navigate();
+
       return null;
     }, [homeState]);
 

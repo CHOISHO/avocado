@@ -40,37 +40,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _EagerInitialization(
-      child: MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-          fontFamily: 'Pretendard',
-          textTheme: textTheme,
-        ),
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('ko'),
-        ],
-        routes: routes,
-        home: const SplashView(),
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        fontFamily: 'Pretendard',
+        textTheme: textTheme,
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ko'),
+      ],
+      routes: routes,
+      home: const SplashView(),
     );
-  }
-}
-
-class _EagerInitialization extends ConsumerWidget {
-  const _EagerInitialization({required this.child});
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(alarmRepositoryProvider);
-    ref.watch(homeViewModelProvider);
-
-    return child;
   }
 }

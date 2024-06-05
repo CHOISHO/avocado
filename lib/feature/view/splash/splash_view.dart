@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/web.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
+import 'package:avocado/data/repository/alarm_repository.dart';
 import 'package:avocado/feature/view/home/home_view.dart';
 import 'package:avocado/feature/view/permission_check_view/permission_check_view.dart';
+import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/feature/view_model/splash_view_model.dart';
 import 'package:avocado/feature/widget/show_modal.dart';
 import 'package:avocado/util/location.dart';
@@ -17,6 +20,10 @@ class SplashView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // INFO: 앱 데이터 초기화
+    ref.watch(alarmRepositoryProvider);
+    var homeState = ref.watch(homeViewModelProvider);
+
     final animationController = useAnimationController(
       duration: const Duration(seconds: 1),
     )..repeat(); // 애니메이션을 반복합니다.
@@ -45,7 +52,7 @@ class SplashView extends HookConsumerWidget {
           if (await PushNotificationUtil().permissionStatusIsDenied ||
               await LocationUtil().permissionStatusIsDenied) {
             await showModal(context, const PermissionCheckView());
-          } else {
+
             Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const HomeView(),
             ));
@@ -59,6 +66,17 @@ class SplashView extends HookConsumerWidget {
 
       return null;
     }, const []);
+
+    useEffect(() {
+      if (homeState.value != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => const HomeView(),
+          ));
+        });
+      }
+      return null;
+    }, [homeState]);
 
     return Container(
       color: AvocadoColors.white,

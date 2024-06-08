@@ -13,9 +13,9 @@ class ApiUtil {
 
     http.Response response = await http.get(
       uri,
-      headers: token != null
+      headers: token == null
           ? baseHeaders
-          : {...baseHeaders, 'Authorization': '$token'},
+          : {...baseHeaders, 'Authorization': token},
     );
 
     if (response.statusCode == 200) {
@@ -35,11 +35,11 @@ class ApiUtil {
 
     http.Response response = await http.post(
       uri,
-      headers: token != null
+      headers: token == null
           ? baseHeaders
           : {
               ...baseHeaders,
-              'Authorization': '$token',
+              'Authorization': token,
             },
       body: jsonEncode(body),
     );

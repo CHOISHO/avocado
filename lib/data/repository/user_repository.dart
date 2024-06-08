@@ -9,7 +9,7 @@ import 'package:avocado/util/shared_preferences.dart';
 
 part 'user_repository.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class UserRepository extends _$UserRepository {
   final String _url = 'bioni-avocado.firebaseapp.com';
 
@@ -38,7 +38,13 @@ class UserRepository extends _$UserRepository {
 
   Future<void> login(String idToken) async {
     try {
-      var user = await ApiUtil.post(_url, '/auth/login', {'token': idToken});
+      var user = await ApiUtil.post(
+        url: _url,
+        path: '/auth/login',
+        body: {
+          'token': idToken,
+        },
+      );
 
       state = state.copyWith(idToken: idToken);
 

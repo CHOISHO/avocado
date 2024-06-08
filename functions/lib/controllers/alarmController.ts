@@ -7,6 +7,17 @@ enum Time {
     '0000', 
 }
 
+type Alarm = {
+    id: string,
+    time: number,
+    districts: Array<District>,
+    period: string,
+    customPeriod: string | null,
+    isActivated: boolean,
+    createdAt: Date,
+    updatedAt: Date,
+};
+
 type District = {
     krJibunAddress: string,
     krAddress: string,
@@ -59,6 +70,7 @@ const AlarmController = {
 
                 await usersAlarmsCollectionRef.set({
                     ...alarm,
+                    time: timeData,
                     id: alarmId,
                     isActivated: true,
                 });
@@ -67,11 +79,44 @@ const AlarmController = {
             } else {
                 throw "허가받지 않은 요청입니다."
             }
-
         } catch (error) {
             res.status(500).json({ error });
         }
     },
+    getUserAlarms: async (req: Request, res: Response) => {
+        try {
+            if(req.headers.authorization !== null) {
+                const { uid } = await getAuth().verifyIdToken(req.headers.authorization!);
+                const alarmsCollection = db.collection('users').doc(uid).collection('alarms');
+                const snapshot = await alarmsCollection.get();
+            
+                let alarms: Array<Alarm> = [];
+
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+
+                    const alarm: Alarm = {
+                        id: data['id'],
+                        time: data['time'],
+                        districts: data['districts'],
+                        period: data['period'],
+                        customPeriod: data['customPeriod'] != null ? data['customPeriod'].toDate() : null,
+                        isActivated: data['isActivated'],
+                        createdAt: data['createdAt'].toDate(),
+                        updatedAt: data['updatedAt'].toDate(),
+                    };
+
+                    alarms.push(alarm);
+                });
+            
+                res.status(200).json({ alarms });
+            } else {
+                throw "허가받지 않은 요청입니다."
+            }
+        } catch (error) {   
+            res.status(500).json({ error });
+        }
+    }
 }
 
 export default AlarmController;

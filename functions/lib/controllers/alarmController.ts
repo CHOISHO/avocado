@@ -31,14 +31,14 @@ const AlarmController = {
                     districts,
                     period,
                     customPeriod: customPeriodData,
-                } : AlarmAddBodyType = req.body;
+                } : AlarmAddBodyType = req.body.alarm;
                 
                 const time = Time[parseInt(timeData)] ?? null;
-
+                
                 if(time == null) {
                     throw "지원하지 않는 시간입니다."
                 }
-
+                    
                 const alarmsUserCollectionRef = db.collection('alarms').doc(time).collection(uid);
                 
                 const timestamp = FieldValue.serverTimestamp();
@@ -52,7 +52,7 @@ const AlarmController = {
                     createdAt: timestamp,
                     updatedAt: timestamp,
                 };
-                
+
                 const {id: alarmId} = await  alarmsUserCollectionRef.add(alarm);
 
                 const usersAlarmsCollectionRef = db.collection('users').doc(uid).collection('alarms').doc(alarmId);

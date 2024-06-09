@@ -8,12 +8,12 @@ part 'alarm_view_model.g.dart';
 @riverpod
 class AlarmViewModel extends _$AlarmViewModel {
   @override
-  List<AlarmModel> build() {
+  Future<List<AlarmModel>> build() async {
     return init();
   }
 
-  List<AlarmModel> init() {
-    return ref.watch(alarmRepositoryProvider);
+  Future<List<AlarmModel>> init() async {
+    return ref.watch(alarmRepositoryProvider.future);
   }
 
   void toggleAlarm(int index) {

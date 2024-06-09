@@ -6,12 +6,12 @@ part of 'alarm_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$alarmRepositoryHash() => r'df48cb414593d896a500d163aa6691f44e7187eb';
+String _$alarmRepositoryHash() => r'5fe6f87d4834d4fd33b385835adecc46116d7ab1';
 
 /// See also [AlarmRepository].
 @ProviderFor(AlarmRepository)
-final alarmRepositoryProvider =
-    AutoDisposeNotifierProvider<AlarmRepository, List<AlarmModel>>.internal(
+final alarmRepositoryProvider = AutoDisposeAsyncNotifierProvider<
+    AlarmRepository, List<AlarmModel>>.internal(
   AlarmRepository.new,
   name: r'alarmRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final alarmRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$AlarmRepository = AutoDisposeNotifier<List<AlarmModel>>;
+typedef _$AlarmRepository = AutoDisposeAsyncNotifier<List<AlarmModel>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

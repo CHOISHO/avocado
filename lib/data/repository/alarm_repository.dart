@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:avocado/data/repository/user_repository.dart';
 import 'package:avocado/domain/mapper/add_alarm_mapper.dart';
 import 'package:avocado/domain/model/alarm_model.dart';
+import 'package:avocado/domain/model/district_model.dart';
 import 'package:avocado/util/api.dart';
 import 'package:avocado/util/shared_preferences.dart';
 
@@ -16,23 +17,14 @@ class AlarmRepository extends _$AlarmRepository {
   final String _url = 'bioni-avocado.firebaseapp.com';
 
   @override
-  List<AlarmModel> build() {
+  Future<List<AlarmModel>> build() async {
     return init();
-  }
-
-  List<AlarmModel> init() {
-    List<String> alarms =
-        SharedPreferencesUtil().getStringList('alarms')?.toList() ?? [];
-
-    var parsedAlarms =
-        alarms.map((e) => AlarmModel.fromJson(jsonDecode(e))).toList();
-
-    return parsedAlarms;
   }
 
   Future<void> addAlarm(AlarmModel alarm) async {
     try {
-      var newAlarms = [...state, alarm];
+      state = const AsyncValue.loading();
+      List<AlarmModel> newAlarms = [...state.value ?? [], alarm];
 
       var userState = ref.read(userRepositoryProvider);
 
@@ -53,19 +45,53 @@ class AlarmRepository extends _$AlarmRepository {
     }
   }
 
-  List<AlarmModel> getAlarms() {
-    List<String> alarms =
-        SharedPreferencesUtil().getStringList('alarms')?.toList() ?? [];
+  Future<List<AlarmModel>> init() async {
+    try {
+      var userState = ref.read(userRepositoryProvider);
 
-    var parsedAlarms =
-        alarms.map((e) => AlarmModel.fromJson(jsonDecode(e))).toList();
+      var response = await ApiUtil.get(
+        url: _url,
+        path: '/alarm/getUserAlarms',
+        token: userState.idToken,
+      );
 
-    return parsedAlarms;
+      List<AlarmModel> alarms = [];
+
+      for (var i = 0; i < response['alarms'].length; i++) {
+        var data = response['alarms'][i];
+        AlarmModel alarm = AlarmModel.fromJson(data);
+        int districtsLength = data['districts'].length;
+
+        if (districtsLength == 1) {
+          alarm = alarm.copyWith(
+            district1: District.fromJson(data['districts'][0]),
+          );
+        }
+
+        if (districtsLength == 2) {
+          alarm = alarm.copyWith(
+            district2: District.fromJson(data['districts'][1]),
+          );
+        }
+
+        if (districtsLength == 3) {
+          alarm = alarm.copyWith(
+            district3: District.fromJson(data['districts'][2]),
+          );
+        }
+
+        alarms.add(alarm);
+      }
+
+      return alarms;
+    } catch (e) {
+      Logger().e(e);
+      return [];
+    }
   }
 
   void editAlarm(int index, AlarmModel editedAlarm) {
-    // TODO: server update
-    final newAlarms = [...state];
+    List<AlarmModel> newAlarms = [...state.value ?? []];
 
     newAlarms[index] = editedAlarm;
 
@@ -73,7 +99,7 @@ class AlarmRepository extends _$AlarmRepository {
   }
 
   void toggleAlarm(int index) {
-    final newAlarms = [...state];
+    List<AlarmModel> newAlarms = [...state.value ?? []];
 
     newAlarms[index] =
         newAlarms[index].copyWith(isActivated: !newAlarms[index].isActivated);
@@ -82,20 +108,29 @@ class AlarmRepository extends _$AlarmRepository {
   }
 
   void removeAlarm(int index) {
-    // TODO: server update
-    final newAlarms = [...state];
+    List<AlarmModel> newAlarms = [...state.value ?? []];
 
     newAlarms.removeAt(index);
 
-    updateAlarm(newAlarms);
+    updateAlarm(newAlarms).then((_) {
+      state = AsyncValue.data(newAlarms);
+    }).catchError((error) {
+      state = AsyncValue.error(error, StackTrace.current);
+    });
   }
 
   Future<void> updateAlarm(List<AlarmModel> newAlarms) async {
-    state = newAlarms;
+    state = const AsyncValue.loading();
+    try {
+      List<String> jsonifiedAlarms =
+          newAlarms.map((alarm) => jsonEncode(alarm.toJson())).toList();
 
-    List<String> jsonifiedAlarms =
-        newAlarms.map((alarm) => jsonEncode(alarm.toJson())).toList();
+      await SharedPreferencesUtil().setStringList('alarms', jsonifiedAlarms);
 
-    await SharedPreferencesUtil().setStringList('alarms', jsonifiedAlarms);
+      state = AsyncValue.data(newAlarms);
+    } catch (error) {
+      state = AsyncValue.error(error, StackTrace.current);
+      Logger().e(error);
+    }
   }
 }

@@ -32,7 +32,7 @@ class AlarmRepository extends _$AlarmRepository {
         url: _url,
         path: '/alarm/add',
         body: {
-          'alarm': addAlarmMapper(alarm),
+          'alarm': alarm.toJson(),
         },
         token: userState.idToken,
       );
@@ -59,26 +59,8 @@ class AlarmRepository extends _$AlarmRepository {
 
       for (var i = 0; i < response['alarms'].length; i++) {
         var data = response['alarms'][i];
+
         AlarmModel alarm = AlarmModel.fromJson(data);
-        int districtsLength = data['districts'].length;
-
-        if (districtsLength == 1) {
-          alarm = alarm.copyWith(
-            district1: District.fromJson(data['districts'][0]),
-          );
-        }
-
-        if (districtsLength == 2) {
-          alarm = alarm.copyWith(
-            district2: District.fromJson(data['districts'][1]),
-          );
-        }
-
-        if (districtsLength == 3) {
-          alarm = alarm.copyWith(
-            district3: District.fromJson(data['districts'][2]),
-          );
-        }
 
         alarms.add(alarm);
       }

@@ -7,7 +7,7 @@ part of 'district_repository.dart';
 // **************************************************************************
 
 String _$districtRepositoryHash() =>
-    r'f253423ff7100406d5494ee312f58862fd553838';
+    r'd0ad0b2da6aa20d2676d940de1852b0694392dd3';
 
 /// See also [DistrictRepository].
 @ProviderFor(DistrictRepository)

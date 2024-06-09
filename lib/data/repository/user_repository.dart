@@ -5,7 +5,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/domain/model/user_model.dart';
 import 'package:avocado/util/api.dart';
-import 'package:avocado/util/shared_preferences.dart';
 
 part 'user_repository.g.dart';
 
@@ -20,7 +19,10 @@ class UserRepository extends _$UserRepository {
 
   Future<String?> create() async {
     try {
-      var response = await ApiUtil.get(_url, '/auth/create');
+      var response = await ApiUtil.get(
+        url: _url,
+        path: '/auth/create',
+      );
 
       String token = response['token'];
 
@@ -47,7 +49,7 @@ class UserRepository extends _$UserRepository {
       );
 
       state = state.copyWith(idToken: idToken);
-
+      Logger().d(idToken);
       // TODO: user 정보 저장
     } catch (error) {
       Logger().e(error);

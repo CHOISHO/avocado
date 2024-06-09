@@ -31,9 +31,9 @@ class WeatherRepository extends _$WeatherRepository {
       }
 
       Map<String, dynamic> response = await ApiUtil.get(
-        _url,
-        '$_versoin/getUltraSrtNcst',
-        {
+        url: _url,
+        path: '$_versoin/getUltraSrtNcst',
+        queryParameters: {
           'serviceKey': dotenv.env['WEATHER_API_SERVICE_KEY']!,
           'pageNo': '1',
           'numOfRows': '1000',
@@ -78,9 +78,9 @@ class WeatherRepository extends _$WeatherRepository {
       }
 
       Map<String, dynamic> response = await ApiUtil.get(
-        _url,
-        '$_versoin/getUltraSrtFcst',
-        {
+        url: _url,
+        path: '$_versoin/getUltraSrtFcst',
+        queryParameters: {
           'serviceKey': dotenv.env['WEATHER_API_SERVICE_KEY']!,
           'pageNo': '1',
           'numOfRows': '1000',
@@ -120,9 +120,9 @@ class WeatherRepository extends _$WeatherRepository {
       }
 
       Map<String, dynamic> response = await ApiUtil.get(
-        _url,
-        '$_versoin/getVilageFcst',
-        {
+        url: _url,
+        path: '$_versoin/getVilageFcst',
+        queryParameters: {
           'serviceKey': dotenv.env['WEATHER_API_SERVICE_KEY']!,
           'pageNo': '1',
           'numOfRows': '30',

@@ -39,7 +39,7 @@ class SplashView extends HookConsumerWidget {
     ]).animate(animationController);
 
     // INFO: 앱 데이터 초기화
-    ref.watch(alarmRepositoryProvider);
+    // ref.watch(alarmRepositoryProvider);
     var homeState = ref.watch(homeViewModelProvider);
 
     useEffect(() {

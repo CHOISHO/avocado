@@ -18,9 +18,9 @@ class DistrictRepository extends _$DistrictRepository {
   Future<List<District>> getDistricts(String keyword, int currentPage) async {
     try {
       var response = await ApiUtil.get(
-        _url,
-        '$_version/district/getDistricts',
-        {
+        url: _url,
+        path: '$_version/district/getDistricts',
+        queryParameters: {
           'currentPage': currentPage.toString(),
           'keyword': keyword,
         },

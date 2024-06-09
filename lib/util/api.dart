@@ -7,8 +7,12 @@ Map<String, String> baseHeaders = {
 };
 
 class ApiUtil {
-  static Future<Map<String, dynamic>> get(String url, String path,
-      [Map<String, String>? queryParameters, String? token]) async {
+  static Future<Map<String, dynamic>> get({
+    required String url,
+    required String path,
+    Map<String, String>? queryParameters,
+    String? token,
+  }) async {
     Uri uri = Uri.https(Uri.encodeComponent(url), path, queryParameters);
 
     http.Response response = await http.get(

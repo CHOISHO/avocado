@@ -1,50 +1,79 @@
 import { Request, Response } from 'express';
 import { FieldValue, Timestamp } from 'firebase-admin/firestore';
+import { JsonObject, JsonProperty } from 'typescript-json-serializer';
 
+import { defaultSerializer } from '../';
 import { db, getAuth } from '../utils/firebaseAdmin';
 
 enum Time {
     '0000', 
 }
 
-type Alarm = {
-    id: string,
-    time: number,
-    districts: Array<District>,
-    period: string,
-    customPeriod: string | null,
-    isActivated: boolean,
-    createdAt: Date,
-    updatedAt: Date,
+type District = {
+    administrativeArea: string,
+    subLocality: string,
+    thoroughfare: string,
+    streetAddress: string,
+    streetNameAddress: string,
+    englishStreetNameAddress: string,
 };
 
-type District = {
-    krJibunAddress: string,
-    krAddress: string,
-    enAddress: string, 
-};
+type AlarmPeriodType =  '매일' | '주중' | '주말' | '날짜지정';
 
 type AlarmAddBodyType = {
-    time: string,
-    districts: Array<District>,
-    period: string,
-    customPeriod: string | null,
+    time: number,
+    district1: District,
+    district2: District | null,
+    district3: District | null,
+    period: AlarmPeriodType,
+    customPeriod: Date | null,
+    isActivated: boolean,
 };
+
+@JsonObject()
+export class Alarm {
+    constructor(
+        @JsonProperty()
+        public id: string,
+        @JsonProperty()
+        public time: number,
+        @JsonProperty()
+        public district1: District,
+        @JsonProperty()
+        public district2: District | null,
+        @JsonProperty()
+        public district3: District | null,
+        @JsonProperty()
+        public period: AlarmPeriodType,
+        @JsonProperty({
+            beforeDeserialize: value => value instanceof Timestamp ? value.toDate() : value,
+        })
+        public customPeriod: Timestamp | Date | null,
+        @JsonProperty()
+        public isActivated: boolean,
+        @JsonProperty({
+            beforeDeserialize: value => value instanceof Timestamp ? value.toDate() : value,
+        })
+        public createdAt: Timestamp | Date,
+        @JsonProperty({
+            beforeDeserialize: value => value instanceof Timestamp ? value.toDate() : value,
+        })
+        public updatedAt: Timestamp | Date,
+    ) {
+    }
+}
 
 const AlarmController = {
     add: async (req: Request, res: Response) => {
         try {
             if(req.headers.authorization !== null) {
                 const { uid } = await getAuth().verifyIdToken(req.headers.authorization!);
-                
                 let {
                     time : timeData,
-                    districts,
-                    period,
                     customPeriod: customPeriodData,
                 } : AlarmAddBodyType = req.body.alarm;
                 
-                const time = Time[parseInt(timeData)] ?? null;
+                const time = Time[timeData] ?? null;
                 
                 if(time == null) {
                     throw "지원하지 않는 시간입니다."
@@ -57,8 +86,7 @@ const AlarmController = {
                 const customPeriod =  customPeriodData != null ? Timestamp.fromDate(new Date(customPeriodData)) : null;
                 
                 const alarm = {
-                    districts,
-                    period,
+                    ...req.body.alarm,
                     customPeriod,
                     createdAt: timestamp,
                     updatedAt: timestamp,
@@ -70,8 +98,8 @@ const AlarmController = {
 
                 await usersAlarmsCollectionRef.set({
                     ...alarm,
-                    time: timeData,
                     id: alarmId,
+                    time: timeData,
                     isActivated: true,
                 });
 
@@ -95,20 +123,13 @@ const AlarmController = {
                 snapshot.forEach(doc => {
                     const data = doc.data();
 
-                    const alarm: Alarm = {
-                        id: data['id'],
-                        time: data['time'],
-                        districts: data['districts'],
-                        period: data['period'],
-                        customPeriod: data['customPeriod'] != null ? data['customPeriod'].toDate() : null,
-                        isActivated: data['isActivated'],
-                        createdAt: data['createdAt'].toDate(),
-                        updatedAt: data['updatedAt'].toDate(),
-                    };
-
-                    alarms.push(alarm);
+                    const alarm = defaultSerializer.deserialize(data, Alarm);
+                    
+                    if(alarm instanceof Alarm) {
+                        alarms.push(alarm);
+                    }
                 });
-            
+
                 res.status(200).json({ alarms });
             } else {
                 throw "허가받지 않은 요청입니다."

@@ -1,14 +1,9 @@
-import 'dart:convert';
-
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/data/repository/user_repository.dart';
-import 'package:avocado/domain/mapper/add_alarm_mapper.dart';
 import 'package:avocado/domain/model/alarm_model.dart';
-import 'package:avocado/domain/model/district_model.dart';
 import 'package:avocado/util/api.dart';
-import 'package:avocado/util/shared_preferences.dart';
 
 part 'alarm_repository.g.dart';
 
@@ -17,14 +12,14 @@ class AlarmRepository extends _$AlarmRepository {
   final String _url = 'bioni-avocado.firebaseapp.com';
 
   @override
-  Future<List<AlarmModel>> build() async {
-    return init();
+  List<AlarmModel>? build() {
+    init();
+    return null;
   }
 
   Future<void> addAlarm(AlarmModel alarm) async {
     try {
-      state = const AsyncValue.loading();
-      List<AlarmModel> newAlarms = [...state.value ?? [], alarm];
+      List<AlarmModel> newAlarms = [...state ?? [], alarm];
 
       var userState = ref.read(userRepositoryProvider);
 
@@ -37,15 +32,13 @@ class AlarmRepository extends _$AlarmRepository {
         token: userState.idToken,
       );
 
-      updateAlarm(newAlarms);
-
-      // TODO: 알림 리스트 서버에서 관리 하도록 수정
+      state = newAlarms;
     } catch (error) {
       Logger().e(error);
     }
   }
 
-  Future<List<AlarmModel>> init() async {
+  Future<void> init() async {
     try {
       var userState = ref.read(userRepositoryProvider);
 
@@ -65,54 +58,40 @@ class AlarmRepository extends _$AlarmRepository {
         alarms.add(alarm);
       }
 
-      return alarms;
+      state = alarms;
+      // return alarms;
     } catch (e) {
       Logger().e(e);
-      return [];
+      // return [];
     }
   }
 
   void editAlarm(int index, AlarmModel editedAlarm) {
-    List<AlarmModel> newAlarms = [...state.value ?? []];
+    List<AlarmModel> newAlarms = [...state ?? []];
 
     newAlarms[index] = editedAlarm;
 
-    updateAlarm(newAlarms);
+    state = newAlarms;
   }
 
   void toggleAlarm(int index) {
-    List<AlarmModel> newAlarms = [...state.value ?? []];
+    List<AlarmModel> newAlarms = [...state ?? []];
 
     newAlarms[index] =
         newAlarms[index].copyWith(isActivated: !newAlarms[index].isActivated);
 
-    updateAlarm(newAlarms);
+    state = newAlarms;
   }
 
   void removeAlarm(int index) {
-    List<AlarmModel> newAlarms = [...state.value ?? []];
+    List<AlarmModel> newAlarms = [...state ?? []];
 
     newAlarms.removeAt(index);
 
-    updateAlarm(newAlarms).then((_) {
-      state = AsyncValue.data(newAlarms);
-    }).catchError((error) {
-      state = AsyncValue.error(error, StackTrace.current);
-    });
+    state = newAlarms;
   }
 
   Future<void> updateAlarm(List<AlarmModel> newAlarms) async {
-    state = const AsyncValue.loading();
-    try {
-      List<String> jsonifiedAlarms =
-          newAlarms.map((alarm) => jsonEncode(alarm.toJson())).toList();
-
-      await SharedPreferencesUtil().setStringList('alarms', jsonifiedAlarms);
-
-      state = AsyncValue.data(newAlarms);
-    } catch (error) {
-      state = AsyncValue.error(error, StackTrace.current);
-      Logger().e(error);
-    }
+    state = newAlarms;
   }
 }

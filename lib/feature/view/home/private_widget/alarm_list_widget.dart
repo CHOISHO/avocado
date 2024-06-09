@@ -22,9 +22,8 @@ class AlarmListWidget extends ConsumerWidget {
 
     return SizedBox(
       height: MediaQuery.sizeOf(context).height - 280,
-      child: alarms.when(
-        data: (alarms) {
-          return alarms.isNotEmpty
+      child: alarms != null
+          ? alarms.isNotEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,16 +77,8 @@ class AlarmListWidget extends ConsumerWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(
-          child: Text(
-            '알림을 불러오는 중 오류가 발생했어요\n$error',
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
+                )
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }

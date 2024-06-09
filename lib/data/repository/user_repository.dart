@@ -49,7 +49,7 @@ class UserRepository extends _$UserRepository {
       );
 
       state = state.copyWith(idToken: idToken);
-      Logger().d(idToken);
+
       // TODO: user 정보 저장
     } catch (error) {
       Logger().e(error);

@@ -39,7 +39,7 @@ class SplashView extends HookConsumerWidget {
     ]).animate(animationController);
 
     // INFO: 앱 데이터 초기화
-    // ref.watch(alarmRepositoryProvider);
+    // ref.watch(alarmRepositoryProvider); idToken이 필요하기에 auth 종료 후에 진행되도록 수정 필요 
     var homeState = ref.watch(homeViewModelProvider);
 
     useEffect(() {

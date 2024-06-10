@@ -164,7 +164,7 @@ const AlarmController = {
             await userAlarmDocumentRef.delete();
             await alarmDocumentRef.delete();
 
-            res.status(200).json();
+            res.status(200).json({ });
         } catch (error) {
             res.status(500).json({ error });
         }

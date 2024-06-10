@@ -38,10 +38,8 @@ class AlarmRepository extends _$AlarmRepository {
       }
 
       state = alarms;
-      // return alarms;
     } catch (e) {
       Logger().e(e);
-      // return [];
     }
   }
 
@@ -83,12 +81,29 @@ class AlarmRepository extends _$AlarmRepository {
     state = newAlarms;
   }
 
-  void removeAlarm(int index) {
-    List<AlarmModel> newAlarms = [...state ?? []];
+  Future<void> removeAlarm(int index) async {
+    try {
+      var userState = ref.read(userRepositoryProvider);
 
-    newAlarms.removeAt(index);
+      List<AlarmModel> newAlarms = [...state ?? []];
 
-    state = newAlarms;
+      var deletedAlarm = newAlarms[index].copyWith();
+
+      newAlarms.removeAt(index);
+
+      state = newAlarms;
+
+      await ApiUtil.post(
+        url: _url,
+        path: '/alarm/delete',
+        body: {
+          "alarmId": deletedAlarm.id,
+        },
+        token: userState.idToken,
+      );
+    } catch (e) {
+      Logger().e(e);
+    }
   }
 
   Future<void> updateAlarm(List<AlarmModel> newAlarms) async {

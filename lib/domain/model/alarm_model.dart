@@ -8,6 +8,7 @@ part 'alarm_model.g.dart';
 @freezed
 class AlarmModel with _$AlarmModel {
   const factory AlarmModel({
+    @Default(null) String? id,
     @Default(null) int? time,
     @Default(null) District? district1,
     @Default(null) District? district2,

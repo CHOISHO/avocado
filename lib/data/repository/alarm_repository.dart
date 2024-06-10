@@ -53,7 +53,7 @@ class AlarmRepository extends _$AlarmRepository {
 
       await ApiUtil.post(
         url: _url,
-        path: '/alarm/add',
+        path: '/alarm/create',
         body: {
           'alarm': alarm.toJson(),
         },

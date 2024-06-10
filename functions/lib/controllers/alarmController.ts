@@ -64,7 +64,7 @@ export class Alarm {
 }
 
 const AlarmController = {
-    add: async (req: Request, res: Response) => {
+    create: async (req: Request, res: Response) => {
         try {
             if(req.headers.authorization !== null) {
                 const { uid } = await getAuth().verifyIdToken(req.headers.authorization!);
@@ -137,7 +137,38 @@ const AlarmController = {
         } catch (error) {   
             res.status(500).json({ error });
         }
-    }
+    },
+    delete: async (req: Request, res: Response) => {
+        try {
+            const userId = req.uid;
+            const alarmId = req.body.alarmId;
+
+            const userAlarmDocumentRef = db.collection('users').doc(userId).collection('alarms').doc(alarmId);
+            
+            const data = (await userAlarmDocumentRef.get()).data();
+
+            if (data === null) {
+                throw '존재하지 않는 데이터 입니다.'
+            }
+
+            const alarm = defaultSerializer.deserialize(data!, Alarm);
+            
+            if(!(alarm instanceof Alarm)) {
+                throw '올바르지 않은 형식 입니다.'
+            }
+
+            const time = Time[alarm!.time];
+            
+            const alarmDocumentRef = db.collection('alarms').doc(time).collection(userId).doc(alarmId);
+
+            await userAlarmDocumentRef.delete();
+            await alarmDocumentRef.delete();
+
+            res.status(200).json();
+        } catch (error) {
+            res.status(500).json({ error });
+        }
+    },
 }
 
 export default AlarmController;

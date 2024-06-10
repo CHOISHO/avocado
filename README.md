@@ -23,5 +23,5 @@
   - [x] 주소 정보 기반 위치 정보(longditude, langditude) 패키지
     [geocoding](https://pub.dev/packages/geocoding)
 - [ ] 알림 기능
-  - [ ] 개인별 알림 데이터가 필요하니 유저 정보를 저장해야 할 듯(Firestore Database)
+  - [x] 개인별 알림 데이터가 필요하니 유저 정보를 저장해야 할 듯(Firestore Database)
   - [ ] 설정된 알림에 따라 개인별 알림을 보내주기 위한 스케쥴링 함수(Firebase Functions CronJob)

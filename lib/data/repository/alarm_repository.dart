@@ -17,27 +17,6 @@ class AlarmRepository extends _$AlarmRepository {
     return null;
   }
 
-  Future<void> addAlarm(AlarmModel alarm) async {
-    try {
-      List<AlarmModel> newAlarms = [...state ?? [], alarm];
-
-      var userState = ref.read(userRepositoryProvider);
-
-      await ApiUtil.post(
-        url: _url,
-        path: '/alarm/add',
-        body: {
-          'alarm': alarm.toJson(),
-        },
-        token: userState.idToken,
-      );
-
-      state = newAlarms;
-    } catch (error) {
-      Logger().e(error);
-    }
-  }
-
   Future<void> init() async {
     try {
       var userState = ref.read(userRepositoryProvider);
@@ -63,6 +42,27 @@ class AlarmRepository extends _$AlarmRepository {
     } catch (e) {
       Logger().e(e);
       // return [];
+    }
+  }
+
+  Future<void> addAlarm(AlarmModel alarm) async {
+    try {
+      List<AlarmModel> newAlarms = [...state ?? [], alarm];
+
+      var userState = ref.read(userRepositoryProvider);
+
+      await ApiUtil.post(
+        url: _url,
+        path: '/alarm/add',
+        body: {
+          'alarm': alarm.toJson(),
+        },
+        token: userState.idToken,
+      );
+
+      state = newAlarms;
+    } catch (error) {
+      Logger().e(error);
     }
   }
 

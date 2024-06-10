@@ -6,7 +6,7 @@ part of 'alarm_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$alarmViewModelHash() => r'e663947cdac66f22768f63d8c3cef5faa59891e2';
+String _$alarmViewModelHash() => r'086b81ed1cee494e1174be6768f006afb0668eb4';
 
 /// See also [AlarmViewModel].
 @ProviderFor(AlarmViewModel)

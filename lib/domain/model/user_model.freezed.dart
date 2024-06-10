@@ -20,7 +20,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserModel {
-  String get idToken => throw _privateConstructorUsedError;
+  String? get idToken => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +33,7 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({String idToken});
+  $Res call({String? idToken});
 }
 
 /// @nodoc
@@ -49,13 +49,13 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? idToken = null,
+    Object? idToken = freezed,
   }) {
     return _then(_value.copyWith(
-      idToken: null == idToken
+      idToken: freezed == idToken
           ? _value.idToken
           : idToken // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -68,7 +68,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String idToken});
+  $Res call({String? idToken});
 }
 
 /// @nodoc
@@ -82,13 +82,13 @@ class __$$UserModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? idToken = null,
+    Object? idToken = freezed,
   }) {
     return _then(_$UserModelImpl(
-      idToken: null == idToken
+      idToken: freezed == idToken
           ? _value.idToken
           : idToken // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -96,14 +96,14 @@ class __$$UserModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserModelImpl implements _UserModel {
-  _$UserModelImpl({this.idToken = ''});
+  _$UserModelImpl({this.idToken = null});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
 
   @override
   @JsonKey()
-  final String idToken;
+  final String? idToken;
 
   @override
   String toString() {
@@ -137,13 +137,13 @@ class _$UserModelImpl implements _UserModel {
 }
 
 abstract class _UserModel implements UserModel {
-  factory _UserModel({final String idToken}) = _$UserModelImpl;
+  factory _UserModel({final String? idToken}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
 
   @override
-  String get idToken;
+  String? get idToken;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
-import 'package:avocado/data/repository/alarm_repository.dart';
+import 'package:avocado/data/repository/user_repository.dart';
 import 'package:avocado/feature/view/home/home_view.dart';
 import 'package:avocado/feature/view/permission_check_view/permission_check_view.dart';
 import 'package:avocado/feature/view_model/home_view_model.dart';
@@ -39,7 +39,8 @@ class SplashView extends HookConsumerWidget {
     ]).animate(animationController);
 
     // INFO: 앱 데이터 초기화
-    // ref.watch(alarmRepositoryProvider); idToken이 필요하기에 auth 종료 후에 진행되도록 수정 필요 
+    // ref.watch(alarmRepositoryProvider); idToken이 필요하기에 auth 종료 후에 진행되도록 수정 필요
+    var userState = ref.watch(userRepositoryProvider);
     var homeState = ref.watch(homeViewModelProvider);
 
     useEffect(() {
@@ -66,6 +67,7 @@ class SplashView extends HookConsumerWidget {
     useEffect(() {
       Future<void> navigate() async {
         if (homeState.value != null &&
+            userState.idToken != null &&
             !await PushNotificationUtil().permissionStatusIsDenied &&
             !await LocationUtil().permissionStatusIsDenied) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -79,7 +81,7 @@ class SplashView extends HookConsumerWidget {
       navigate();
 
       return null;
-    }, [homeState]);
+    }, [homeState, userState]);
 
     return Container(
       color: AvocadoColors.white,

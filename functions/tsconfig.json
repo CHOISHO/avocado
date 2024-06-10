@@ -15,6 +15,7 @@
     "middleware",
     "controllers",
     "routes",
-    "utils"
+    "utils",
+    "express.d.ts"
   ]
 }

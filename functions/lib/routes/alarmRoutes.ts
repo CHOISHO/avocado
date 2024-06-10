@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.use(checkAuthorization);
 
-router.post('/add', AlarmController.add);
+router.post('/create', AlarmController.create);
 router.get('/getUserAlarms', AlarmController.getUserAlarms);
+router.post('/delete', AlarmController.delete);
 
 export default router;

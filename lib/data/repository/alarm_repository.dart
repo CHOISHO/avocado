@@ -64,12 +64,27 @@ class AlarmRepository extends _$AlarmRepository {
     }
   }
 
-  void editAlarm(int index, AlarmModel editedAlarm) {
-    List<AlarmModel> newAlarms = [...state ?? []];
+  Future<void> editAlarm(int index, AlarmModel editedAlarm) async {
+    try {
+      List<AlarmModel> newAlarms = [...state ?? []];
 
-    newAlarms[index] = editedAlarm;
+      newAlarms[index] = editedAlarm;
 
-    state = newAlarms;
+      state = newAlarms;
+
+      var userState = ref.read(userRepositoryProvider);
+
+      await ApiUtil.post(
+        url: _url,
+        path: '/alarm/update',
+        body: {
+          'alarm': editedAlarm.toJson(),
+        },
+        token: userState.idToken,
+      );
+    } catch (e) {
+      Logger().e(e);
+    }
   }
 
   void toggleAlarm(int index) {
@@ -83,8 +98,6 @@ class AlarmRepository extends _$AlarmRepository {
 
   Future<void> removeAlarm(int index) async {
     try {
-      var userState = ref.read(userRepositoryProvider);
-
       List<AlarmModel> newAlarms = [...state ?? []];
 
       var deletedAlarm = newAlarms[index].copyWith();
@@ -92,6 +105,8 @@ class AlarmRepository extends _$AlarmRepository {
       newAlarms.removeAt(index);
 
       state = newAlarms;
+
+      var userState = ref.read(userRepositoryProvider);
 
       await ApiUtil.post(
         url: _url,

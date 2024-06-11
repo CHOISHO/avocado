@@ -30,6 +30,10 @@ type AlarmAddBodyType = {
     isActivated: boolean,
 };
 
+type AlarmUpdateBodyType = AlarmAddBodyType & {
+    id: string,
+};
+
 @JsonObject()
 export class Alarm {
     constructor(
@@ -135,6 +139,44 @@ const AlarmController = {
                 throw "허가받지 않은 요청입니다."
             }
         } catch (error) {   
+            res.status(500).json({ error });
+        }
+    },
+    update: async (req: Request, res: Response) => {
+        try {
+            const userId = req.uid;
+
+            let {
+                id: alarmId,
+                time : timeData,
+                customPeriod: customPeriodData,
+            } : AlarmUpdateBodyType = req.body.alarm;
+
+              
+            const time = Time[timeData] ?? null;
+                
+            if(time == null) {
+                throw "지원하지 않는 시간입니다."
+            }
+                            
+            const timestamp = FieldValue.serverTimestamp();
+            
+            const customPeriod =  customPeriodData != null ? Timestamp.fromDate(new Date(customPeriodData)) : null;
+            
+            const alarm = {
+                ...req.body.alarm,
+                customPeriod,
+                updatedAt: timestamp,
+            };
+
+            const usersAlarmsCollectionRef = db.collection('users').doc(userId).collection('alarms').doc(alarmId);
+            const alarmsUserAlarmDocumentRef = db.collection('alarms').doc(time).collection(userId).doc(alarmId);
+
+            await usersAlarmsCollectionRef.update(alarm);
+            await alarmsUserAlarmDocumentRef.update(alarm);
+
+            res.status(200).json({});
+        } catch (error) {
             res.status(500).json({ error });
         }
     },

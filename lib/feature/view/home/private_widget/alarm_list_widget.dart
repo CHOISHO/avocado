@@ -8,6 +8,7 @@ import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/feature/view/add_alarm/add_alarm_view.dart';
 import 'package:avocado/feature/view_model/add_alarm_view_model.dart';
 import 'package:avocado/feature/view_model/alarm_view_model.dart';
+import 'package:avocado/feature/widget/debouced_switch_widget.dart';
 import 'package:avocado/feature/widget/shadow_card.dart';
 import 'package:avocado/util/date.dart';
 
@@ -171,17 +172,11 @@ class AlarmCardWidget extends StatelessWidget {
             ),
             SizedBox(
               height: 30,
-              child: Switch(
+              child: DebouncedSwitchWidget(
                 value: alarm.isActivated,
-                activeColor: AvocadoColors.main,
-                thumbColor: MaterialStatePropertyAll(AvocadoColors.white),
-                activeTrackColor: AvocadoColors.main,
-                inactiveTrackColor: AvocadoColors.grey04,
-                onChanged: (value) {
-                  onToggleAlarm();
-                },
+                onTap: onToggleAlarm,
               ),
-            ),
+            )
           ],
         ),
       )),

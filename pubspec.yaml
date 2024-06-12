@@ -55,6 +55,8 @@ dependencies:
   firebase_auth: ^4.19.6
   shared_preferences: ^2.2.3
   device_info_plus: ^10.1.0
+  easy_debounce: ^2.0.3
+  simple_observable: ^2.0.0
 
 dev_dependencies:
   flutter_test:

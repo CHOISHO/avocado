@@ -87,13 +87,30 @@ class AlarmRepository extends _$AlarmRepository {
     }
   }
 
-  void toggleAlarm(int index) {
-    List<AlarmModel> newAlarms = [...state ?? []];
+  Future<void> toggleAlarm(int index) async {
+    try {
+      List<AlarmModel> newAlarms = [...state ?? []];
 
-    newAlarms[index] =
-        newAlarms[index].copyWith(isActivated: !newAlarms[index].isActivated);
+      newAlarms[index] =
+          newAlarms[index].copyWith(isActivated: !newAlarms[index].isActivated);
 
-    state = newAlarms;
+      state = newAlarms;
+
+      var toggledAlarm = newAlarms[index].copyWith();
+
+      var userState = ref.read(userRepositoryProvider);
+
+      await ApiUtil.post(
+        url: _url,
+        path: '/alarm/update',
+        body: {
+          'alarm': toggledAlarm.toJson(),
+        },
+        token: userState.idToken,
+      );
+    } catch (e) {
+      Logger().e(e);
+    }
   }
 
   Future<void> removeAlarm(int index) async {

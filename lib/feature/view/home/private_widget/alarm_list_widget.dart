@@ -173,6 +173,7 @@ class AlarmCardWidget extends StatelessWidget {
             SizedBox(
               height: 30,
               child: DebouncedSwitchWidget(
+                debounceKey: alarm.id ?? '',
                 value: alarm.isActivated,
                 onTap: onToggleAlarm,
               ),

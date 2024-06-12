@@ -5,9 +5,14 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:avocado/config/avocado_colors.dart';
 
 class DebouncedSwitchWidget extends StatelessWidget {
-  const DebouncedSwitchWidget(
-      {required this.value, required this.onTap, super.key});
+  const DebouncedSwitchWidget({
+    required this.debounceKey,
+    required this.value,
+    required this.onTap,
+    super.key,
+  });
 
+  final String debounceKey;
   final bool value;
   final Function onTap;
 
@@ -16,7 +21,7 @@ class DebouncedSwitchWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         EasyDebounce.debounce(
-          DateTime.timestamp().toString(),
+          debounceKey,
           const Duration(milliseconds: 500),
           () {
             onTap();

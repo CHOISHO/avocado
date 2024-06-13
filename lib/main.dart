@@ -8,9 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/text_theme.dart';
-import 'package:avocado/data/repository/alarm_repository.dart';
 import 'package:avocado/feature/view/splash/splash_view.dart';
-import 'package:avocado/feature/view_model/home_view_model.dart';
 import 'package:avocado/firebase_options.dart';
 import 'package:avocado/routes.dart';
 import 'package:avocado/util/shared_preferences.dart';

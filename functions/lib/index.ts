@@ -9,7 +9,9 @@ import weatherRoutes from './routes/weatherRoutes';
 
 export const defaultSerializer = new JsonSerializer();
 
-const httpsOptoins: HttpsOptions = { region: 'asia-northeast3'};
+process.env.TZ = 'Asia/Seoul';
+
+const httpsOptoins: HttpsOptions = { region: 'asia-northeast3' };
 
 const app = express();
 

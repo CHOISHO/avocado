@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:avocado/data/repository/user_repository.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:logger/web.dart';
@@ -18,9 +21,49 @@ final transformer = Xml2Json();
 class WeatherRepository extends _$WeatherRepository {
   final String _url = 'apis.data.go.kr';
   final String _versoin = '/1360000/VilageFcstInfoService_2.0';
+  final String _urlFirebase = 'bioni-avocado.firebaseapp.com';
 
   @override
   void build() {}
+
+  Future<Weather?> get([String? address]) async {
+    try {
+      Location? location;
+
+      if (address == null) {
+        location = await LocationUtil().getLocation();
+      } else {
+        location = await LocationUtil().getLocationFromAddress(address);
+      }
+
+      if (location == null) {
+        throw 'Location 정보가 없습니다.';
+      }
+
+      var userState = ref.watch(userRepositoryProvider);
+
+      var response = await ApiUtil.post(
+        url: _urlFirebase,
+        path: '/weather/read',
+        body: {
+          'location': {
+            'x': location.x,
+            'y': location.y,
+          }
+        },
+        token: userState.idToken,
+      );
+
+      var weather = Weather.fromJson(response['weather']).copyWith(
+        district: location.district,
+      );
+
+      return weather;
+    } catch (e) {
+      Logger().e(e);
+      return null;
+    }
+  }
 
   Future<Weather?> getUltraShortTermLive() async {
     try {

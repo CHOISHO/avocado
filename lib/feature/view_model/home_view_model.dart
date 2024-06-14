@@ -25,9 +25,7 @@ class HomeViewModel extends _$HomeViewModel {
   }
 
   Future<HomeViewModelState> _init() async {
-    Weather? weather = await ref
-        .read(weatherRepositoryProvider.notifier)
-        .getUltraShortTermForecast();
+    Weather? weather = await ref.read(weatherRepositoryProvider.notifier).get();
 
     return HomeViewModelState(
       weather: weather,

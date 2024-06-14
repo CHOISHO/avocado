@@ -14,6 +14,10 @@ _$DistrictImpl _$$DistrictImplFromJson(Map<String, dynamic> json) =>
       streetAddress: json['jibunAddr'] as String? ?? '',
       streetNameAddress: json['roadAddr'] as String? ?? '',
       englishStreetNameAddress: json['engAddr'] as String? ?? '',
+      latitude: (json['latitude'] as num?)?.toInt() ?? null,
+      longitude: (json['longitude'] as num?)?.toInt() ?? null,
+      x: (json['x'] as num?)?.toInt() ?? null,
+      y: (json['y'] as num?)?.toInt() ?? null,
     );
 
 Map<String, dynamic> _$$DistrictImplToJson(_$DistrictImpl instance) =>
@@ -24,4 +28,8 @@ Map<String, dynamic> _$$DistrictImplToJson(_$DistrictImpl instance) =>
       'jibunAddr': instance.streetAddress,
       'roadAddr': instance.streetNameAddress,
       'engAddr': instance.englishStreetNameAddress,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+      'x': instance.x,
+      'y': instance.y,
     };

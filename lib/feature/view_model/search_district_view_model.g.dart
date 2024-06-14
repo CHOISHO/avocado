@@ -9,7 +9,7 @@ part of 'search_district_view_model.dart';
 _$SearchDistrictViewModelStateImpl _$$SearchDistrictViewModelStateImplFromJson(
         Map<String, dynamic> json) =>
     _$SearchDistrictViewModelStateImpl(
-      currentPage: json['currentPage'] as int? ?? 1,
+      currentPage: (json['currentPage'] as num?)?.toInt() ?? 1,
       districts: (json['districts'] as List<dynamic>?)
               ?.map((e) => District.fromJson(e as Map<String, dynamic>))
               .toList() ??

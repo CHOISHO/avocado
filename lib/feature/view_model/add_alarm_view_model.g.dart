@@ -13,7 +13,7 @@ _$AddAlarmViewModelStateImpl _$$AddAlarmViewModelStateImplFromJson(
           ? const AlarmModel()
           : AlarmModel.fromJson(json['alarm'] as Map<String, dynamic>),
       isEditMode: json['isEditMode'] as bool? ?? false,
-      selectedIndex: json['selectedIndex'] as int? ?? null,
+      selectedIndex: (json['selectedIndex'] as num?)?.toInt() ?? null,
     );
 
 Map<String, dynamic> _$$AddAlarmViewModelStateImplToJson(

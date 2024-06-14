@@ -94,7 +94,6 @@ class LocationUtil {
   Future<Location?> getLocationFromAddress(String address) async {
     try {
       var positions = await locationFromAddress(address);
-
       var position = positions[0];
 
       GridPosition gridPosition = _converToGridPosition(
@@ -109,8 +108,13 @@ class LocationUtil {
         administrativeArea: placemark[0].administrativeArea ?? '',
         subLocality: placemark[0].subLocality ?? '',
         thoroughfare: placemark[0].thoroughfare ?? '',
+        latitude: position.latitude.toInt(),
+        longitude: position.longitude.toInt(),
+        x: gridPosition.x,
+        y: gridPosition.y,
       );
 
+      // TODO: District 반환할 수 있도록 리팩토링, 중복 코드 제거
       return Location(
         latitude: position.latitude.toInt(),
         longitude: position.longitude.toInt(),
@@ -146,8 +150,13 @@ class LocationUtil {
         administrativeArea: placemark[0].administrativeArea ?? '',
         subLocality: placemark[0].subLocality ?? '',
         thoroughfare: placemark[0].thoroughfare ?? '',
+        latitude: position.latitude.toInt(),
+        longitude: position.longitude.toInt(),
+        x: gridPosition.x,
+        y: gridPosition.y,
       );
 
+      // TODO: District 반환할 수 있도록 리팩토링, 중복 코드 제거
       return Location(
         latitude: position.latitude.toInt(),
         longitude: position.longitude.toInt(),

@@ -16,6 +16,10 @@ type District = {
     streetAddress: string,
     streetNameAddress: string,
     englishStreetNameAddress: string,
+    latitude: number,
+    longitude: number,
+    x: number,
+    y: number,
 };
 
 type AlarmPeriodType =  '매일' | '주중' | '주말' | '날짜지정';

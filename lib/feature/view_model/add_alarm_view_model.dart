@@ -1,10 +1,11 @@
+import 'package:avocado/util/location.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/data/repository/alarm_repository.dart';
 import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/domain/model/district_model.dart';
-import 'package:avocado/util/date.dart';
 
 part 'add_alarm_view_model.freezed.dart';
 part 'add_alarm_view_model.g.dart';
@@ -50,26 +51,62 @@ class AddAlarmViewModel extends _$AddAlarmViewModel {
     );
   }
 
-  void setDistrict1(District district) {
+  Future<void> setDistrict1(District district) async {
+    var location = await LocationUtil()
+        .getLocationFromAddress(district.englishStreetNameAddress);
+
+    if (location == null) {
+      return;
+    }
+
     state = state.copyWith(
       alarm: state.alarm.copyWith(
-        district1: district,
+        district1: district.copyWith(
+          latitude: location.latitude,
+          longitude: location.longitude,
+          x: location.x,
+          y: location.y,
+        ),
       ),
     );
   }
 
-  void setDistrict2(District district) {
+  Future<void> setDistrict2(District district) async {
+    var location = await LocationUtil()
+        .getLocationFromAddress(district.englishStreetNameAddress);
+
+    if (location == null) {
+      return;
+    }
+
     state = state.copyWith(
       alarm: state.alarm.copyWith(
-        district2: district,
+        district2: district.copyWith(
+          latitude: location.latitude,
+          longitude: location.longitude,
+          x: location.x,
+          y: location.y,
+        ),
       ),
     );
   }
 
-  void setDistrict3(District district) {
+  Future<void> setDistrict3(District district) async {
+    var location = await LocationUtil()
+        .getLocationFromAddress(district.englishStreetNameAddress);
+
+    if (location == null) {
+      return;
+    }
+
     state = state.copyWith(
       alarm: state.alarm.copyWith(
-        district3: district,
+        district3: district.copyWith(
+          latitude: location.latitude,
+          longitude: location.longitude,
+          x: location.x,
+          y: location.y,
+        ),
       ),
     );
   }

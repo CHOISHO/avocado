@@ -12,6 +12,10 @@ class District with _$District {
     @Default('') @JsonKey(name: 'jibunAddr') String streetAddress,
     @Default('') @JsonKey(name: 'roadAddr') String streetNameAddress,
     @Default('') @JsonKey(name: 'engAddr') String englishStreetNameAddress,
+    @Default(null) int? latitude,
+    @Default(null) int? longitude,
+    @Default(null) int? x,
+    @Default(null) int? y,
   }) = _District;
 
   factory District.fromJson(Map<String, dynamic> json) =>

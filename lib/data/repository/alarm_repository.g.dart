@@ -6,7 +6,7 @@ part of 'alarm_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$alarmRepositoryHash() => r'2159934bb41fa9a7817e2ff24b2b9610712ade60';
+String _$alarmRepositoryHash() => r'56ac43a8c574cd64e98355635a1fa94f2964945f';
 
 /// See also [AlarmRepository].
 @ProviderFor(AlarmRepository)

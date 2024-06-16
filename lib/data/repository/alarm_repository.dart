@@ -13,7 +13,6 @@ class AlarmRepository extends _$AlarmRepository {
 
   @override
   List<AlarmModel>? build() {
-    init();
     return null;
   }
 

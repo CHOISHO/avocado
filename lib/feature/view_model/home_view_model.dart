@@ -17,19 +17,17 @@ class HomeViewModelState with _$HomeViewModelState {
       _$HomeViewModelStateFromJson(json);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class HomeViewModel extends _$HomeViewModel {
   @override
-  Future<HomeViewModelState> build() async {
-    return await _init();
+  HomeViewModelState build() {
+    return const HomeViewModelState();
   }
 
-  Future<HomeViewModelState> _init() async {
+  Future<void> init() async {
     Weather? weather = await ref.read(weatherRepositoryProvider.notifier).get();
 
-    return HomeViewModelState(
-      weather: weather,
-    );
+    state = state.copyWith(weather: weather);
   }
 
   Future<void> setDistrict(String value) async {
@@ -37,7 +35,6 @@ class HomeViewModel extends _$HomeViewModel {
         .read(weatherRepositoryProvider.notifier)
         .getUltraShortTermForecast(value);
 
-    final previousState = state.asData!.value;
-    state = AsyncData(previousState.copyWith(weather: weather));
+    state = state.copyWith(weather: weather);
   }
 }

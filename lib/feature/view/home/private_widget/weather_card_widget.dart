@@ -15,15 +15,13 @@ class WeatherCardWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var data = ref.watch(homeViewModelProvider);
+    var state = ref.watch(homeViewModelProvider);
 
     return shadowCard(
       SizedBox(
         height: 105,
-        child: data.when(
-          data: (value) {
-            if (value.weather != null) {
-              return Row(
+        child: state.weather != null
+            ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
@@ -31,13 +29,13 @@ class WeatherCardWidget extends ConsumerWidget {
                     children: [
                       ElevatedButton(
                         style: ButtonStyle(
-                          padding: const MaterialStatePropertyAll(
+                          padding: const WidgetStatePropertyAll(
                               EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 6)),
                           backgroundColor:
-                              MaterialStatePropertyAll(AvocadoColors.main),
+                              WidgetStatePropertyAll(AvocadoColors.main),
                           minimumSize:
-                              const MaterialStatePropertyAll(Size(132, 26)),
+                              const WidgetStatePropertyAll(Size(132, 26)),
                         ),
                         onPressed: () {
                           showSelectDistrictModalWidget(
@@ -53,7 +51,7 @@ class WeatherCardWidget extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${value.weather!.district.administrativeArea}, ${value.weather!.district.subLocality} ${value.weather!.district.thoroughfare}',
+                              '${state.weather!.district.administrativeArea}, ${state.weather!.district.subLocality} ${state.weather!.district.thoroughfare}',
                               style: context.textThemeLabelMedium
                                   .copyWith(color: AvocadoColors.white),
                             ),
@@ -68,16 +66,16 @@ class WeatherCardWidget extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      weatherCardContent[value.weather!.type] != null
+                      weatherCardContent[state.weather!.type] != null
                           ? Text(
-                              weatherCardContent[value.weather!.type]!.label,
+                              weatherCardContent[state.weather!.type]!.label,
                               style: context.textThemeTitleMedium
                                   .copyWith(fontWeight: FontWeight.w600),
                             )
                           : Container(),
-                      weatherCardContent[value.weather!.type] != null
+                      weatherCardContent[state.weather!.type] != null
                           ? Text(
-                              weatherCardContent[value.weather!.type]!
+                              weatherCardContent[state.weather!.type]!
                                   .description,
                               style: context.textThemeBodySmall
                                   .copyWith(fontWeight: FontWeight.w500),
@@ -85,23 +83,13 @@ class WeatherCardWidget extends ConsumerWidget {
                           : Container(),
                     ],
                   ),
-                  weatherCardContent[value.weather!.type] != null
+                  weatherCardContent[state.weather!.type] != null
                       ? SvgPicture.asset(
-                          weatherCardContent[value.weather!.type]!.icon)
+                          weatherCardContent[state.weather!.type]!.icon)
                       : Container()
                 ],
-              );
-            } else {
-              return Container();
-            }
-          },
-          error: (e, st) => const Center(
-            child: Text('Oops, something unexpected happened'),
-          ),
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        ),
+              )
+            : Container(),
       ),
     );
   }

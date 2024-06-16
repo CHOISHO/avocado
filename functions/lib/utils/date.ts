@@ -1,9 +1,17 @@
 export function getYYYYMMDD(date: Date): string {
     const year = date.getFullYear().toString();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-  
-    return `${year}${month}${day}`;
+    let day = date.getDate();
+    
+    const hour = date.getHours();
+    
+    if (hour < 2) {
+      day = day - 1; // INFO: To calculate 22:00, 23:00 for 0:00, 1:00
+    }
+    
+    const parsedDay = day.toString().padStart(2, '0');
+    
+    return `${year}${month}${parsedDay}`;
 }  
 
 export function getUltraShortTermForecastBaseTime(date: Date): string {

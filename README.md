@@ -24,4 +24,5 @@
     [geocoding](https://pub.dev/packages/geocoding)
 - [ ] 알림 기능
   - [x] 개인별 알림 데이터가 필요하니 유저 정보를 저장해야 할 듯(Firestore Database)
+  - [ ] 푸시 노티피케이션 상황별 리스너 설정
   - [ ] 설정된 알림에 따라 개인별 알림을 보내주기 위한 스케쥴링 함수(Firebase Functions CronJob)

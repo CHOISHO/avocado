@@ -12,6 +12,7 @@ import 'package:avocado/feature/view/splash/splash_view.dart';
 import 'package:avocado/firebase_options.dart';
 import 'package:avocado/routes.dart';
 import 'package:avocado/util/shared_preferences.dart';
+import 'package:avocado/util/push_notification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,10 @@ void main() async {
   await SharedPreferencesUtil().init();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    await PushNotificationUtil().init();
+  });
 
   if (kDebugMode) {
     FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
@@ -33,12 +38,15 @@ void main() async {
   );
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: 'Pretendard',

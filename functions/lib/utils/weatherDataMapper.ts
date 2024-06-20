@@ -1,6 +1,6 @@
 import { logger } from 'firebase-functions/v1';
 
-interface WeatherData {
+interface ForecastResponse {
   response: {
     body: {
       items: {
@@ -104,7 +104,27 @@ try {
 }
 }
 
-export function getUltraShortTermForecastMapper(data: WeatherData): Weather | null {
+
+function sortByForecastTime(data: Array<{
+  fcstTime: string;
+  category: string;
+  fcstValue: string;
+}>) {
+  const parsedData: Record<string, Array<{ fcstTime: string; category: string; fcstValue: string }>> = {};
+
+  // Parse the time-based data
+  for (const item of data) {
+    if (!parsedData[item.fcstTime]) {
+      parsedData[item.fcstTime] = [item];
+    } else {
+      parsedData[item.fcstTime]!.push(item);
+    }
+  }
+
+  return parsedData;
+}
+
+export function getUltraShortTermForecastMapper(data: ForecastResponse): Weather | null {
   try {
 
     if (!data.response || !data.response.body || !data.response.body.items || !data.response.body.items.item) {
@@ -112,17 +132,8 @@ export function getUltraShortTermForecastMapper(data: WeatherData): Weather | nu
     }
 
     const items = data.response.body.items.item;
-
-    const parsedItems: Record<string, Array<{ fcstTime: string; category: string; fcstValue: string }>> = {};
-
-    // Parse the time-based data
-    for (const item of items) {
-      if (!parsedItems[item.fcstTime]) {
-        parsedItems[item.fcstTime] = [item];
-      } else {
-        parsedItems[item.fcstTime]!.push(item);
-      }
-    }
+    
+    const parsedItems = sortByForecastTime(items);
 
     const currentTimeItems = parsedItems[`${String(new Date().getHours()).padStart(2, '0')}00`];
 
@@ -131,8 +142,8 @@ export function getUltraShortTermForecastMapper(data: WeatherData): Weather | nu
     for (const item of currentTimeItems!) {
       const category = item.category;
 
-      if (category && categoryMap[category]) {
-        const parsedCategory = categoryMap[category];
+      if (category && ultraShortTermForecastCategoryMap[category]) {
+        const parsedCategory = ultraShortTermForecastCategoryMap[category];
         parsedByCategory[parsedCategory] = item.fcstValue || '';
       }
     }
@@ -150,7 +161,7 @@ export function getUltraShortTermForecastMapper(data: WeatherData): Weather | nu
   }
 }
 
-const categoryMap: Record<string, keyof Weather> = {
+const ultraShortTermForecastCategoryMap: Record<string, keyof Weather> = {
   T1H: 'temperature',
   RN1: 'precipitationPerHour',
   SKY: 'sky',
@@ -162,6 +173,11 @@ const categoryMap: Record<string, keyof Weather> = {
   VEC: 'windDirection',
   WSD: 'windSpeed',
 };
+
+// TODO: 단기 일기 예보 카테고리 
+// const shortTermForecastCategoryMap: Record<string, keyof Weather> = {
+//   POP: ''
+// }
 
 function parseWeather(data: Record<string, string>): Omit<Weather, 'type'> {
   return {

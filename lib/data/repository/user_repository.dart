@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/domain/model/user_model.dart';
 import 'package:avocado/util/api.dart';
+import 'package:avocado/util/push_notification.dart';
 
 part 'user_repository.g.dart';
 
@@ -40,11 +41,14 @@ class UserRepository extends _$UserRepository {
 
   Future<void> login(String idToken) async {
     try {
+      var deviceToken = await PushNotificationUtil().getDeviceToken();
+
       var user = await ApiUtil.post(
         url: _url,
         path: '/auth/login',
         body: {
-          'token': idToken,
+          'idToken': idToken,
+          'deviceToken': deviceToken,
         },
       );
 

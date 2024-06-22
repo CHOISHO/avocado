@@ -27,7 +27,11 @@ const AuthController = {
        try{
             const body = req.body;
    
-            const { uid } : DecodedIdToken = await getAuth().verifyIdToken(body['token']);
+            const { uid } : DecodedIdToken = await getAuth().verifyIdToken(body['idToken']);
+
+            await db.collection('users').doc(uid).update({
+                deviceToken: body['deviceToken'],
+            });
 
             const userDocument = await db.collection('users').doc(uid).get();
 

@@ -34,7 +34,7 @@ class PushNotificationUtil {
   AndroidNotificationChannel channel = const AndroidNotificationChannel(
     'weather_alarm_channel',
     'Weather Alarm Notification',
-    description: 'Weather Alarm Notification', // description
+    description: 'Weather Alarm Notification',
     importance: Importance.high,
   );
 
@@ -120,7 +120,7 @@ class PushNotificationUtil {
           (NotificationResponse notificationResponse) {
         Map<String, dynamic> payload = {
           'id': notificationResponse.id,
-          'payload': notificationResponse.payload,
+          'payload': jsonDecode(notificationResponse.payload ?? ''),
         };
 
         switch (notificationResponse.notificationResponseType) {
@@ -133,6 +133,11 @@ class PushNotificationUtil {
         }
       },
     );
+
+    await _flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
   }
 
   Future<void> showNotification(RemoteMessage message) async {
@@ -140,14 +145,10 @@ class PushNotificationUtil {
     AndroidNotification? android = message.notification?.android;
 
     if (notification != null && android != null) {
-      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-          FlutterLocalNotificationsPlugin();
-
-      await flutterLocalNotificationsPlugin
+      await _flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(channel);
-
       _flutterLocalNotificationsPlugin.show(
         notification.hashCode,
         notification.title,
@@ -158,6 +159,13 @@ class PushNotificationUtil {
             channel.name,
             icon: '@mipmap/ic_launcher',
           ),
+        ),
+        payload: jsonEncode(
+          {
+            'title': notification.title ?? '',
+            'body': notification.body ?? '',
+            'data': message.data,
+          },
         ),
       );
     }

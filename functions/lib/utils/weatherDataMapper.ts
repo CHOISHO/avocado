@@ -14,18 +14,37 @@ interface ForecastResponse {
   };
 }
 
-export interface Weather {
-  temperature: string;
-  precipitationPerHour: string;
-  sky: string;
-  windSpeedToEastWest: string;
-  windSpeedToSouthNorth: string;
-  huminity: string;
-  precipitationType: string;
-  lightning: string;
-  windDirection: string;
-  windSpeed: string;
-  type: WeatherType;
+export interface UltraShortForecastWeather {
+  temperature?: string;
+  precipitationPerHour?: string;
+  sky?: string;
+  windSpeedToEastWest?: string;
+  windSpeedToSouthNorth?: string;
+  huminity?: string;
+  precipitationType?: string;
+  lightning?: string;
+  windDirection?: string;
+  windSpeed?: string;
+  type?: string | WeatherType;
+}
+
+export interface ShortForecastWeather {
+  precipitationProbability?: string;
+  precipitationType?: string;
+  precipitationPerHour?: string;
+  huminity?: string;
+  snowPerHour?: string;
+  sky?: string;
+  temperaturePerHour?: string;
+  temperatureMin?: string;
+  temperatureMax?: string;
+  windSpeedToEastWest?: string;
+  windSpeedToSouthNorth?: string;
+  wave?: string;
+  windDirection?: string;
+  windSpeed?: string;
+  type?: string | WeatherType;
+  time: string;
 }
 
 export enum WeatherType {
@@ -40,12 +59,11 @@ export enum WeatherType {
     snowing = 'snowing'
 }
   
-function getWeatherType(data: Record<string, string>): WeatherType {
+function getWeatherType(data: UltraShortForecastWeather | ShortForecastWeather): WeatherType {
 try {
     const sky = data['sky']!;
     const precipitationType = data['precipitationType']!;
     const precipitationPerHour = data['precipitationPerHour']!;
-    const lightning = data['lightning']!;
 
     let weatherType: WeatherType = WeatherType.sunny;
 
@@ -124,7 +142,7 @@ function sortByForecastTime(data: Array<{
   return parsedData;
 }
 
-export function getUltraShortTermForecastMapper(data: ForecastResponse): Weather | null {
+export function getUltraShortTermForecastMapper(data: ForecastResponse): UltraShortForecastWeather | null {
   try {
 
     if (!data.response || !data.response.body || !data.response.body.items || !data.response.body.items.item) {
@@ -137,7 +155,7 @@ export function getUltraShortTermForecastMapper(data: ForecastResponse): Weather
 
     const currentTimeItems = parsedItems[`${String(new Date().getHours()).padStart(2, '0')}00`];
 
-    const parsedByCategory: Record<string, string> = {};
+    const parsedByCategory: UltraShortForecastWeather = {};
 
     for (const item of currentTimeItems!) {
       const category = item.category;
@@ -152,7 +170,7 @@ export function getUltraShortTermForecastMapper(data: ForecastResponse): Weather
     const weatherType = getWeatherType(parsedByCategory);
 
     return {
-      ...parseWeather(parsedByCategory),
+      ...parsedByCategory,
       type: weatherType,
     };
   } catch (e) {
@@ -161,7 +179,63 @@ export function getUltraShortTermForecastMapper(data: ForecastResponse): Weather
   }
 }
 
-const ultraShortTermForecastCategoryMap: Record<string, keyof Weather> = {
+
+export function getShortTermForecastMapper(data: ForecastResponse): ShortForecastWeather[] | null {
+  try {
+
+    if (!data.response || !data.response.body || !data.response.body.items || !data.response.body.items.item) {
+      throw new Error('No data available');
+    }
+
+    const items = data.response.body.items.item;
+    
+    const parsedItems = sortByForecastTime(items);
+
+    
+    const times = Array(4).fill(new Date().getHours()).map(function(value, index){
+      let hour = value + (index * 2);
+
+      if(hour >= 24){
+        hour -= 24;
+      }
+
+      return `${String(hour).padStart(2, '0')}00`;
+    } );
+
+    let selectedItems: ShortForecastWeather[] = [];
+
+    for(const time of times) {
+      
+      if(!!parsedItems[time]){
+      
+        const parsedByCategory: ShortForecastWeather = {
+          time,
+        };
+
+        for (const item of parsedItems[time]) {
+          const category = item.category;
+       
+          if (category && shortTermForecastCategoryMap[category]) {
+            const parsedCategory = shortTermForecastCategoryMap[category];
+            parsedByCategory[parsedCategory] = item.fcstValue || '';
+          }
+        }
+
+        selectedItems.push(parsedByCategory);
+      }
+      
+    }
+
+    selectedItems = selectedItems.map((item) => ({...item, type: getWeatherType(item)}));
+    
+    return selectedItems;
+  } catch (e) {
+    logger.error(e);
+    return null;
+  }
+}
+
+const ultraShortTermForecastCategoryMap: Record<string, keyof UltraShortForecastWeather> = {
   T1H: 'temperature',
   RN1: 'precipitationPerHour',
   SKY: 'sky',
@@ -174,23 +248,23 @@ const ultraShortTermForecastCategoryMap: Record<string, keyof Weather> = {
   WSD: 'windSpeed',
 };
 
-// TODO: 단기 일기 예보 카테고리 
-// const shortTermForecastCategoryMap: Record<string, keyof Weather> = {
-//   POP: ''
-// }
-
-function parseWeather(data: Record<string, string>): Omit<Weather, 'type'> {
-  return {
-    temperature: data.temperature || '',
-    precipitationPerHour: data.precipitationPerHour || '',
-    sky: data.sky || '',
-    windSpeedToEastWest: data.windSpeedToEastWest || '',
-    windSpeedToSouthNorth: data.windSpeedToSouthNorth || '',
-    huminity: data.huminity || '',
-    precipitationType: data.precipitationType || '',
-    lightning: data.lightning || '',
-    windDirection: data.windDirection || '',
-    windSpeed: data.windSpeed || '',
-  };
+const shortTermForecastCategoryMap: Record<string, keyof ShortForecastWeather> = {
+  POP: 'precipitationProbability',
+  PTY: 'precipitationType',
+  PCP: 'precipitationPerHour',
+  REH: 'huminity',
+  SNO: 'snowPerHour',
+  SKY: 'sky',
+  TMP: 'temperaturePerHour',
+  TMN: 'temperatureMin',
+  TMX: 'temperatureMax',
+  UUU: 'windSpeedToEastWest',
+  VVV: 'windSpeedToSouthNorth',
+  WAV: 'wave',
+  VEC: 'windDirection',
+  WSD: 'windSpeed',
 }
 
+function isRainning(type: WeatherType) {
+  return type === WeatherType.rainningDownpour || WeatherType.rainningDrizzle || WeatherType.rainningHeavily || WeatherType.rainningNormal
+}

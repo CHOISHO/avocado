@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Request, Response } from 'express';
 
 import { getUltraShortTermForecastBaseTime, getYYYYMMDD } from '../utils/date';
-import { getUltraShortTermForecastMapper, Weather, WeatherType } from '../utils/weatherDataMapper';
+import { getUltraShortTermForecastMapper, UltraShortForecastWeather, WeatherType } from '../utils/weatherDataMapper';
 
 type GetWeatherBody = {
     location: {
@@ -38,7 +38,7 @@ const WeatherController = {
                 },
             );
 
-            let weather: Weather | null = {
+            let weather: UltraShortForecastWeather | null = {
                 temperature: '',
                 precipitationPerHour: '',
                 sky: '',

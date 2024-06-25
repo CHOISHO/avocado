@@ -1,9 +1,13 @@
 import { Request, Response } from 'express';
 import { FieldValue, Timestamp } from 'firebase-admin/firestore';
 import { JsonObject, JsonProperty } from 'typescript-json-serializer';
+import { Message } from 'firebase-admin/messaging';
+import axios from 'axios';
 
 import { defaultSerializer } from '../';
-import { db, getAuth } from '../utils/firebaseAdmin';
+import { db, getAuth, getMessaging } from '../utils/firebaseAdmin';
+import { getShortTermForecastBaseTime, getYYYYMMDD } from '../utils/date';
+import { getShortTermForecastMapper, ShortForecastWeather } from '../utils/weatherDataMapper';
 
 enum Time {
     '0000', 
@@ -214,6 +218,111 @@ const AlarmController = {
         } catch (error) {
             res.status(500).json({ error });
         }
+    },
+    sendNotification: async (req: Request, res: Response) => {
+        const AlarmsDocumentRef = db.collection('alarms').doc('0000'); // TODO: cronJob 시간 정해지면 기준시간으로 적용
+        const AlarmsUsersRef = await AlarmsDocumentRef.listCollections();
+
+        const activatedAlarmList: {data: Alarm, userId: string, alarmId: string,  deviceToken: string | null}[] = [];
+        
+        for(const AlarmUser of AlarmsUsersRef){
+            const userSnapshot = await db.collection('users').doc(AlarmUser.id).get();
+            const activatedAlarmSnapshot = await AlarmUser.where('isActivated', '==', true).get();
+
+            if(activatedAlarmSnapshot.empty) {
+
+            } else {
+                for(const alarmSnapshot of activatedAlarmSnapshot.docs) {
+                    const alarmWithData = {
+                        data: defaultSerializer.deserialize<Alarm>(alarmSnapshot.data(), Alarm) as Alarm,
+                        userId: AlarmUser.id,
+                        alarmId: alarmSnapshot.id,
+                        deviceToken: userSnapshot.data() ? userSnapshot.data()!['deviceToken'] : null,
+                    };
+
+                    activatedAlarmList.push(alarmWithData);
+                }
+            }
+        }
+
+        const getWeatherpromises = activatedAlarmList.map(async (alarm) => {
+            try {
+                // TODO: 지역 district1, district2, district3 까지 체크
+                const district = alarm.data['district1'];
+
+                const date = new Date();
+
+                const weatherResponse = await axios.get(
+                    'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        params: {
+                            'serviceKey': process.env['WEATHER_API_SERVICE_KEY']!,
+                            'pageNo': '1',
+                            'numOfRows': '100',
+                            'dataType': 'JSON',
+                            'base_date': getYYYYMMDD(date),
+                            'base_time':
+                                getShortTermForecastBaseTime(date),
+                            'nx': district.x.toString(),
+                            'ny': district.y.toString(),
+                        }
+                    },
+                );
+
+                let weather: ShortForecastWeather[] | null = null;
+                
+                switch (weatherResponse['data']['response']['header']['resultCode']) {
+                    case '00':
+                    weather = getShortTermForecastMapper(weatherResponse['data']);
+
+                    if(weather === null) {
+                        throw '데이터 파싱 에러 입니다.';
+                    }
+
+                    break;
+                    case '03':
+                    throw '데이터가 없습니다.';
+                }
+
+                if(weather !== null){
+                    await AlarmsDocumentRef.collection(alarm.userId).doc(alarm.alarmId).set({weather}, {merge: true});
+
+                    return {
+                        alarmId: alarm.alarmId,
+                        userId: alarm.userId,
+                        deviceToken: alarm.deviceToken,
+                    };
+                } else {
+                    throw '데이터가 없습니다.'
+                }
+            } catch (error) {
+                return null; // 에러가 발생한 경우 null을 반환하거나 원하는 에러 처리를 할 수 있습니다.
+            }
+        });
+
+        const weatherpromises = await Promise.all(getWeatherpromises);
+
+        const messages: Message[] = [];
+
+        for(const weather of weatherpromises) {
+            // TODO: weather data 불러올 수 있도록 userId, alarmId 추가 
+            const message: Message = {
+                notification: {
+                    title: '비오니',
+                    body: 'World'
+                },
+                token: weather?.deviceToken ? weather?.deviceToken : '',
+            };
+
+            messages.push(message);
+        }
+
+        await getMessaging().sendEach(messages);
+        
+        res.status(200).json({})
     },
 }
 

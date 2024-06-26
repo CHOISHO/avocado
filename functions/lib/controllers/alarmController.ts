@@ -247,57 +247,72 @@ const AlarmController = {
 
         const getWeatherpromises = activatedAlarmList.map(async (alarm) => {
             try {
-                // TODO: 지역 district1, district2, district3 까지 체크
-                const district = alarm.data['district1'];
+                const districtList = [
+                    alarm.data['district1'],
+                    alarm.data['district2'],
+                    alarm.data['district3'],
+                ].filter(district => district !== null);
 
                 const date = new Date();
 
-                const weatherResponse = await axios.get(
-                    'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        params: {
-                            'serviceKey': process.env['WEATHER_API_SERVICE_KEY']!,
-                            'pageNo': '1',
-                            'numOfRows': '100',
-                            'dataType': 'JSON',
-                            'base_date': getYYYYMMDD(date),
-                            'base_time':
-                                getShortTermForecastBaseTime(date),
-                            'nx': district.x.toString(),
-                            'ny': district.y.toString(),
-                        }
-                    },
-                );
+                const weatherMap: Record<string, ShortForecastWeather[]> = {};
 
-                let weather: ShortForecastWeather[] | null = null;
-                
-                switch (weatherResponse['data']['response']['header']['resultCode']) {
-                    case '00':
-                    weather = getShortTermForecastMapper(weatherResponse['data']);
+                for (let i=0; i<districtList.length; i++) {
+                    const  district =  districtList[i];
 
-                    if(weather === null) {
-                        throw '데이터 파싱 에러 입니다.';
+                    if(district === null) {
+                        continue;
                     }
 
-                    break;
-                    case '03':
-                    throw '데이터가 없습니다.';
+                    const weatherResponse = await axios.get(
+                        'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
+                        {
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            params: {
+                                'serviceKey': process.env['WEATHER_API_SERVICE_KEY']!,
+                                'pageNo': '1',
+                                'numOfRows': '100',
+                                'dataType': 'JSON',
+                                'base_date': getYYYYMMDD(date),
+                                'base_time':
+                                    getShortTermForecastBaseTime(date),
+                                'nx': district.x.toString(),
+                                'ny': district.y.toString(),
+                            }
+                        },
+                    );
+    
+                    let weather: ShortForecastWeather[] | null = null;
+                    
+                    switch (weatherResponse['data']['response']['header']['resultCode']) {
+                        case '00':
+                            weather = getShortTermForecastMapper(weatherResponse['data']);
+    
+                            if(weather === null) {
+                                throw '데이터 파싱 에러 입니다.';
+                            }
+    
+                            break;
+                        case '03':
+                            throw '데이터가 없습니다.';
+                    }
+    
+                    if(weather !== null){
+                        weatherMap[i] = weather;
+                    } else {
+                        throw '데이터가 없습니다.'
+                    }
                 }
 
-                if(weather !== null){
-                    await AlarmsDocumentRef.collection(alarm.userId).doc(alarm.alarmId).set({weather}, {merge: true});
+                await AlarmsDocumentRef.collection(alarm.userId).doc(alarm.alarmId).set({'weather': weatherMap}, {merge: true});
 
-                    return {
-                        alarmId: alarm.alarmId,
-                        userId: alarm.userId,
-                        deviceToken: alarm.deviceToken,
-                    };
-                } else {
-                    throw '데이터가 없습니다.'
-                }
+                return {
+                    alarmId: alarm.alarmId,
+                    userId: alarm.userId,
+                    deviceToken: alarm.deviceToken,
+                };
             } catch (error) {
                 return null; // 에러가 발생한 경우 null을 반환하거나 원하는 에러 처리를 할 수 있습니다.
             }
@@ -308,7 +323,6 @@ const AlarmController = {
         const messages: Message[] = [];
 
         for(const weather of weatherpromises) {
-            // TODO: weather data 불러올 수 있도록 userId, alarmId 추가 
             const message: Message = {
                 notification: {
                     title: '비오니',

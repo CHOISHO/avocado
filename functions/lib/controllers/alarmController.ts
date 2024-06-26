@@ -314,7 +314,11 @@ const AlarmController = {
                     title: '비오니',
                     body: 'World'
                 },
-                token: weather?.deviceToken ? weather?.deviceToken : '',
+                data: {
+                    alarmId: weather ? weather.alarmId : '',
+                    userId:  weather ? weather.userId : '',
+                },
+                token: weather?.deviceToken ? weather.deviceToken : '',
             };
 
             messages.push(message);

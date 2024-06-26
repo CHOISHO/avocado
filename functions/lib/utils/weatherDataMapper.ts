@@ -179,8 +179,12 @@ export function getUltraShortTermForecastMapper(data: ForecastResponse): UltraSh
   }
 }
 
+export type GetShortTermForecastMapperPayload = {
+  data:ShortForecastWeather[] | null,
+  rainningCountOnDistrict: number,
+} | null;
 
-export function getShortTermForecastMapper(data: ForecastResponse): ShortForecastWeather[] | null {
+export function getShortTermForecastMapper(data: ForecastResponse): GetShortTermForecastMapperPayload {
   try {
 
     if (!data.response || !data.response.body || !data.response.body.items || !data.response.body.items.item) {
@@ -226,9 +230,25 @@ export function getShortTermForecastMapper(data: ForecastResponse): ShortForecas
       
     }
 
-    selectedItems = selectedItems.map((item) => ({...item, type: getWeatherType(item)}));
+    let rainningCountOnDistrict = 0;
+
+    selectedItems = selectedItems.map((item) => {
+      const type = getWeatherType(item);
+      
+      if(getIsRainning(type)) {
+        rainningCountOnDistrict++;
+      }
+
+      return {
+        ...item,
+        type,
+      };
+    });
     
-    return selectedItems;
+    return {
+      data: selectedItems,
+      rainningCountOnDistrict,
+    };
   } catch (e) {
     logger.error(e);
     return null;
@@ -265,6 +285,6 @@ const shortTermForecastCategoryMap: Record<string, keyof ShortForecastWeather> =
   WSD: 'windSpeed',
 }
 
-function isRainning(type: WeatherType) {
+export function getIsRainning(type: WeatherType) {
   return type === WeatherType.rainningDownpour || WeatherType.rainningDrizzle || WeatherType.rainningHeavily || WeatherType.rainningNormal
 }

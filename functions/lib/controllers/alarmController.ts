@@ -7,7 +7,7 @@ import axios from 'axios';
 import { defaultSerializer } from '../';
 import { db, getAuth, getMessaging } from '../utils/firebaseAdmin';
 import { getShortTermForecastBaseTime, getYYYYMMDD } from '../utils/date';
-import { getShortTermForecastMapper, ShortForecastWeather } from '../utils/weatherDataMapper';
+import { getIsRainning, getShortTermForecastMapper, GetShortTermForecastMapperPayload, ShortForecastWeather } from '../utils/weatherDataMapper';
 
 enum Time {
     '0000', 
@@ -245,6 +245,8 @@ const AlarmController = {
             }
         }
 
+        let rainningCountOnDistrict = 0;
+
         const getWeatherpromises = activatedAlarmList.map(async (alarm) => {
             try {
                 const districtList = [
@@ -284,7 +286,7 @@ const AlarmController = {
                         },
                     );
     
-                    let weather: ShortForecastWeather[] | null = null;
+                    let weather: GetShortTermForecastMapperPayload = null;
                     
                     switch (weatherResponse['data']['response']['header']['resultCode']) {
                         case '00':
@@ -299,8 +301,12 @@ const AlarmController = {
                             throw '데이터가 없습니다.';
                     }
     
-                    if(weather !== null){
-                        weatherMap[i] = weather;
+                    if(weather !== null && weather.data !== null){
+                        weatherMap[i] = weather.data;
+
+                        if(weather.rainningCountOnDistrict > 0) {
+                            rainningCountOnDistrict++;
+                        }
                     } else {
                         throw '데이터가 없습니다.'
                     }
@@ -314,34 +320,48 @@ const AlarmController = {
                     deviceToken: alarm.deviceToken,
                 };
             } catch (error) {
-                return null; // 에러가 발생한 경우 null을 반환하거나 원하는 에러 처리를 할 수 있습니다.
+                return null;
             }
         });
 
         const weatherpromises = await Promise.all(getWeatherpromises);
 
-        const messages: Message[] = [];
+        if (rainningCountOnDistrict === 0) {
+            const messages: Message[] = [];
 
-        for(const weather of weatherpromises) {
-            const message: Message = {
-                notification: {
-                    title: '비오니',
-                    body: 'World'
-                },
-                data: {
-                    alarmId: weather ? weather.alarmId : '',
-                    userId:  weather ? weather.userId : '',
-                },
-                token: weather?.deviceToken ? weather.deviceToken : '',
-            };
-
-            messages.push(message);
+            for(const weather of weatherpromises) {
+                const message: Message = {
+                    notification: {
+                        title: '비오니',
+                        body: getNotificationBodyByRainningCountOnDistrict(rainningCountOnDistrict),
+                    },
+                    data: {
+                        alarmId: weather ? weather.alarmId : '',
+                        userId:  weather ? weather.userId : '',
+                    },
+                    token: weather?.deviceToken ? weather.deviceToken : '',
+                };
+    
+                messages.push(message);
+            }
+    
+            await getMessaging().sendEach(messages);
         }
 
-        await getMessaging().sendEach(messages);
-        
         res.status(200).json({})
     },
+}
+
+function getNotificationBodyByRainningCountOnDistrict(rainningCountOnDistrict: number) : string{
+    let body = '';
+
+    if (rainningCountOnDistrict === 0) {
+        body = ''
+    } else {
+        body = `설정한 지역 중에 우산이 필요한 곳이 ${rainningCountOnDistrict}군데 있어요.\n오늘은 우산을 챙겨가세요 :D`;
+    }
+
+    return body;
 }
 
 export default AlarmController;

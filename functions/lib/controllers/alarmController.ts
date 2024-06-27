@@ -8,6 +8,7 @@ import { defaultSerializer } from '../';
 import { db, getAuth, getMessaging } from '../utils/firebaseAdmin';
 import { getShortTermForecastBaseTime, getYYYYMMDD } from '../utils/date';
 import { getIsRainning, getShortTermForecastMapper, GetShortTermForecastMapperPayload, ShortForecastWeather } from '../utils/weatherDataMapper';
+import { logger } from 'firebase-functions/v1';
 
 enum Time {
     '0000', 
@@ -326,7 +327,7 @@ const AlarmController = {
 
         const weatherpromises = await Promise.all(getWeatherpromises);
 
-        if (rainningCountOnDistrict === 0) {
+        if (rainningCountOnDistrict > 0) {
             const messages: Message[] = [];
 
             for(const weather of weatherpromises) {
@@ -341,10 +342,10 @@ const AlarmController = {
                     },
                     token: weather?.deviceToken ? weather.deviceToken : '',
                 };
-    
+
                 messages.push(message);
             }
-    
+
             await getMessaging().sendEach(messages);
         }
 

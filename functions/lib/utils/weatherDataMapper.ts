@@ -234,7 +234,7 @@ export function getShortTermForecastMapper(data: ForecastResponse): GetShortTerm
 
     selectedItems = selectedItems.map((item) => {
       const type = getWeatherType(item);
-      
+
       if(getIsRainning(type)) {
         rainningCountOnDistrict++;
       }
@@ -286,5 +286,5 @@ const shortTermForecastCategoryMap: Record<string, keyof ShortForecastWeather> =
 }
 
 export function getIsRainning(type: WeatherType) {
-  return type === WeatherType.rainningDownpour || WeatherType.rainningDrizzle || WeatherType.rainningHeavily || WeatherType.rainningNormal
+  return type === WeatherType.rainningDownpour || type === WeatherType.rainningDrizzle || type === WeatherType.rainningHeavily || type === WeatherType.rainningNormal
 }

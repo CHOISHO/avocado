@@ -102,9 +102,9 @@ class PushNotificationUtil {
       }
 
       Map<String, dynamic> parsedPayload = jsonDecode(payload);
-      print('---------------------------$payload');
 
-      await _flutterLocalNotificationsPlugin.cancel(parsedPayload['id']!);
+      await _flutterLocalNotificationsPlugin
+          .cancel(parsedPayload['notificationId']!);
       // await _flutterLocalNotificationsPlugin.cancelAll();
       await showModal(
           navigatorKey.currentState!.overlay!.context,
@@ -119,7 +119,7 @@ class PushNotificationUtil {
       onDidReceiveNotificationResponse:
           (NotificationResponse notificationResponse) {
         Map<String, dynamic> payload = {
-          'id': notificationResponse.id,
+          'notificationId': notificationResponse.id,
           'payload': jsonDecode(notificationResponse.payload ?? ''),
         };
 

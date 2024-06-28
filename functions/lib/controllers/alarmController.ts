@@ -15,9 +15,9 @@ enum Time {
 }
 
 type District = {
-    administrativeArea: string,
-    subLocality: string,
-    thoroughfare: string,
+    siNm: string,
+    sggNm: string,
+    emdNm: string,
     streetAddress: string,
     streetNameAddress: string,
     englishStreetNameAddress: string,
@@ -220,136 +220,168 @@ const AlarmController = {
             res.status(500).json({ error });
         }
     },
-    sendNotification: async (req: Request, res: Response) => {
-        const AlarmsDocumentRef = db.collection('alarms').doc('0000'); // TODO: cronJob 시간 정해지면 기준시간으로 적용
-        const AlarmsUsersRef = await AlarmsDocumentRef.listCollections();
+    getNotificationDetail: async (req: Request, res: Response) => {
+        try {
+            const userId = req.uid;
+            const alarmId = req.body.alarmId;
+    
+            const alarmWeatherDocumentRef = db.collection('alarms').doc('0000').collection(userId).doc(alarmId);
+            const alarmWeather = (await alarmWeatherDocumentRef.get()).data();
+            
+            if(!alarmWeather) {
+                throw '알람 정보가 없습니다.'
+            }
 
-        const activatedAlarmList: {data: Alarm, userId: string, alarmId: string,  deviceToken: string | null}[] = [];
-        
-        for(const AlarmUser of AlarmsUsersRef){
-            const userSnapshot = await db.collection('users').doc(AlarmUser.id).get();
-            const activatedAlarmSnapshot = await AlarmUser.where('isActivated', '==', true).get();
-
-            if(activatedAlarmSnapshot.empty) {
-
+            const weatherData: Record<number, Array<ShortForecastWeather>> = alarmWeather['weather'];
+            
+            if(weatherData){
+                const weather = Object.entries(weatherData).map(([_, value]) => value);
+                res.status(200).json({weather});
             } else {
-                for(const alarmSnapshot of activatedAlarmSnapshot.docs) {
-                    const alarmWithData = {
-                        data: defaultSerializer.deserialize<Alarm>(alarmSnapshot.data(), Alarm) as Alarm,
-                        userId: AlarmUser.id,
-                        alarmId: alarmSnapshot.id,
-                        deviceToken: userSnapshot.data() ? userSnapshot.data()!['deviceToken'] : null,
+                throw '날씨 정보가 없습니다.';
+            }
+        } catch (error) {
+            res.status(500).json({ error });
+        }
+    },
+    sendNotification: async (req: Request, res: Response) => {
+        // TODO: 날씨 검색을 하나의 Service 로 분리하기 
+        try {
+            const AlarmsDocumentRef = db.collection('alarms').doc('0000'); // TODO: cronJob 시간 정해지면 기준시간으로 적용
+            const AlarmsUsersRef = await AlarmsDocumentRef.listCollections();
+
+            const activatedAlarmList: {data: Alarm, userId: string, alarmId: string,  deviceToken: string | null}[] = [];
+            
+            for(const AlarmUser of AlarmsUsersRef){
+                const userSnapshot = await db.collection('users').doc(AlarmUser.id).get();
+                const activatedAlarmSnapshot = await AlarmUser.where('isActivated', '==', true).get();
+
+                if(activatedAlarmSnapshot.empty) {
+
+                } else {
+                    for(const alarmSnapshot of activatedAlarmSnapshot.docs) {
+                        const alarmWithData = {
+                            data: defaultSerializer.deserialize<Alarm>(alarmSnapshot.data(), Alarm) as Alarm,
+                            userId: AlarmUser.id,
+                            alarmId: alarmSnapshot.id,
+                            deviceToken: userSnapshot.data() ? userSnapshot.data()!['deviceToken'] : null,
+                        };
+
+                        activatedAlarmList.push(alarmWithData);
+                    }
+                }
+            }
+
+            let rainningCountOnDistrict = 0;
+
+            const getWeatherpromises = activatedAlarmList.map(async (alarm) => {
+                try {
+                    const districtList = [
+                        alarm.data['district1'],
+                        alarm.data['district2'],
+                        alarm.data['district3'],
+                    ].filter(district => district !== null);
+
+                    const date = new Date();
+
+                    const weatherMap: Record<string, {district: string, data:ShortForecastWeather[]}> = {};
+
+                    for (let i=0; i<districtList.length; i++) {
+                        const  district =  districtList[i];
+
+                        if(district === null) {
+                            continue;
+                        }
+
+                        const weatherResponse = await axios.get(
+                            'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
+                            {
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                params: {
+                                    'serviceKey': process.env['WEATHER_API_SERVICE_KEY']!,
+                                    'pageNo': '1',
+                                    'numOfRows': '100',
+                                    'dataType': 'JSON',
+                                    'base_date': getYYYYMMDD(date),
+                                    'base_time':
+                                        getShortTermForecastBaseTime(date),
+                                    'nx': district.x.toString(),
+                                    'ny': district.y.toString(),
+                                }
+                            },
+                        );
+        
+                        let weather: GetShortTermForecastMapperPayload = null;
+                        
+                        switch (weatherResponse['data']['response']['header']['resultCode']) {
+                            case '00':
+                                weather = getShortTermForecastMapper(weatherResponse['data']);
+        
+                                if(weather === null) {
+                                    throw '데이터 파싱 에러 입니다.';
+                                }
+        
+                                break;
+                            case '03':
+                                throw '데이터가 없습니다.';
+                        }
+        
+                        if(weather !== null && weather.data !== null){
+                            weatherMap[i] = {
+                                district: `${district.siNm} ${district.sggNm} ${district.emdNm}`,
+                                data: weather.data,
+                            };
+
+                            if(weather.rainningCountOnDistrict > 0) {
+                                rainningCountOnDistrict++;
+                            }
+                        } else {
+                            throw '데이터가 없습니다.'
+                        }
+                    }
+
+                    await AlarmsDocumentRef.collection(alarm.userId).doc(alarm.alarmId).set({'weather': weatherMap}, {merge: true});
+
+                    return {
+                        alarmId: alarm.alarmId,
+                        userId: alarm.userId,
+                        deviceToken: alarm.deviceToken,
+                    };
+                } catch (error) {
+                    return null;
+                }
+            });
+
+            const weatherpromises = await Promise.all(getWeatherpromises);
+            
+            if (rainningCountOnDistrict > 0) {
+                const messages: Message[] = [];
+
+                for(const weather of weatherpromises) {
+                    const message: Message = {
+                        notification: {
+                            title: '비오니',
+                            body: getNotificationBodyByRainningCountOnDistrict(rainningCountOnDistrict),
+                        },
+                        data: {
+                            alarmId: weather ? weather.alarmId : '',
+                            userId:  weather ? weather.userId : '',
+                        },
+                        token: weather?.deviceToken ? weather.deviceToken : '',
                     };
 
-                    activatedAlarmList.push(alarmWithData);
-                }
-            }
-        }
-
-        let rainningCountOnDistrict = 0;
-
-        const getWeatherpromises = activatedAlarmList.map(async (alarm) => {
-            try {
-                const districtList = [
-                    alarm.data['district1'],
-                    alarm.data['district2'],
-                    alarm.data['district3'],
-                ].filter(district => district !== null);
-
-                const date = new Date();
-
-                const weatherMap: Record<string, ShortForecastWeather[]> = {};
-
-                for (let i=0; i<districtList.length; i++) {
-                    const  district =  districtList[i];
-
-                    if(district === null) {
-                        continue;
-                    }
-
-                    const weatherResponse = await axios.get(
-                        'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
-                        {
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            params: {
-                                'serviceKey': process.env['WEATHER_API_SERVICE_KEY']!,
-                                'pageNo': '1',
-                                'numOfRows': '100',
-                                'dataType': 'JSON',
-                                'base_date': getYYYYMMDD(date),
-                                'base_time':
-                                    getShortTermForecastBaseTime(date),
-                                'nx': district.x.toString(),
-                                'ny': district.y.toString(),
-                            }
-                        },
-                    );
-    
-                    let weather: GetShortTermForecastMapperPayload = null;
-                    
-                    switch (weatherResponse['data']['response']['header']['resultCode']) {
-                        case '00':
-                            weather = getShortTermForecastMapper(weatherResponse['data']);
-    
-                            if(weather === null) {
-                                throw '데이터 파싱 에러 입니다.';
-                            }
-    
-                            break;
-                        case '03':
-                            throw '데이터가 없습니다.';
-                    }
-    
-                    if(weather !== null && weather.data !== null){
-                        weatherMap[i] = weather.data;
-
-                        if(weather.rainningCountOnDistrict > 0) {
-                            rainningCountOnDistrict++;
-                        }
-                    } else {
-                        throw '데이터가 없습니다.'
-                    }
+                    messages.push(message);
                 }
 
-                await AlarmsDocumentRef.collection(alarm.userId).doc(alarm.alarmId).set({'weather': weatherMap}, {merge: true});
-
-                return {
-                    alarmId: alarm.alarmId,
-                    userId: alarm.userId,
-                    deviceToken: alarm.deviceToken,
-                };
-            } catch (error) {
-                return null;
-            }
-        });
-
-        const weatherpromises = await Promise.all(getWeatherpromises);
-
-        if (rainningCountOnDistrict > 0) {
-            const messages: Message[] = [];
-
-            for(const weather of weatherpromises) {
-                const message: Message = {
-                    notification: {
-                        title: '비오니',
-                        body: getNotificationBodyByRainningCountOnDistrict(rainningCountOnDistrict),
-                    },
-                    data: {
-                        alarmId: weather ? weather.alarmId : '',
-                        userId:  weather ? weather.userId : '',
-                    },
-                    token: weather?.deviceToken ? weather.deviceToken : '',
-                };
-
-                messages.push(message);
+                await getMessaging().sendEach(messages);
             }
 
-            await getMessaging().sendEach(messages);
+            res.status(200).json({});
+        } catch (error) {
+            res.status(500).json({ error });
         }
-
-        res.status(200).json({})
     },
 }
 

@@ -11,6 +11,7 @@ router.post('/create', AlarmController.create);
 router.get('/getUserAlarms', AlarmController.getUserAlarms);
 router.post('/update', AlarmController.update);
 router.post('/delete', AlarmController.delete);
+router.post('/getNotificationDetail', AlarmController.getNotificationDetail);
 router.post('/sendNotification', AlarmController.sendNotification);
 
 export default router;

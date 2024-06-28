@@ -180,7 +180,7 @@ export function getUltraShortTermForecastMapper(data: ForecastResponse): UltraSh
 }
 
 export type GetShortTermForecastMapperPayload = {
-  data:ShortForecastWeather[] | null,
+  data: ShortForecastWeather[] | null,
   rainningCountOnDistrict: number,
 } | null;
 

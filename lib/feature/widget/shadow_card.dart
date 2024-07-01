@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
 
-Widget shadowCard(Widget child) {
+Widget shadowCard({required Widget child}) {
   return Container(
     margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
     padding: const EdgeInsets.all(24),

@@ -18,7 +18,7 @@ class WeatherCardWidget extends ConsumerWidget {
     var state = ref.watch(homeViewModelProvider);
 
     return shadowCard(
-      SizedBox(
+      child: SizedBox(
         height: 105,
         child: state.weather != null
             ? Row(

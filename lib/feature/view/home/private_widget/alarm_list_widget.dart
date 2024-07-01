@@ -102,85 +102,87 @@ class AlarmCardWidget extends StatelessWidget {
       onTap: () {
         onTapCard();
       },
-      child: shadowCard(SizedBox(
-        width: double.infinity,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      alarm.period == AlarmPeriodType.custom &&
-                              alarm.customPeriod != null
-                          ? '${DateUtil.getLocalTimeDateWithoutWeekday(alarm.customPeriod!)} '
-                          : '${alarm.period.label} ',
-                      style: context.textThemeBodyMedium
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      alarm.time != null
-                          ? DateUtil.getHHColonMMWithAMPM(alarm.time!)
-                          : '',
-                      style: context.textThemeBodyMedium.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AvocadoColors.main,
+      child: shadowCard(
+        child: SizedBox(
+          width: double.infinity,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        alarm.period == AlarmPeriodType.custom &&
+                                alarm.customPeriod != null
+                            ? '${DateUtil.getLocalTimeDateWithoutWeekday(alarm.customPeriod!)} '
+                            : '${alarm.period.label} ',
+                        style: context.textThemeBodyMedium
+                            .copyWith(fontWeight: FontWeight.w500),
                       ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      alarm.district1?.thoroughfare != null
-                          ? '${alarm.district1?.thoroughfare}'
-                          : '',
-                      style: context.textThemeBodyMedium
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      alarm.district2?.thoroughfare != null
-                          ? ', ${alarm.district2?.thoroughfare}'
-                          : '',
-                      style: context.textThemeBodyMedium
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      alarm.district3?.thoroughfare != null
-                          ? ', ${alarm.district3?.thoroughfare}'
-                          : '',
-                      style: context.textThemeBodyMedium
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      '에',
-                      style: context.textThemeBodyMedium
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-                Text(
-                  '비가 오면 알려줄게요.',
-                  style: context.textThemeBodyMedium.copyWith(
-                    color: AvocadoColors.grey02,
+                      Text(
+                        alarm.time != null
+                            ? DateUtil.getHHColonMMWithAMPM(alarm.time!)
+                            : '',
+                        style: context.textThemeBodyMedium.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: AvocadoColors.main,
+                        ),
+                      )
+                    ],
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
-              child: DebouncedSwitchWidget(
-                debounceKey: alarm.id ?? '',
-                value: alarm.isActivated,
-                onTap: onToggleAlarm,
+                  Row(
+                    children: [
+                      Text(
+                        alarm.district1?.thoroughfare != null
+                            ? '${alarm.district1?.thoroughfare}'
+                            : '',
+                        style: context.textThemeBodyMedium
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        alarm.district2?.thoroughfare != null
+                            ? ', ${alarm.district2?.thoroughfare}'
+                            : '',
+                        style: context.textThemeBodyMedium
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        alarm.district3?.thoroughfare != null
+                            ? ', ${alarm.district3?.thoroughfare}'
+                            : '',
+                        style: context.textThemeBodyMedium
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        '에',
+                        style: context.textThemeBodyMedium
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '비가 오면 알려줄게요.',
+                    style: context.textThemeBodyMedium.copyWith(
+                      color: AvocadoColors.grey02,
+                    ),
+                  ),
+                ],
               ),
-            )
-          ],
+              SizedBox(
+                height: 30,
+                child: DebouncedSwitchWidget(
+                  debounceKey: alarm.id ?? '',
+                  value: alarm.isActivated,
+                  onTap: onToggleAlarm,
+                ),
+              )
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

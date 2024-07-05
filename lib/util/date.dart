@@ -113,6 +113,21 @@ class DateUtil {
     return '$AMPM ${time.toString().padLeft(2, '0')}:00';
   }
 
+  static String getHourWithAMPM(int time) {
+    String AMPM;
+    int hour;
+
+    if (time >= 12) {
+      AMPM = '오후';
+      hour = time - 12;
+    } else {
+      AMPM = '오전';
+      hour = time;
+    }
+
+    return '$AMPM $hour시';
+  }
+
   static String getLocalTimeDate(DateTime date) {
     String year = date.year.toString();
     String month = date.month.toString().padLeft(2, '0');

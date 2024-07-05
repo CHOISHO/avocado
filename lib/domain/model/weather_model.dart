@@ -11,12 +11,20 @@ part 'weather_model.g.dart';
 class Weather with _$Weather {
   const factory Weather({
     @Default(District()) District district,
-    @Default('') String temperature,
-    @Default('') String precipitationProbability,
-    @Default('') String precipitation,
-    @Default('') String sky,
     @Default('') String huminity,
+    @Default('') String precipitationPerHour,
+    @Default('') String precipitationProbability,
+    @Default('') String precipitationType,
+    @Default('') String sky,
+    @Default('') String snowPerHour,
+    @Default('') String temperaturePerHour,
+    @Default('') String time,
     @Default(WeatherType.initial) WeatherType type,
+    @Default('') String wave,
+    @Default('') String windDirection,
+    @Default('') String windSpeed,
+    @Default('') String windSpeedToEastWest,
+    @Default('') String windSpeedToSouthNorth,
   }) = _Weather;
 
   factory Weather.fromJson(Map<String, dynamic> json) =>

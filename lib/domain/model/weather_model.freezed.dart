@@ -21,12 +21,20 @@ Weather _$WeatherFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Weather {
   District get district => throw _privateConstructorUsedError;
-  String get temperature => throw _privateConstructorUsedError;
-  String get precipitationProbability => throw _privateConstructorUsedError;
-  String get precipitation => throw _privateConstructorUsedError;
-  String get sky => throw _privateConstructorUsedError;
   String get huminity => throw _privateConstructorUsedError;
+  String get precipitationPerHour => throw _privateConstructorUsedError;
+  String get precipitationProbability => throw _privateConstructorUsedError;
+  String get precipitationType => throw _privateConstructorUsedError;
+  String get sky => throw _privateConstructorUsedError;
+  String get snowPerHour => throw _privateConstructorUsedError;
+  String get temperaturePerHour => throw _privateConstructorUsedError;
+  String get time => throw _privateConstructorUsedError;
   WeatherType get type => throw _privateConstructorUsedError;
+  String get wave => throw _privateConstructorUsedError;
+  String get windDirection => throw _privateConstructorUsedError;
+  String get windSpeed => throw _privateConstructorUsedError;
+  String get windSpeedToEastWest => throw _privateConstructorUsedError;
+  String get windSpeedToSouthNorth => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,12 +48,20 @@ abstract class $WeatherCopyWith<$Res> {
   @useResult
   $Res call(
       {District district,
-      String temperature,
-      String precipitationProbability,
-      String precipitation,
-      String sky,
       String huminity,
-      WeatherType type});
+      String precipitationPerHour,
+      String precipitationProbability,
+      String precipitationType,
+      String sky,
+      String snowPerHour,
+      String temperaturePerHour,
+      String time,
+      WeatherType type,
+      String wave,
+      String windDirection,
+      String windSpeed,
+      String windSpeedToEastWest,
+      String windSpeedToSouthNorth});
 
   $DistrictCopyWith<$Res> get district;
 }
@@ -64,42 +80,82 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
   @override
   $Res call({
     Object? district = null,
-    Object? temperature = null,
-    Object? precipitationProbability = null,
-    Object? precipitation = null,
-    Object? sky = null,
     Object? huminity = null,
+    Object? precipitationPerHour = null,
+    Object? precipitationProbability = null,
+    Object? precipitationType = null,
+    Object? sky = null,
+    Object? snowPerHour = null,
+    Object? temperaturePerHour = null,
+    Object? time = null,
     Object? type = null,
+    Object? wave = null,
+    Object? windDirection = null,
+    Object? windSpeed = null,
+    Object? windSpeedToEastWest = null,
+    Object? windSpeedToSouthNorth = null,
   }) {
     return _then(_value.copyWith(
       district: null == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
               as District,
-      temperature: null == temperature
-          ? _value.temperature
-          : temperature // ignore: cast_nullable_to_non_nullable
+      huminity: null == huminity
+          ? _value.huminity
+          : huminity // ignore: cast_nullable_to_non_nullable
+              as String,
+      precipitationPerHour: null == precipitationPerHour
+          ? _value.precipitationPerHour
+          : precipitationPerHour // ignore: cast_nullable_to_non_nullable
               as String,
       precipitationProbability: null == precipitationProbability
           ? _value.precipitationProbability
           : precipitationProbability // ignore: cast_nullable_to_non_nullable
               as String,
-      precipitation: null == precipitation
-          ? _value.precipitation
-          : precipitation // ignore: cast_nullable_to_non_nullable
+      precipitationType: null == precipitationType
+          ? _value.precipitationType
+          : precipitationType // ignore: cast_nullable_to_non_nullable
               as String,
       sky: null == sky
           ? _value.sky
           : sky // ignore: cast_nullable_to_non_nullable
               as String,
-      huminity: null == huminity
-          ? _value.huminity
-          : huminity // ignore: cast_nullable_to_non_nullable
+      snowPerHour: null == snowPerHour
+          ? _value.snowPerHour
+          : snowPerHour // ignore: cast_nullable_to_non_nullable
+              as String,
+      temperaturePerHour: null == temperaturePerHour
+          ? _value.temperaturePerHour
+          : temperaturePerHour // ignore: cast_nullable_to_non_nullable
+              as String,
+      time: null == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as WeatherType,
+      wave: null == wave
+          ? _value.wave
+          : wave // ignore: cast_nullable_to_non_nullable
+              as String,
+      windDirection: null == windDirection
+          ? _value.windDirection
+          : windDirection // ignore: cast_nullable_to_non_nullable
+              as String,
+      windSpeed: null == windSpeed
+          ? _value.windSpeed
+          : windSpeed // ignore: cast_nullable_to_non_nullable
+              as String,
+      windSpeedToEastWest: null == windSpeedToEastWest
+          ? _value.windSpeedToEastWest
+          : windSpeedToEastWest // ignore: cast_nullable_to_non_nullable
+              as String,
+      windSpeedToSouthNorth: null == windSpeedToSouthNorth
+          ? _value.windSpeedToSouthNorth
+          : windSpeedToSouthNorth // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
@@ -121,12 +177,20 @@ abstract class _$$WeatherImplCopyWith<$Res> implements $WeatherCopyWith<$Res> {
   @useResult
   $Res call(
       {District district,
-      String temperature,
-      String precipitationProbability,
-      String precipitation,
-      String sky,
       String huminity,
-      WeatherType type});
+      String precipitationPerHour,
+      String precipitationProbability,
+      String precipitationType,
+      String sky,
+      String snowPerHour,
+      String temperaturePerHour,
+      String time,
+      WeatherType type,
+      String wave,
+      String windDirection,
+      String windSpeed,
+      String windSpeedToEastWest,
+      String windSpeedToSouthNorth});
 
   @override
   $DistrictCopyWith<$Res> get district;
@@ -144,42 +208,82 @@ class __$$WeatherImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? district = null,
-    Object? temperature = null,
-    Object? precipitationProbability = null,
-    Object? precipitation = null,
-    Object? sky = null,
     Object? huminity = null,
+    Object? precipitationPerHour = null,
+    Object? precipitationProbability = null,
+    Object? precipitationType = null,
+    Object? sky = null,
+    Object? snowPerHour = null,
+    Object? temperaturePerHour = null,
+    Object? time = null,
     Object? type = null,
+    Object? wave = null,
+    Object? windDirection = null,
+    Object? windSpeed = null,
+    Object? windSpeedToEastWest = null,
+    Object? windSpeedToSouthNorth = null,
   }) {
     return _then(_$WeatherImpl(
       district: null == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
               as District,
-      temperature: null == temperature
-          ? _value.temperature
-          : temperature // ignore: cast_nullable_to_non_nullable
+      huminity: null == huminity
+          ? _value.huminity
+          : huminity // ignore: cast_nullable_to_non_nullable
+              as String,
+      precipitationPerHour: null == precipitationPerHour
+          ? _value.precipitationPerHour
+          : precipitationPerHour // ignore: cast_nullable_to_non_nullable
               as String,
       precipitationProbability: null == precipitationProbability
           ? _value.precipitationProbability
           : precipitationProbability // ignore: cast_nullable_to_non_nullable
               as String,
-      precipitation: null == precipitation
-          ? _value.precipitation
-          : precipitation // ignore: cast_nullable_to_non_nullable
+      precipitationType: null == precipitationType
+          ? _value.precipitationType
+          : precipitationType // ignore: cast_nullable_to_non_nullable
               as String,
       sky: null == sky
           ? _value.sky
           : sky // ignore: cast_nullable_to_non_nullable
               as String,
-      huminity: null == huminity
-          ? _value.huminity
-          : huminity // ignore: cast_nullable_to_non_nullable
+      snowPerHour: null == snowPerHour
+          ? _value.snowPerHour
+          : snowPerHour // ignore: cast_nullable_to_non_nullable
+              as String,
+      temperaturePerHour: null == temperaturePerHour
+          ? _value.temperaturePerHour
+          : temperaturePerHour // ignore: cast_nullable_to_non_nullable
+              as String,
+      time: null == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
               as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as WeatherType,
+      wave: null == wave
+          ? _value.wave
+          : wave // ignore: cast_nullable_to_non_nullable
+              as String,
+      windDirection: null == windDirection
+          ? _value.windDirection
+          : windDirection // ignore: cast_nullable_to_non_nullable
+              as String,
+      windSpeed: null == windSpeed
+          ? _value.windSpeed
+          : windSpeed // ignore: cast_nullable_to_non_nullable
+              as String,
+      windSpeedToEastWest: null == windSpeedToEastWest
+          ? _value.windSpeedToEastWest
+          : windSpeedToEastWest // ignore: cast_nullable_to_non_nullable
+              as String,
+      windSpeedToSouthNorth: null == windSpeedToSouthNorth
+          ? _value.windSpeedToSouthNorth
+          : windSpeedToSouthNorth // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -189,12 +293,20 @@ class __$$WeatherImplCopyWithImpl<$Res>
 class _$WeatherImpl implements _Weather {
   const _$WeatherImpl(
       {this.district = const District(),
-      this.temperature = '',
-      this.precipitationProbability = '',
-      this.precipitation = '',
-      this.sky = '',
       this.huminity = '',
-      this.type = WeatherType.initial});
+      this.precipitationPerHour = '',
+      this.precipitationProbability = '',
+      this.precipitationType = '',
+      this.sky = '',
+      this.snowPerHour = '',
+      this.temperaturePerHour = '',
+      this.time = '',
+      this.type = WeatherType.initial,
+      this.wave = '',
+      this.windDirection = '',
+      this.windSpeed = '',
+      this.windSpeedToEastWest = '',
+      this.windSpeedToSouthNorth = ''});
 
   factory _$WeatherImpl.fromJson(Map<String, dynamic> json) =>
       _$$WeatherImplFromJson(json);
@@ -204,26 +316,50 @@ class _$WeatherImpl implements _Weather {
   final District district;
   @override
   @JsonKey()
-  final String temperature;
+  final String huminity;
+  @override
+  @JsonKey()
+  final String precipitationPerHour;
   @override
   @JsonKey()
   final String precipitationProbability;
   @override
   @JsonKey()
-  final String precipitation;
+  final String precipitationType;
   @override
   @JsonKey()
   final String sky;
   @override
   @JsonKey()
-  final String huminity;
+  final String snowPerHour;
+  @override
+  @JsonKey()
+  final String temperaturePerHour;
+  @override
+  @JsonKey()
+  final String time;
   @override
   @JsonKey()
   final WeatherType type;
+  @override
+  @JsonKey()
+  final String wave;
+  @override
+  @JsonKey()
+  final String windDirection;
+  @override
+  @JsonKey()
+  final String windSpeed;
+  @override
+  @JsonKey()
+  final String windSpeedToEastWest;
+  @override
+  @JsonKey()
+  final String windSpeedToSouthNorth;
 
   @override
   String toString() {
-    return 'Weather(district: $district, temperature: $temperature, precipitationProbability: $precipitationProbability, precipitation: $precipitation, sky: $sky, huminity: $huminity, type: $type)';
+    return 'Weather(district: $district, huminity: $huminity, precipitationPerHour: $precipitationPerHour, precipitationProbability: $precipitationProbability, precipitationType: $precipitationType, sky: $sky, snowPerHour: $snowPerHour, temperaturePerHour: $temperaturePerHour, time: $time, type: $type, wave: $wave, windDirection: $windDirection, windSpeed: $windSpeed, windSpeedToEastWest: $windSpeedToEastWest, windSpeedToSouthNorth: $windSpeedToSouthNorth)';
   }
 
   @override
@@ -233,23 +369,52 @@ class _$WeatherImpl implements _Weather {
             other is _$WeatherImpl &&
             (identical(other.district, district) ||
                 other.district == district) &&
-            (identical(other.temperature, temperature) ||
-                other.temperature == temperature) &&
+            (identical(other.huminity, huminity) ||
+                other.huminity == huminity) &&
+            (identical(other.precipitationPerHour, precipitationPerHour) ||
+                other.precipitationPerHour == precipitationPerHour) &&
             (identical(
                     other.precipitationProbability, precipitationProbability) ||
                 other.precipitationProbability == precipitationProbability) &&
-            (identical(other.precipitation, precipitation) ||
-                other.precipitation == precipitation) &&
+            (identical(other.precipitationType, precipitationType) ||
+                other.precipitationType == precipitationType) &&
             (identical(other.sky, sky) || other.sky == sky) &&
-            (identical(other.huminity, huminity) ||
-                other.huminity == huminity) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.snowPerHour, snowPerHour) ||
+                other.snowPerHour == snowPerHour) &&
+            (identical(other.temperaturePerHour, temperaturePerHour) ||
+                other.temperaturePerHour == temperaturePerHour) &&
+            (identical(other.time, time) || other.time == time) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.wave, wave) || other.wave == wave) &&
+            (identical(other.windDirection, windDirection) ||
+                other.windDirection == windDirection) &&
+            (identical(other.windSpeed, windSpeed) ||
+                other.windSpeed == windSpeed) &&
+            (identical(other.windSpeedToEastWest, windSpeedToEastWest) ||
+                other.windSpeedToEastWest == windSpeedToEastWest) &&
+            (identical(other.windSpeedToSouthNorth, windSpeedToSouthNorth) ||
+                other.windSpeedToSouthNorth == windSpeedToSouthNorth));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, district, temperature,
-      precipitationProbability, precipitation, sky, huminity, type);
+  int get hashCode => Object.hash(
+      runtimeType,
+      district,
+      huminity,
+      precipitationPerHour,
+      precipitationProbability,
+      precipitationType,
+      sky,
+      snowPerHour,
+      temperaturePerHour,
+      time,
+      type,
+      wave,
+      windDirection,
+      windSpeed,
+      windSpeedToEastWest,
+      windSpeedToSouthNorth);
 
   @JsonKey(ignore: true)
   @override
@@ -268,29 +433,53 @@ class _$WeatherImpl implements _Weather {
 abstract class _Weather implements Weather {
   const factory _Weather(
       {final District district,
-      final String temperature,
-      final String precipitationProbability,
-      final String precipitation,
-      final String sky,
       final String huminity,
-      final WeatherType type}) = _$WeatherImpl;
+      final String precipitationPerHour,
+      final String precipitationProbability,
+      final String precipitationType,
+      final String sky,
+      final String snowPerHour,
+      final String temperaturePerHour,
+      final String time,
+      final WeatherType type,
+      final String wave,
+      final String windDirection,
+      final String windSpeed,
+      final String windSpeedToEastWest,
+      final String windSpeedToSouthNorth}) = _$WeatherImpl;
 
   factory _Weather.fromJson(Map<String, dynamic> json) = _$WeatherImpl.fromJson;
 
   @override
   District get district;
   @override
-  String get temperature;
+  String get huminity;
+  @override
+  String get precipitationPerHour;
   @override
   String get precipitationProbability;
   @override
-  String get precipitation;
+  String get precipitationType;
   @override
   String get sky;
   @override
-  String get huminity;
+  String get snowPerHour;
+  @override
+  String get temperaturePerHour;
+  @override
+  String get time;
   @override
   WeatherType get type;
+  @override
+  String get wave;
+  @override
+  String get windDirection;
+  @override
+  String get windSpeed;
+  @override
+  String get windSpeedToEastWest;
+  @override
+  String get windSpeedToSouthNorth;
   @override
   @JsonKey(ignore: true)
   _$$WeatherImplCopyWith<_$WeatherImpl> get copyWith =>

@@ -99,6 +99,21 @@ WeatherType getWeatherType(Map<String, String> data) {
   }
 }
 
+bool checkIsRainning(WeatherType weatherType) {
+  bool isRainning;
+
+  if (weatherType == WeatherType.rainningNormal ||
+      weatherType == WeatherType.rainningDrizzle ||
+      weatherType == WeatherType.rainningHeavily ||
+      weatherType == WeatherType.rainningDownpour) {
+    isRainning = true;
+  } else {
+    isRainning = false;
+  }
+
+  return isRainning;
+}
+
 Weather getUltraShortTermForecastMapper(Map<String, dynamic> data) {
   if (data['response'] == null ||
       data['response']['body'] == null ||

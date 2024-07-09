@@ -1,123 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:avocado/config/avocado_colors.dart';
 import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/domain/mapper/weather_data_mapper.dart';
 import 'package:avocado/domain/model/weather_model.dart';
+import 'package:avocado/feature/view_model/notification_detail_view_model.dart';
 import 'package:avocado/feature/widget/shadow_card.dart';
 import 'package:avocado/util/date.dart';
-
-// TODO: API 데이터 연결
-List<Map<String, dynamic>> weather = [
-  {
-    "district": "충청북도 충주시 칠금동",
-    "data": [
-      {
-        "windSpeedToEastWest": "5.9",
-        "sky": "4",
-        "precipitationProbability": "60",
-        "windSpeedToSouthNorth": "-0.7",
-        "huminity": "90",
-        "snowPerHour": "적설없음",
-        "type": "rainningDrizzle",
-        "wave": "0",
-        "temperaturePerHour": "26",
-        "precipitationType": "1",
-        "precipitationPerHour": "1.0mm",
-        "time": "1600",
-        "windDirection": "277",
-        "windSpeed": "5.9"
-      },
-      {
-        "windSpeedToEastWest": "1.2",
-        "sky": "4",
-        "precipitationProbability": "60",
-        "windSpeedToSouthNorth": "1",
-        "huminity": "90",
-        "snowPerHour": "적설없음",
-        "type": "rainningDrizzle",
-        "wave": "0",
-        "temperaturePerHour": "26",
-        "precipitationType": "1",
-        "precipitationPerHour": "2.0mm",
-        "time": "1800",
-        "windDirection": "230",
-        "windSpeed": "1.6"
-      },
-      {
-        "windSpeedToEastWest": "1.3",
-        "sky": "4",
-        "precipitationProbability": "60",
-        "windSpeedToSouthNorth": "1.2",
-        "huminity": "95",
-        "snowPerHour": "적설없음",
-        "type": "rainningNormal",
-        "wave": "0",
-        "temperaturePerHour": "25",
-        "precipitationType": "1",
-        "precipitationPerHour": "3.0mm",
-        "time": "2000",
-        "windDirection": "227",
-        "windSpeed": "1.8"
-      }
-    ]
-  },
-  {
-    "district": "서울특별시 도봉구 도봉동",
-    "data": [
-      {
-        "windSpeedToEastWest": "1",
-        "sky": "4",
-        "precipitationProbability": "60",
-        "windSpeedToSouthNorth": "0.5",
-        "huminity": "80",
-        "snowPerHour": "적설없음",
-        "type": "rainningDrizzle",
-        "wave": "0",
-        "temperaturePerHour": "26",
-        "precipitationType": "1",
-        "precipitationPerHour": "1mm 미만",
-        "time": "1600",
-        "windDirection": "243",
-        "windSpeed": "1.1"
-      },
-      {
-        "windSpeedToEastWest": "1.2",
-        "sky": "4",
-        "precipitationProbability": "30",
-        "windSpeedToSouthNorth": "1.5",
-        "huminity": "85",
-        "snowPerHour": "적설없음",
-        "type": "cloudyNormal",
-        "wave": "0",
-        "temperaturePerHour": "26",
-        "precipitationType": "0",
-        "precipitationPerHour": "강수없음",
-        "time": "1800",
-        "windDirection": "219",
-        "windSpeed": "1.9"
-      },
-      {
-        "windSpeedToEastWest": "0.6",
-        "sky": "4",
-        "precipitationProbability": "60",
-        "windSpeedToSouthNorth": "1.2",
-        "huminity": "85",
-        "snowPerHour": "적설없음",
-        "type": "rainningNormal",
-        "wave": "0",
-        "temperaturePerHour": "25",
-        "precipitationType": "1",
-        "precipitationPerHour": "8.0mm",
-        "time": "2000",
-        "windDirection": "207",
-        "windSpeed": "1.3"
-      }
-    ]
-  }
-];
 
 String getRainningIcon(WeatherType weatherType) {
   String icon;
@@ -137,6 +29,48 @@ String getRainningIcon(WeatherType weatherType) {
   return icon;
 }
 
+Widget getDescriptionWidgetByRainningCount(
+  BuildContext context, {
+  required bool isOverRainningHeavily,
+  required int rainningDisrtictCount,
+  required int weatherDataRowCount,
+}) {
+  List<InlineSpan> description = [];
+  String umbrellaDescription = '';
+
+  if (isOverRainningHeavily) {
+    umbrellaDescription = '오늘은 튼튼한 우산을 챙겨가세요';
+  } else {
+    umbrellaDescription = '오늘은 작은 우산을 챙겨가세요';
+  }
+
+  if (weatherDataRowCount > 1) {
+    description = [
+      const TextSpan(text: '설정한 지역 중에\n우산이 필요한 곳이'),
+      TextSpan(
+        text: ' $rainningDisrtictCount군데 ',
+        style: TextStyle(
+          color: AvocadoColors.main,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      const TextSpan(text: '있어요.'),
+      TextSpan(text: '\n$umbrellaDescription :D'),
+    ];
+  } else {
+    description = [
+      TextSpan(text: '설정한 지역에 우산이 필요해요.\n$umbrellaDescription :D')
+    ];
+  }
+
+  return RichText(
+    text: TextSpan(
+      children: description,
+      style: context.textThemeBodyMedium.copyWith(fontWeight: FontWeight.w500),
+    ),
+  );
+}
+
 String getPrecipitaionText(String value) {
   return value == '강수없음' ? '-' : value;
 }
@@ -151,29 +85,29 @@ String getPrecipitaionProbabilityText(String value) {
   return parsedValue == 0 ? '-' : '$parsedValue %';
 }
 
-class NotificationDetailView extends StatelessWidget {
+class NotificationDetailView extends ConsumerStatefulWidget {
   const NotificationDetailView({super.key});
 
   @override
+  ConsumerState<NotificationDetailView> createState() =>
+      _NotificationDetailViewState();
+}
+
+class _NotificationDetailViewState
+    extends ConsumerState<NotificationDetailView> {
+  @override
+  void initState() {
+    super.initState();
+
+    ref
+        .read(notificationDetailViewModelProvider.notifier)
+        .init('ApFw0UZw5O3R3fFmzfZF');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // TODO: 파서 분리
-    var parsed = weather.map((item) {
-      var parsedData = [];
-      bool needUmbrella = false;
-
-      for (var i in item['data']) {
-        var data = Weather.fromJson(i);
-        needUmbrella = checkIsRainning(data.type);
-
-        parsedData.add(data);
-      }
-
-      return {
-        ...item,
-        'needUmbrella': needUmbrella,
-        'data': parsedData,
-      };
-    }).toList();
+    var notificationDetailViewModel =
+        ref.watch(notificationDetailViewModelProvider);
 
     return SizedBox(
       width: double.infinity,
@@ -182,14 +116,17 @@ class NotificationDetailView extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 32, bottom: 48, left: 16),
-            child: Text(
-              '설정한 지역에 우산이 필요해요.\n오늘은 튼튼한 우산을 챙겨가세요 :D', // TODO: 비오는 날 체크 후 텍스트 수정
-              style: context.textThemeBodyMedium
-                  .copyWith(fontWeight: FontWeight.w500),
+            child: getDescriptionWidgetByRainningCount(
+              context,
+              isOverRainningHeavily:
+                  notificationDetailViewModel.isOverRainningHeavily,
+              rainningDisrtictCount:
+                  notificationDetailViewModel.rainningDisrtictCount,
+              weatherDataRowCount: notificationDetailViewModel.weather.length,
             ),
           ),
-          ...List.generate(parsed.length, (i) {
-            var data = parsed[i]['data'];
+          ...List.generate(notificationDetailViewModel.weather.length, (i) {
+            var data = notificationDetailViewModel.weather[i].data;
 
             return shadowCard(
               child: Column(
@@ -200,13 +137,15 @@ class NotificationDetailView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          parsed[i]['district'],
+                          notificationDetailViewModel.weather[i].district,
                           style: context.textThemeBodyMedium.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         Text(
-                          parsed[i]['needUmbrella'] ? '우산 필요' : '',
+                          notificationDetailViewModel.weather[i].needUmbrella
+                              ? '우산 필요'
+                              : '',
                           style: context.textThemeBodyMedium.copyWith(
                             color: AvocadoColors.main,
                             fontWeight: FontWeight.w700,
@@ -215,135 +154,147 @@ class NotificationDetailView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Column(
-                    children: [
-                      Table(
-                        columnWidths: const {
-                          0: FixedColumnWidth(60),
-                        },
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        children: [
-                          TableRow(
-                            children: [
-                              SizedBox(
-                                height: 25,
-                                child: Text(
-                                  '시간',
-                                  style: context.textThemeLabelMedium.copyWith(
-                                    color: AvocadoColors.grey03,
-                                  ),
-                                ),
-                              ),
-                              ...List.generate(data.length, (int index) {
-                                return SizedBox(
-                                  height: 25,
-                                  child: Text(
-                                    DateUtil.getHourWithAMPM(int.parse(
-                                        data[index].time.substring(0, 2))),
-                                    textAlign: TextAlign.center,
-                                    style: context.textThemeBodySmall.copyWith(
-                                      color: AvocadoColors.grey01,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              SizedBox(
-                                height: 25,
-                                child: Text(
-                                  '강수량',
-                                  style: context.textThemeLabelMedium.copyWith(
-                                    color: AvocadoColors.grey03,
-                                  ),
-                                ),
-                              ),
-                              ...List.generate(data.length, (int index) {
-                                return SizedBox(
-                                  height: 25,
-                                  child: Text(
-                                    checkIsRainning(data[index].type)
-                                        ? data[index].type.label
-                                        : '-',
-                                    textAlign: TextAlign.center,
-                                    style: context.textThemeBodySmall.copyWith(
-                                      color: AvocadoColors.main,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              const SizedBox(
-                                height: 25,
-                              ),
-                              ...List.generate(data.length, (int index) {
-                                return SizedBox(
-                                  height: 25,
-                                  child: Text(
-                                    '(${getPrecipitaionTextWithUnit(data[index].precipitationPerHour)})',
-                                    textAlign: TextAlign.center,
-                                    style: context.textThemeBodySmall.copyWith(
-                                      color: AvocadoColors.grey02,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              Container(),
-                              ...List.generate(data.length, (int index) {
-                                return checkIsRainning(data[index].type)
-                                    ? SvgPicture.asset(
-                                        getRainningIcon(
-                                          data[index].type,
+                  data != null
+                      ? Column(
+                          children: [
+                            Table(
+                              columnWidths: const {
+                                0: FixedColumnWidth(60),
+                              },
+                              defaultVerticalAlignment:
+                                  TableCellVerticalAlignment.middle,
+                              children: [
+                                TableRow(
+                                  children: [
+                                    SizedBox(
+                                      height: 25,
+                                      child: Text(
+                                        '시간',
+                                        style: context.textThemeLabelMedium
+                                            .copyWith(
+                                          color: AvocadoColors.grey03,
                                         ),
-                                        width: 50,
-                                      )
-                                    : Container();
-                              }),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              SizedBox(
-                                height: 25,
-                                child: Text(
-                                  '강수확률',
-                                  style: context.textThemeLabelMedium.copyWith(
-                                    color: AvocadoColors.grey03,
-                                  ),
-                                ),
-                              ),
-                              ...List.generate(data.length, (int index) {
-                                return SizedBox(
-                                  height: 25,
-                                  child: Text(
-                                    getPrecipitaionProbabilityText(
-                                        data[index].precipitationProbability),
-                                    textAlign: TextAlign.center,
-                                    style: context.textThemeBodySmall.copyWith(
-                                      color: AvocadoColors.grey02,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                                    ...List.generate(data.length, (int index) {
+                                      return SizedBox(
+                                        height: 25,
+                                        child: Text(
+                                          DateUtil.getHourWithAMPM(int.parse(
+                                              data[index]
+                                                  .time
+                                                  .substring(0, 2))),
+                                          textAlign: TextAlign.center,
+                                          style: context.textThemeBodySmall
+                                              .copyWith(
+                                            color: AvocadoColors.grey01,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    SizedBox(
+                                      height: 25,
+                                      child: Text(
+                                        '강수량',
+                                        style: context.textThemeLabelMedium
+                                            .copyWith(
+                                          color: AvocadoColors.grey03,
+                                        ),
+                                      ),
+                                    ),
+                                    ...List.generate(data.length, (int index) {
+                                      return SizedBox(
+                                        height: 25,
+                                        child: Text(
+                                          checkIsRainning(data[index].type)
+                                              ? data[index].type.label
+                                              : '-',
+                                          textAlign: TextAlign.center,
+                                          style: context.textThemeBodySmall
+                                              .copyWith(
+                                            color: AvocadoColors.main,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    const SizedBox(
+                                      height: 25,
+                                    ),
+                                    ...List.generate(data.length, (int index) {
+                                      return SizedBox(
+                                        height: 25,
+                                        child: Text(
+                                          '(${getPrecipitaionTextWithUnit(data[index].precipitationPerHour)})',
+                                          textAlign: TextAlign.center,
+                                          style: context.textThemeBodySmall
+                                              .copyWith(
+                                            color: AvocadoColors.grey02,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Container(),
+                                    ...List.generate(data.length, (int index) {
+                                      return checkIsRainning(data[index].type)
+                                          ? SvgPicture.asset(
+                                              getRainningIcon(
+                                                data[index].type,
+                                              ),
+                                              width: 50,
+                                            )
+                                          : Container();
+                                    }),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    SizedBox(
+                                      height: 25,
+                                      child: Text(
+                                        '강수확률',
+                                        style: context.textThemeLabelMedium
+                                            .copyWith(
+                                          color: AvocadoColors.grey03,
+                                        ),
+                                      ),
+                                    ),
+                                    ...List.generate(data.length, (int index) {
+                                      return SizedBox(
+                                        height: 25,
+                                        child: Text(
+                                          getPrecipitaionProbabilityText(
+                                              data[index]
+                                                  .precipitationProbability),
+                                          textAlign: TextAlign.center,
+                                          style: context.textThemeBodySmall
+                                              .copyWith(
+                                            color: AvocadoColors.grey02,
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Container(),
                 ],
               ),
             );

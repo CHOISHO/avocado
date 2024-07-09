@@ -2,6 +2,7 @@ import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:avocado/data/repository/user_repository.dart';
+import 'package:avocado/domain/mapper/get_alarm_detail_mapper.dart';
 import 'package:avocado/domain/model/alarm_model.dart';
 import 'package:avocado/util/api.dart';
 
@@ -139,5 +140,27 @@ class AlarmRepository extends _$AlarmRepository {
 
   Future<void> updateAlarm(List<AlarmModel> newAlarms) async {
     state = newAlarms;
+  }
+
+  Future<List<AlarmWeatherModel>> getAlarmDetail(String alarmId) async {
+    try {
+      var userState = ref.read(userRepositoryProvider);
+
+      var response = await ApiUtil.post(
+        url: _url,
+        path: '/alarm/getNotificationDetail',
+        body: {
+          "alarmId": alarmId,
+        },
+        token: userState.idToken,
+      );
+
+      List<AlarmWeatherModel> alarmWeatherList = getAlarmDetailMapper(response);
+
+      return alarmWeatherList;
+    } catch (e) {
+      Logger().e(e);
+      return [];
+    }
   }
 }

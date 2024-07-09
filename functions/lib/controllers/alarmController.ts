@@ -236,6 +236,7 @@ const AlarmController = {
             
             if(weatherData){
                 const weather = Object.entries(weatherData).map(([_, value]) => value);
+
                 res.status(200).json({weather});
             } else {
                 throw '날씨 정보가 없습니다.';
@@ -385,7 +386,7 @@ const AlarmController = {
     },
 }
 
-function getNotificationBodyByRainningCountOnDistrict(rainningCountOnDistrict: number) : string{
+function getNotificationBodyByRainningCountOnDistrict(rainningCountOnDistrict: number) : string {
     let body = '';
 
     if (rainningCountOnDistrict === 0) {

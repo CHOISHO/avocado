@@ -1,12 +1,10 @@
-import 'dart:convert';
-
-import 'package:avocado/data/repository/user_repository.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:logger/web.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:xml2json/xml2json.dart';
 
+import 'package:avocado/data/repository/user_repository.dart';
 import 'package:avocado/domain/mapper/weather_data_mapper.dart';
 import 'package:avocado/domain/model/weather_model.dart';
 import 'package:avocado/util/api.dart';

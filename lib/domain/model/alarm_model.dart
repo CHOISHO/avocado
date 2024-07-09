@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:avocado/domain/model/district_model.dart';
+import 'package:avocado/domain/model/weather_model.dart';
 
 part 'alarm_model.freezed.dart';
 part 'alarm_model.g.dart';
@@ -31,4 +32,16 @@ enum AlarmPeriodType {
   const AlarmPeriodType(this.value, this.label);
   final String value;
   final String label;
+}
+
+@freezed
+class AlarmWeatherModel with _$AlarmWeatherModel {
+  factory AlarmWeatherModel({
+    @Default('') String district,
+    @Default(null) List<Weather>? data,
+    @Default(false) bool needUmbrella,
+  }) = _AlarmWeatherModel;
+
+  factory AlarmWeatherModel.fromJson(Map<String, dynamic> json) =>
+      _$AlarmWeatherModelFromJson(json);
 }

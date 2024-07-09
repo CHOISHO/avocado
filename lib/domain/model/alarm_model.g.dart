@@ -45,3 +45,22 @@ const _$AlarmPeriodTypeEnumMap = {
   AlarmPeriodType.weekend: 'weekend',
   AlarmPeriodType.custom: 'custom',
 };
+
+_$AlarmWeatherModelImpl _$$AlarmWeatherModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AlarmWeatherModelImpl(
+      district: json['district'] as String? ?? '',
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => Weather.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          null,
+      needUmbrella: json['needUmbrella'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$AlarmWeatherModelImplToJson(
+        _$AlarmWeatherModelImpl instance) =>
+    <String, dynamic>{
+      'district': instance.district,
+      'data': instance.data,
+      'needUmbrella': instance.needUmbrella,
+    };

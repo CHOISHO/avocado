@@ -354,3 +354,193 @@ abstract class _AlarmModel implements AlarmModel {
   _$$AlarmModelImplCopyWith<_$AlarmModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+AlarmWeatherModel _$AlarmWeatherModelFromJson(Map<String, dynamic> json) {
+  return _AlarmWeatherModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AlarmWeatherModel {
+  String get district => throw _privateConstructorUsedError;
+  List<Weather>? get data => throw _privateConstructorUsedError;
+  bool get needUmbrella => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AlarmWeatherModelCopyWith<AlarmWeatherModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AlarmWeatherModelCopyWith<$Res> {
+  factory $AlarmWeatherModelCopyWith(
+          AlarmWeatherModel value, $Res Function(AlarmWeatherModel) then) =
+      _$AlarmWeatherModelCopyWithImpl<$Res, AlarmWeatherModel>;
+  @useResult
+  $Res call({String district, List<Weather>? data, bool needUmbrella});
+}
+
+/// @nodoc
+class _$AlarmWeatherModelCopyWithImpl<$Res, $Val extends AlarmWeatherModel>
+    implements $AlarmWeatherModelCopyWith<$Res> {
+  _$AlarmWeatherModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? district = null,
+    Object? data = freezed,
+    Object? needUmbrella = null,
+  }) {
+    return _then(_value.copyWith(
+      district: null == district
+          ? _value.district
+          : district // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<Weather>?,
+      needUmbrella: null == needUmbrella
+          ? _value.needUmbrella
+          : needUmbrella // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AlarmWeatherModelImplCopyWith<$Res>
+    implements $AlarmWeatherModelCopyWith<$Res> {
+  factory _$$AlarmWeatherModelImplCopyWith(_$AlarmWeatherModelImpl value,
+          $Res Function(_$AlarmWeatherModelImpl) then) =
+      __$$AlarmWeatherModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String district, List<Weather>? data, bool needUmbrella});
+}
+
+/// @nodoc
+class __$$AlarmWeatherModelImplCopyWithImpl<$Res>
+    extends _$AlarmWeatherModelCopyWithImpl<$Res, _$AlarmWeatherModelImpl>
+    implements _$$AlarmWeatherModelImplCopyWith<$Res> {
+  __$$AlarmWeatherModelImplCopyWithImpl(_$AlarmWeatherModelImpl _value,
+      $Res Function(_$AlarmWeatherModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? district = null,
+    Object? data = freezed,
+    Object? needUmbrella = null,
+  }) {
+    return _then(_$AlarmWeatherModelImpl(
+      district: null == district
+          ? _value.district
+          : district // ignore: cast_nullable_to_non_nullable
+              as String,
+      data: freezed == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<Weather>?,
+      needUmbrella: null == needUmbrella
+          ? _value.needUmbrella
+          : needUmbrella // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AlarmWeatherModelImpl implements _AlarmWeatherModel {
+  _$AlarmWeatherModelImpl(
+      {this.district = '',
+      final List<Weather>? data = null,
+      this.needUmbrella = false})
+      : _data = data;
+
+  factory _$AlarmWeatherModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AlarmWeatherModelImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String district;
+  final List<Weather>? _data;
+  @override
+  @JsonKey()
+  List<Weather>? get data {
+    final value = _data;
+    if (value == null) return null;
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey()
+  final bool needUmbrella;
+
+  @override
+  String toString() {
+    return 'AlarmWeatherModel(district: $district, data: $data, needUmbrella: $needUmbrella)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AlarmWeatherModelImpl &&
+            (identical(other.district, district) ||
+                other.district == district) &&
+            const DeepCollectionEquality().equals(other._data, _data) &&
+            (identical(other.needUmbrella, needUmbrella) ||
+                other.needUmbrella == needUmbrella));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, district,
+      const DeepCollectionEquality().hash(_data), needUmbrella);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AlarmWeatherModelImplCopyWith<_$AlarmWeatherModelImpl> get copyWith =>
+      __$$AlarmWeatherModelImplCopyWithImpl<_$AlarmWeatherModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AlarmWeatherModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AlarmWeatherModel implements AlarmWeatherModel {
+  factory _AlarmWeatherModel(
+      {final String district,
+      final List<Weather>? data,
+      final bool needUmbrella}) = _$AlarmWeatherModelImpl;
+
+  factory _AlarmWeatherModel.fromJson(Map<String, dynamic> json) =
+      _$AlarmWeatherModelImpl.fromJson;
+
+  @override
+  String get district;
+  @override
+  List<Weather>? get data;
+  @override
+  bool get needUmbrella;
+  @override
+  @JsonKey(ignore: true)
+  _$$AlarmWeatherModelImplCopyWith<_$AlarmWeatherModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

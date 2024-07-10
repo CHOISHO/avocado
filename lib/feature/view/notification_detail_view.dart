@@ -86,7 +86,12 @@ String getPrecipitaionProbabilityText(String value) {
 }
 
 class NotificationDetailView extends ConsumerStatefulWidget {
-  const NotificationDetailView({super.key});
+  const NotificationDetailView({
+    required this.alarmId,
+    super.key,
+  });
+
+  final String alarmId;
 
   @override
   ConsumerState<NotificationDetailView> createState() =>
@@ -99,9 +104,7 @@ class _NotificationDetailViewState
   void initState() {
     super.initState();
 
-    ref
-        .read(notificationDetailViewModelProvider.notifier)
-        .init('ApFw0UZw5O3R3fFmzfZF');
+    ref.read(notificationDetailViewModelProvider.notifier).init(widget.alarmId);
   }
 
   @override

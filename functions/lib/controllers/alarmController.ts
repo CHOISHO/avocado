@@ -7,7 +7,7 @@ import axios from 'axios';
 import { defaultSerializer } from '../';
 import { db, getAuth, getMessaging } from '../utils/firebaseAdmin';
 import { getShortTermForecastBaseTime, getYYYYMMDD } from '../utils/date';
-import { getIsRainning, getShortTermForecastMapper, GetShortTermForecastMapperPayload, ShortForecastWeather } from '../utils/weatherDataMapper';
+import { getShortTermForecastMapper, GetShortTermForecastMapperPayload, ShortForecastWeather } from '../utils/weatherDataMapper';
 import { logger } from 'firebase-functions/v1';
 
 enum Time {
@@ -362,15 +362,12 @@ const AlarmController = {
 
                 for(const weather of weatherpromises) {
                     const message: Message = {
-                        notification: {
+                        token: weather?.deviceToken ? weather.deviceToken : '',
+                        data: {
+                            alarmId: weather ? weather.alarmId : '',
                             title: '비오니',
                             body: getNotificationBodyByRainningCountOnDistrict(rainningCountOnDistrict),
                         },
-                        data: {
-                            alarmId: weather ? weather.alarmId : '',
-                            userId:  weather ? weather.userId : '',
-                        },
-                        token: weather?.deviceToken ? weather.deviceToken : '',
                     };
 
                     messages.push(message);

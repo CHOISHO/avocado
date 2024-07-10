@@ -1,16 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
-import 'package:avocado/feature/widget/show_modal.dart';
-import 'package:avocado/main.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'package:avocado/feature/view/notification_detail_view.dart';
+import 'package:avocado/feature/widget/show_modal.dart';
+import 'package:avocado/main.dart';
 
 class PushNotificationUtil {
   factory PushNotificationUtil() {
@@ -85,32 +87,13 @@ class PushNotificationUtil {
 
     // INFO: Add On Tap Status Bar Background Notification Listener
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('---------------------------$message');
-
-      showModal(
-          navigatorKey.currentState!.overlay!.context,
-          const Center(
-            child: Text('------------------STATUS BAR BACKGROUND ON CLICKED'),
-          ));
+      // showNotificationDetailView(message);
     });
 
     // INFO:
     // 1. Define On Tap Floating Foreground Notification, Floating Background Notification Listener
-    selectNotificationStream.stream.listen((String? payload) async {
-      if (payload == null) {
-        return;
-      }
-
-      Map<String, dynamic> parsedPayload = jsonDecode(payload);
-
-      await _flutterLocalNotificationsPlugin
-          .cancel(parsedPayload['notificationId']!);
-      // await _flutterLocalNotificationsPlugin.cancelAll();
-      await showModal(
-          navigatorKey.currentState!.overlay!.context,
-          const Center(
-            child: Text('------------------FOREGROUND, Floating Background'),
-          ));
+    selectNotificationStream.stream.listen((String? message) async {
+      showNotificationDetailView(message);
     });
 
     // 2. Add On Tap Floating Foreground Notification, Floating Background Notification Listener
@@ -141,18 +124,23 @@ class PushNotificationUtil {
   }
 
   Future<void> showNotification(RemoteMessage message) async {
-    RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
+    Map<String, dynamic> data = message.data;
+    String title = data['title'] ?? '';
+    String body = data['body'] ?? '';
+    String alarmId = data['alarmId'] ?? '';
 
-    if (notification != null && android != null) {
+    if (title.isNotEmpty && body.isNotEmpty && alarmId.isNotEmpty) {
       await _flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(channel);
+
+      var random = Random().nextInt(100);
+
       _flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
+        random,
+        title,
+        body,
         NotificationDetails(
           android: AndroidNotificationDetails(
             channel.id,
@@ -162,21 +150,41 @@ class PushNotificationUtil {
         ),
         payload: jsonEncode(
           {
-            'title': notification.title ?? '',
-            'body': notification.body ?? '',
-            'data': message.data,
+            'title': title,
+            'body': body,
+            'alarmId': alarmId,
           },
         ),
       );
     }
+  }
+
+  Future<void> showNotificationDetailView(String? message) async {
+    try {
+      if (message == null) {
+        return;
+      }
+
+      await _flutterLocalNotificationsPlugin.cancelAll();
+
+      var parsedMessage = jsonDecode(message);
+
+      if (parsedMessage['payload'] != null &&
+          parsedMessage['payload']['alarmId'] != null) {
+        await showModal(
+          navigatorKey.currentState!.overlay!.context,
+          NotificationDetailView(
+            alarmId: parsedMessage['payload']['alarmId'],
+          ),
+        );
+      }
+    } catch (e) {}
   }
 }
 
 @pragma('vm:entry-point')
 Future<void> backgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  Logger().d('BACKGROUD');
-  print('-----------------------BACKGROUD');
 
   PushNotificationUtil().showNotification(message);
 }

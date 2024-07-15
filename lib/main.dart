@@ -11,8 +11,8 @@ import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/feature/view/splash/splash_view.dart';
 import 'package:avocado/firebase_options.dart';
 import 'package:avocado/routes.dart';
-import 'package:avocado/util/shared_preferences.dart';
 import 'package:avocado/util/push_notification.dart';
+import 'package:avocado/util/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

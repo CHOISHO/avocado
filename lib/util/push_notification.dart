@@ -87,7 +87,7 @@ class PushNotificationUtil {
 
     // INFO: Add On Tap Status Bar Background Notification Listener
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // showNotificationDetailView(message);
+      showNotificationDetailView(message.data.toString());
     });
 
     // INFO:
@@ -121,6 +121,27 @@ class PushNotificationUtil {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
+  }
+
+  Future<String?> getInitialMessage() async {
+    try {
+      NotificationAppLaunchDetails? notificationAppLaunchDetails =
+          await _flutterLocalNotificationsPlugin
+              .getNotificationAppLaunchDetails();
+
+      if (notificationAppLaunchDetails == null &&
+          notificationAppLaunchDetails?.notificationResponse == null &&
+          notificationAppLaunchDetails?.notificationResponse?.payload == null) {
+        return null;
+      }
+
+      String payload = jsonDecode(
+          notificationAppLaunchDetails!.notificationResponse!.payload!);
+
+      return jsonEncode({'payload': payload});
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<void> showNotification(RemoteMessage message) async {

@@ -368,6 +368,9 @@ const AlarmController = {
                             title: '비오니',
                             body: getNotificationBodyByRainningCountOnDistrict(rainningCountOnDistrict),
                         },
+                        android: {
+                            priority: 'high',
+                        },
                     };
 
                     messages.push(message);

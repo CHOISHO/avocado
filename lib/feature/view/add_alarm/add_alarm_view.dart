@@ -104,18 +104,6 @@ class AddAlarmView extends ConsumerWidget {
                   });
                 },
               ),
-              SelectWidget(
-                label: '지역 3',
-                value: state.alarm.district3?.streetNameAddress ?? '',
-                hintText: '확인 지역을 선택해 주세요.',
-                onTap: () {
-                  showSelectDistrictModalWidget(context, (selectedDistrict) {
-                    ref
-                        .read(addAlarmViewModelProvider.notifier)
-                        .setDistrict3(selectedDistrict);
-                  });
-                },
-              ),
               const SelectPeriodWidget(),
               state.isEditMode
                   ? GestureDetector(

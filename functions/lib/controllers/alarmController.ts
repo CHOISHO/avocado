@@ -8,11 +8,12 @@ import { defaultSerializer } from '../';
 import { db, getAuth, getMessaging } from '../utils/firebaseAdmin';
 import { getShortTermForecastBaseTime, getYYYYMMDD } from '../utils/date';
 import { getShortTermForecastMapper, GetShortTermForecastMapperPayload, ShortForecastWeather } from '../utils/weatherDataMapper';
-import { logger } from 'firebase-functions/v1';
 
-enum Time {
-    '0000', 
-}
+const TimeMap: Record<number, string> = {
+    8: '0800',
+    12: '1200',
+    17: '1700',
+};
 
 type District = {
     siNm: string,
@@ -86,7 +87,7 @@ const AlarmController = {
                     customPeriod: customPeriodData,
                 } : AlarmAddBodyType = req.body.alarm;
                 
-                const time = Time[timeData] ?? null;
+                const time = TimeMap[timeData] ?? null;
                 
                 if(time == null) {
                     throw "지원하지 않는 시간입니다."
@@ -162,7 +163,7 @@ const AlarmController = {
             } : AlarmUpdateBodyType = req.body.alarm;
 
               
-            const time = Time[timeData] ?? null;
+            const time = TimeMap[timeData] ?? null;
                 
             if(time == null) {
                 throw "지원하지 않는 시간입니다."
@@ -181,8 +182,20 @@ const AlarmController = {
             const usersAlarmsCollectionRef = db.collection('users').doc(userId).collection('alarms').doc(alarmId);
             const alarmsUserAlarmDocumentRef = db.collection('alarms').doc(time).collection(userId).doc(alarmId);
 
+            const prevAlarm = (await usersAlarmsCollectionRef.get()).data();
+            const parsedPrevAlarm = defaultSerializer.deserialize(prevAlarm!, Alarm);
+
+            if(!(parsedPrevAlarm instanceof Alarm)) {
+                throw '올바르지 않은 형식 입니다.'
+            }
+
+            const prevTime = TimeMap[parsedPrevAlarm.time];
+            const prevAlarmsUserAlarmDocumentRef = db.collection('alarms').doc(prevTime).collection(userId).doc(alarmId);
+            
+            await prevAlarmsUserAlarmDocumentRef.delete();
+            await alarmsUserAlarmDocumentRef.set(alarm);
+
             await usersAlarmsCollectionRef.update(alarm);
-            await alarmsUserAlarmDocumentRef.update(alarm);
 
             res.status(200).json({});
         } catch (error) {
@@ -208,7 +221,7 @@ const AlarmController = {
                 throw '올바르지 않은 형식 입니다.'
             }
 
-            const time = Time[alarm!.time];
+            const time = TimeMap[alarm!.time];
             
             const alarmDocumentRef = db.collection('alarms').doc(time).collection(userId).doc(alarmId);
 

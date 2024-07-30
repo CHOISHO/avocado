@@ -7,10 +7,9 @@ import 'package:avocado/config/text_theme.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/remove_alarm_remind_popup_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_district_modal_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_period_widget.dart';
-import 'package:avocado/feature/view/add_alarm/private_widget/select_time_modal_widget.dart';
+import 'package:avocado/feature/view/add_alarm/private_widget/select_time_widget.dart';
 import 'package:avocado/feature/view/add_alarm/private_widget/select_widget.dart';
 import 'package:avocado/feature/view_model/add_alarm_view_model.dart';
-import 'package:avocado/util/date.dart';
 
 class AddAlarmView extends ConsumerWidget {
   const AddAlarmView({super.key});
@@ -70,16 +69,7 @@ class AddAlarmView extends ConsumerWidget {
                 style: context.textThemeBodyMedium
                     .copyWith(fontWeight: FontWeight.w500),
               ),
-              SelectWidget(
-                label: '시각',
-                value: state.alarm.time != null
-                    ? DateUtil.getHHColonMM(state.alarm.time!)
-                    : '',
-                hintText: '알림 시각을 선택해 주세요.',
-                onTap: () {
-                  showSelectTimeModalWidget(context);
-                },
-              ),
+              const SelectTimeWidget(),
               SelectWidget(
                 label: '지역 1',
                 value: state.alarm.district1?.streetNameAddress ?? '',
